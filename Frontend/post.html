@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/post.css" rel="stylesheet">
+    <!-- icons -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Post</title>
+</head>
+<body>
+    <div id="upload-container">
+        <h3>Share your outfit!</h3>
+        <form action="http://localhost:8000/cat" method="post" enctype="multipart/form-data" id="uploadForm">
+            <input class="light-border file" type="file" required name="post" accept="image/*" placeholder="Choose file">
+            <input class="light-border" type="text" required name="description" placeholder="Description">
+            <input class="light-border" type="text" required name="category" placeholder="Category">
+            <button id="uploadButton" type="submit">Upload</button>
+            <a id="backButton" href="home.html">Back</a>
+        </form>
+    </div>
+
+    <!-- js -->
+    <script src="js/post.js"></script>
+</body>
+</html>
