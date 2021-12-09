@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/front.css" rel="stylesheet">
+    <!-- icons -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <!-- another font -->
+    <link href="./css/front.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Staatliches&display=swap" rel="stylesheet">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Frontpage</title>
+</head>
+<body>
+    <!-- Preload -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+
+    <!-- login -->
+    <section class="login" id="secLogin">
+        <!-- <div class="trapezoid"></div> -->
+        <img src="img/DrawKit-Fashion-Illustration-10.png" alt="login page image">
+        <div id="login-container">
+            <h3>Welcome to ootd</h3>
+            <form id="loginForm" action="http://localhost:3000/auth/login" method="post">
+                <input class="light-border" type="text" required name="username" placeholder="Username">
+                <input class="light-border" type="password" required name="passwd" placeholder="password" />
+                <button id="loginButton" type="submit">Login</button>
+                <a id="registerButton" href="register.html">Register</a>
+            </form>
+        </div>
+    </section>
+
+    <!-- front -->
+    <!-- <section class="front">
+        <div class="trapezoid"></div>
+        <div class="title">
+            <h1>OOTD.</h1>
+        </div>
+        <div class="slogun">
+            <h3 id="s1"> <span id="sloganHighlight">Each day</span> is a page</h3>
+            <h3 id="s2">in your <span id="sloganHighlight">fashion story</span>.</h3>
+        </div>
+        <img src="img/DrawKit-Fashion-Illustration-01.png" alt="front page image">
+        <div class="nav">
+            <a class="toLogin" href="#secLogin">Sign in</a>
+            <a class="toAboutUs" href="#secAboutUs">About Us</a>
+        </div>
+    </section> -->
+    <section class="front" id="secFront">
+        <div id="creators">
+            <span id="text1"></span>
+            <span id="text2"></span>
+        </div>
+        <svg id="filters">
+            <defs>
+                <filter id="threshold">
+                    <feColorMatrix in="SourceGraphic" type="matrix" values
+                                          ="1 0 0 0 0
+                                            0 1 0 0 0
+                                            0 0 1 0 0
+                                            0 0 0 200 -140" />
+                </filter>
+            </defs>
+        </svg>  
+        <div class="title">
+            <h1>
+                <span class="l1">
+                    <span>OOTD.</span>
+                </span>
+            </h1>
+            <h3 id="s1">
+                <span class="l2" id="sloganHighlight">Each day</span>
+                is a page
+            </h3>
+            <h3 id="s2">in your <span id="sloganHighlight">fashion story</span>.</h3>
+        </div>
+        <img src="img/DrawKit-Fashion-Illustration-01.png" alt="front page image">
+
+        <div class="nav">
+            <a class="toLogin" href="#secLogin">Login</a>
+            <a class="toAboutUs" href="#secAboutUs">About</a>
+        </div>
+    </section>
+
+    <!-- aboutUs -->
+    <section class="aboutUs" id="secAboutUs">
+        <div>
+            <!-- <video autoplay muted loop id="leftVideo">
+                        <source src="video/pexels-cottonbro.mp4" type="video/mp4">
+                    </video> -->
+            <div class="a1">
+                <h1 class="fade fadeOut">About OOTD</h1>
+                <img class="img1" src="img/DrawKit-Fashion-Illustration-06.png" alt="front page image">
+            </div>
+            <div class="a2">
+                <h1 class="fade fadeOut">Getting inspired.</h1>
+                <h1 class="fade fadeOut">Find your personal style.</h1>
+                <h1 class="fade fadeOut">Never follow trends blindly.</h1>
+                <h1 class="fade fadeOut">Never goes out of style.</h1>
+            </div>
+            <div class="a3">
+                <img src="img/Quote.png">
+                <h1 id="quote">Fashion is like eating, <span>shouldn't <br> stick to the same menu.</span></h1>
+                <h1>—Kenzo Takada</h1>
+            </div>
+            <div class="a4">
+                <img src="img/largeGallery.jpeg">   
+                <h1>Whoa.</h1>
+            </div>
+            <div class="a5">
+                <div class="c1">
+                    <img src="img/AboutUs1.jpg">   
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia nobis itaque eaque soluta voluptate laboriosam, reprehenderit vero fugiat placeat dignissimos mollitia. Praesentium possimus cupiditate itaque corporis nihil culpa? Culpa, ducimus.</p>
+                </div>
+                <div class="c2">
+                    <img src="img/AboutUs2.jpg">
+                </div>
+                <div class="c3">
+                    <img src="img/AboutUs5.png">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum sit, sapiente praesentium dicta optio voluptatibus laborum in ad recusandae, et corrupti nesciunt, ipsum exercitationem reiciendis obcaecati dignissimos explicabo eaque corporis?</p>
+                </div>
+                <div class="c4">
+                    <img src="img/AboutUs4.jpeg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- js -->
+    <script src="js/front.js"></script>
+</body>
+</html>
