@@ -3,6 +3,15 @@ const pool = require('../database/db');
 const { httpError } = require('../utils/errors');
 const promisePool = pool.promise();
 
+const getAllCategories = async () => {
+  try {
+    const [rows] = await promisePool.query('SELECT * FROM categories');
+    return rows;
+  } catch (e) {
+    console.error('error getting all categories', e.message);
+  }
+}
+
 const getAllPosts = async () => {
     //all async will return a promise
     try {
@@ -73,6 +82,7 @@ const getAllPosts = async () => {
   
 
 module.exports = {
-    getAllPosts,
+  getAllCategories,
+  getAllPosts,
 };
   
