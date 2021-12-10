@@ -3,7 +3,7 @@
 html,
 body {
     font-family: 'Bebas Neue', cursive;
-    height: 100%;
+    height: 100vh;
     padding: 0;
     margin: 0;
     scroll-behavior: smooth;
@@ -21,7 +21,7 @@ body {
 .fadeOut { opacity: 0; }
 .fadeIn { opacity: 1; }
 
-  /* Preload */
+/* Preload */
 #loader-wrapper {
     position: fixed;
     top: 0;
@@ -145,8 +145,8 @@ body {
 
   /* login */
   .login {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: #f8f8f8;
     position: relative;
   }
@@ -158,14 +158,15 @@ body {
   }
   #login-container {
     position: absolute;
-    margin-right: 2%;
-    width: 500px;
-    height: 400px;
+    margin-right: 8%;
+    margin-bottom: 2%;
+    width: 30em;
+    height: 30em;
     right: 0;
     bottom: 0;
   }
   #login-container h3 {
-    margin-top: 50px;
+    margin-top: 2em;
     font-size:calc(10px + 1vw);
     text-align: center;
   }
