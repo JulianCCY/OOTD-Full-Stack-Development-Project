@@ -2,7 +2,7 @@
   'use strict';
   const url = 'http://localhost:3000'; // change url when uploading to server
 
-  // check sessionStorage
+  // check session Storage
   if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
     location.href = 'front.html';
     return;

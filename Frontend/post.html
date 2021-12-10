@@ -18,10 +18,12 @@
 <body>
     <div id="upload-container">
         <h3>Share your outfit!</h3>
-        <form action="http://localhost:8000/cat" method="post" enctype="multipart/form-data" id="uploadForm">
+        <form action="http://localhost:3000/post" method="post" enctype="multipart/form-data" id="uploadForm">
             <input class="light-border file" type="file" required name="post" accept="image/*" placeholder="Choose file">
             <input class="light-border" type="text" required name="description" placeholder="Description">
-            <input class="light-border" type="text" required name="category" placeholder="Category">
+            <select class="light-border category" name="category">
+                <option value="">Select a category</option>
+            </select>
             <button id="uploadButton" type="submit">Upload</button>
             <a id="backButton" href="home.html">Back</a>
         </form>
@@ -30,6 +32,6 @@
     <!-- js -->
     <script src="js/post.js"></script>
     <script src="./js/serialize.js"></script>
-    <script src="./js/check-login.js"></script>
+    <!-- <script src="./js/check-login.js"></script> -->
 </body>
 </html>

@@ -1,11 +1,37 @@
 'use strict';
-const url = 'https://localhost:8000'; // change url when uploading to server
+const url = 'http://localhost:3000'; // change url when uploading to server
 
 // select existing html elements
 const uploadForm = document.querySelector('#uploadForm');
-const userList = document.querySelector('.add-owner');
+const categoryList = document.querySelector('.category');
 
-// submit add cat form
+// create user options to <select>
+const categoryOptions = (categories) => {
+  // clear user list
+  categoryList.innerHTML = '';
+  categories.forEach((category) => {
+    // create options with DOM methods
+    const option = document.createElement('option');
+    option.value = category.cid;
+    option.innerHTML = category.category;
+    option.classList.add('light-border');
+    categoryList.appendChild(option);
+  });
+};
+
+// get categories options
+const getCategories = async () => {
+  try {
+    const response = await fetch(url + '/post');
+    const categories = await response.json();
+    categoryOptions(categories);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+getCategories();
+
+// submit upload form
 uploadForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   const fd = new FormData(uploadForm);
