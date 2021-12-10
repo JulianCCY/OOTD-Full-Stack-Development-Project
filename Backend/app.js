@@ -21,15 +21,17 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 app.use(passport.initialize());
 
+app.use(express.static('uploads'));
+
 app.use('/auth', authRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 // app.use('/post', passport.authenticate('jwt', {session: false}), postRoute);
 app.use('/post', postRoute)
 
 //hash password check
-app.get('/', async (req, res) =>{
-    res.send(await bcrypt.hash('admin', 12));
-});
+// app.get('/', async (req, res) =>{
+//     res.send(await bcrypt.hash('admin', 12));
+// });
 
 //Handling error
 app.use((req, res, next)=>{
