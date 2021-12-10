@@ -16,14 +16,16 @@ app.use(cors());
 app.use(express.json());// for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-// app.use(passport.initialize());
+app.use(passport.initialize());
+
 app.use('/auth', authRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 
 //Handling error
-// app.use((req, res, next)=>{
-//     const err = httpError('Not Found', 404);
-// });
+app.use((req, res, next)=>{
+    const err = httpError('Not Found', 404);
+    next(err);
+});
 
 //error handler
 app.use((err, req, res, next) => {

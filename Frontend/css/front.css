@@ -210,105 +210,8 @@ body {
     color: rgba(0, 0, 0, 1);
     transition: 0.5s;
   }
-  /* front */
-  /* .front {
-    width: 100%;
-    height: 100%;
-    background: #F5F5DD;
-    position: relative;
-    overflow: hidden;
-  }
-  .title {
-    top: 6%;
-    left: 10%;
-    position: absolute;
-    transform: rotate(-30deg);
-  }
-  .slogun {
-    top: -17%;
-    left: 17%;
-    position: relative;
-    transform: rotate(-30deg);
-  }
-  #sloganHighlight{
-    color: #6AAAD5;
-  }
-  #s1 {
-    transform: translateX(-7%);
-    margin-bottom: 0;
-  }
-  #s2 {
-    margin-top: 0;
-  }
-  .front h1 {
-    margin: 0;
-    font-size:calc(75px + 8vw);
-  }
-  .front h3 {
-    font-size:calc(10px + 2vw);
-  }
-  .front img {
-    width: 35%;
-    position: absolute;
-    bottom: -15px;
-    right: 2%;
-  }
-  .nav {
-    height: 15%;
-    bottom: 10%;
-    margin-left: 5%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    position: absolute;
-  }
-  .toLogin {
-    font-size:calc(10px + 2vw);
-    text-decoration: none;
-    color: #000000;
-    display: inline-block;
-    position: relative;
-  }
-  .toLogin:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 4px;
-    bottom: 0;
-    left: 0;
-    background-color: #000000;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-  .toLogin:hover:after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-  .toAboutUs {
-    font-size:calc(5px + 1vw);
-    text-decoration: none;
-    color: #000000;
-    display: inline-block;
-    position: relative;
-  }
-  .toAboutUs:after {
-    content: '';
-    position: absolute;
-    width: 70%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #000000;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-  .toAboutUs:hover:after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  } */
 
+  /* front */
   .front {
     width: 100%;
     height: 105vh;
@@ -345,8 +248,8 @@ body {
     display: block;
   }
   .l1 span { 
-    animation-delay: 0.4s;
-    animation-duration: 3s;
+    animation-delay: 1s;
+    animation-duration: 2s;
     animation-name: wipe-up;
     animation-fill-mode: forwards;
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);

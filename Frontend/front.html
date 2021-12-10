@@ -36,7 +36,7 @@
             <h3>Welcome to ootd</h3>
             <form id="loginForm" action="http://localhost:3000/auth/login" method="post">
                 <input class="light-border" type="text" required name="username" placeholder="Username">
-                <input class="light-border" type="password" required name="passwd" placeholder="password" />
+                <input class="light-border" type="password" required name="password" placeholder="Password" />
                 <button id="loginButton" type="submit">Login</button>
                 <a id="registerButton" href="register.html">Register</a>
             </form>
@@ -44,21 +44,6 @@
     </section>
 
     <!-- front -->
-    <!-- <section class="front">
-        <div class="trapezoid"></div>
-        <div class="title">
-            <h1>OOTD.</h1>
-        </div>
-        <div class="slogun">
-            <h3 id="s1"> <span id="sloganHighlight">Each day</span> is a page</h3>
-            <h3 id="s2">in your <span id="sloganHighlight">fashion story</span>.</h3>
-        </div>
-        <img src="img/DrawKit-Fashion-Illustration-01.png" alt="front page image">
-        <div class="nav">
-            <a class="toLogin" href="#secLogin">Sign in</a>
-            <a class="toAboutUs" href="#secAboutUs">About Us</a>
-        </div>
-    </section> -->
     <section class="front" id="secFront">
         <div id="creators">
             <span id="text1"></span>
@@ -141,5 +126,6 @@
 
     <!-- js -->
     <script src="js/front.js"></script>
+    <script src="./js/serialize.js"></script>
 </body>
 </html>

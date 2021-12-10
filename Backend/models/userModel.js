@@ -20,7 +20,7 @@ const promisePool = pool.promise();
       const [rows] = await promisePool.query('SELECT * FROM ootd_user WHERE role > 0');
       return rows;
     } catch (e) {
-      console.error("getAllUsers error", e.message);
+      console.error("get all users error", e.message);
     };
   };
   
@@ -34,25 +34,9 @@ const promisePool = pool.promise();
       console.error("insert error", e.message);
     }
   };
-
-  // Check duplicate username in authController
-  // const getAllUsername = async (params) => {
-  //   try {
-  //     const [rows] = await promisePool.execute(
-  //       'SELECT * FROM ootd_user WHERE username = ?',
-  //       [params]
-  //     );
-  //     return rows;
-  //   } catch (e) {
-  //     console.log('error', e.message);
-  //     return [];
-  //   }
-  // };
-  
   
   module.exports = {
     getUserLogin,
     getAllUsers,
     insertUser,
-    // getAllUsername,
   };
