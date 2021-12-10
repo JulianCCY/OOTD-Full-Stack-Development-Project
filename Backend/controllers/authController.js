@@ -6,7 +6,7 @@ const passport = require('passport');
 const { insertUser } = require('../models/userModel');
 const { httpError } = require('../utils/errors');
 
-
+//Login 
 const login = (req, res, next) => {
   // TODO: add passport authenticate
   passport.authenticate('local', { session: false }, (err, user, info) => {
@@ -21,7 +21,7 @@ const login = (req, res, next) => {
         next(httpError('login error', 400));
         return;
       }
-      const token = jwt.sign(user, 'jwt_secret_smash_keyboard');
+      const token = jwt.sign(user, 'secretissecret');
       return res.json({ user, token });
     });
   })(req, res, next);

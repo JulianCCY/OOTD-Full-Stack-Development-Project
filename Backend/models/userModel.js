@@ -3,7 +3,16 @@
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
-  
+  const getUserLogin = async (params) => {
+    try {
+      console.log(params);
+      const [rows] = await promisePool.execute('SELECT * FROM ootd_user WHERE username = ?;', params);
+      return rows;
+    } catch (e) {
+      console.log('error', e.message);
+    }
+  }  
+
   const getAllUsers = async () => {
     //all async will return a promise
     try {
@@ -42,6 +51,7 @@ const promisePool = pool.promise();
   
   
   module.exports = {
+    getUserLogin,
     getAllUsers,
     insertUser,
     // getAllUsername,
