@@ -5,11 +5,14 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
+const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
 const authRoute = require('./routes/authRoute.js');
 
 const { httpError } = require('./utils/errors');
 const passport = require('./utils/pass');
+
+var bcrypt = require('bcryptjs');
 
 
 app.use(cors());
@@ -20,6 +23,12 @@ app.use(passport.initialize());
 
 app.use('/auth', authRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+// app.use('/post', passport.authenticate('jwt', {session: false}), postRoute);
+
+//hash password check
+app.get('/', async (req, res) =>{
+    res.send(await bcrypt.hash('admin', 12));
+});
 
 //Handling error
 app.use((req, res, next)=>{

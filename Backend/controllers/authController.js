@@ -6,19 +6,19 @@ const { insertUser } = require('../models/userModel');
 const { httpError } = require('../utils/errors');
 const bcrypt = require("bcryptjs");
 
-//Login 
+//Login Session
 const login = (req, res, next) => {
   // TODO: add passport authenticate
   passport.authenticate('local', { session: false }, (err, user, info) => {
     console.log('local params', err, user, info);
     if (err || !user) {
-      next(httpError('username / password incorrect', 400));
+      next(httpError('Username / Password Incorrect', 400));
       return;
     }
     
     req.login(user, { session: false }, (err) => {
       if (err) {
-        next(httpError('login error', 400));
+        next(httpError('Login Error', 400));
         return;
       }
       const token = jwt.sign(user, 'secretissecret');
@@ -28,7 +28,7 @@ const login = (req, res, next) => {
 };
 
 
-//Register User
+//Register Session
 const user_post = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
