@@ -37,15 +37,16 @@ const getPost = async(postId, next) => {
     }
 };
   
-//user id ????????
-const insertPost = async (post) =>{
+const insertPost = async (post, userId) =>{
     try{
       const[rows] = await promisePool.execute('INSERT INTO user_post (user_id, image, description, category) VALUES (?,?,?,?)', 
-      [post.user_id, post.image, post.description, post.category]);
+      [userId, post.image, post.description, post.category]);
       console.log('model insert post', rows);
       return rows.insertId;
     }catch(e){
       console.error('model insert post', e.message);
+      const err = httpError('SQL error', 500);
+      next(err);
     };
 };
 

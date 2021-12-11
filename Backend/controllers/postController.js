@@ -25,26 +25,33 @@ const post_get = async (req, res, next) => {
 const post_post = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        const err = httpError("Data not valid", 400);
+        console.log('Post image validation: ', errors.array());
+        const err = httpError("Posting data not valid", 400);
         next(err);
         return;
     }
+
     console.log("add post data", req.body);
-    console.log("filename", req.file);
+    console.log("Posting images", req.file);
 
-    // try {
-    //     const post = req.body;
-    //     post.image = req.file.image;
-    //     post.user_id = req.user_id;
-    //     const id = await insertPost(post);
-    //     res.json({message: `post created with id: ${id}`, post_id: id});
+    if (!req.file) {
+        const err = httpError('Invalid file', 400);
+        next(err);
+        return;
+    }
 
-    // } catch (e) {
-    //     console.log("post_post error", e.message);
-    //     const err = httpError("Error uploading post", 400);
-    //     next(err);
-    //     return;
-    // }
+    try {
+        const post = req.body;
+        const user_id = req.user.user_id;
+        const id = await insertPost(post, user_id);
+        res.json({message: `post created with id: ${id}`, post_id: id});
+
+    } catch (e) {
+        console.log("post_post error", e.message);
+        const err = httpError("Error uploading post", 400);
+        next(err);
+        return;
+    }
 }
 
 // const cat_delete = async (req, res) => {

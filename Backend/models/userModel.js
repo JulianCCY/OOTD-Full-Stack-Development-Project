@@ -11,7 +11,16 @@ const promisePool = pool.promise();
     } catch (e) {
       console.log('error', e.message);
     }
-  }  
+  }
+
+  const getUser = async (userId) => {
+    try{
+      const [rows] = await promisePool.execute('SELECT * FROM ootd_user WHERE user_id = ?', [userId]);
+      return rows;
+    } catch (e) {
+      console.error('model get user by ID', e.message);
+    }
+  };
 
   const getAllUsers = async () => {
     //all async will return a promise
@@ -37,6 +46,7 @@ const promisePool = pool.promise();
   
   module.exports = {
     getUserLogin,
+    getUser,
     getAllUsers,
     insertUser,
   };
