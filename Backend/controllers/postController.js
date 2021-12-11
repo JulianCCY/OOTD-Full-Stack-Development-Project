@@ -3,7 +3,7 @@
 const { getAllPosts, getPost, insertPost } = require('../models/postModel');
 const { httpError } = require('../utils/errors');
 const { validationResult } = require("express-validator");
-// const { makeThumbnail } = require('../utils/resize');
+const { makePostPhoto } = require('../utils/resize');
 // const { getCoordinates } = require('../utils/imageMeta');
 
 const get_all_posts = async (req, res) => {
@@ -35,19 +35,33 @@ const upload_post = async (req, res, next) => {
         next(err);
         return;
     }
+
     console.log("upload post data", req.body);
     console.log("filename", req.file);
+
     if (!req.file) {
         const err = httpError('Invalid file', 400);
         next(err);
         return;
     }
+
     try {
+        const thumb = await makePostPhoto(req.file.path, req.file.filename);
+        console.log('Try thumb', req.file);
+
         const post = req.body;
         post.filename = req.file.filename;
         post.userId = req.user.user_id;
         const id = await insertPost(post);
-        res.json({message: `Post created with id: ${id}`, post_id: id});
+        console.log('Try insert', req.file);
+
+        if (thumb){
+            console.log('After insert', req.file);
+            res.json({message: `Post created with id: ${id}`, post_id: id});
+            return;
+        }
+        
+        
     } catch (e) {
         console.log("upload post error", e.message);
         const err = httpError("Error uploading cat", 400);

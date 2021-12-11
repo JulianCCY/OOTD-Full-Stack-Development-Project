@@ -14,7 +14,7 @@ passport.use(new Strategy(
             const [user] = await getUserLogin(params);
             console.log('Local strategy', user); // result is binary row
             if (!user) {
-            return done(null, false, {message: 'Incorrect email.'});
+            return done(null, false, {message: 'Incorrect username.'});
             }
             if (!await bcrypt.compare(password, user.password)) {
             return done(null, false, {message: 'Incorrect password.'});

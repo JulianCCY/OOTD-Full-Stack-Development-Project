@@ -3,6 +3,9 @@
 const express = require("express");
 const { body } = require("express-validator");
 const multer = require("multer");
+const { get_all_posts, get_post, upload_post } = require("../controllers/postController");
+const router = express.Router();
+
 const fileFilter = (req, file, cb) => {
     if(file.mimetype.includes("image")) {
         cb(null, true)
@@ -11,8 +14,6 @@ const fileFilter = (req, file, cb) => {
     }
 };
 const upload = multer({dest: "./uploads/", fileFilter});
-const { get_all_posts, get_post, upload_post } = require("../controllers/postController");
-const router = express.Router();
 
 router.route('/')
     .get(get_all_posts)
