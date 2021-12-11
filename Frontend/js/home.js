@@ -1,5 +1,5 @@
 'use strict';
-const url = 'https://localhost:8000'; // change url when uploading to server
+const url = 'http://localhost:3000'; // change url when uploading to server
 
 // Search Bar
 var toggle = 0;
@@ -30,7 +30,8 @@ const createPosts = (posts) => {
     posts.forEach((post) => {
       // create li with DOM methods
       const img = document.createElement('img');
-      img.src = url + '/thumbnails/' + post.filename;
+      // img.src = url + '/thumbnails/' + post.image;
+      img.src = url + '/' + post.image;
       img.alt = post.id;
       img.classList.add('resp');
   
@@ -45,7 +46,7 @@ const createPosts = (posts) => {
     //   h2.innerHTML = cat.name;
   
       const p1 = document.createElement('p');
-      p1.innerHTML = `${post.owner}`;
+      p1.innerHTML = `${post.username}`;
   
       const p2 = document.createElement('p');
       p2.innerHTML = `${post.likes} likes`;
@@ -55,10 +56,11 @@ const createPosts = (posts) => {
   
       const li = document.createElement('li');
       li.classList.add('light-border');
+      p1.classList.add("username");
   
     //   li.appendChild(h2);
-      li.appendChild(figure);
       li.appendChild(p1);
+      li.appendChild(figure);
       li.appendChild(p2);
       li.appendChild(p3);
       ul.appendChild(li);
@@ -96,7 +98,7 @@ const createPosts = (posts) => {
           }
         });
   
-        // li.appendChild(modButton);
+        li.appendChild(modButton);
         li.appendChild(delButton);
       }
     });

@@ -415,6 +415,12 @@ body {
 .a3 span {
   color: rgb(210, 70, 70);
 }
+.a4,
+.a5 {
+  background: #2e2e3a;
+  border-style: groove;
+  border-color: transparent;
+}
 .a4 {
   position: relative;
 }

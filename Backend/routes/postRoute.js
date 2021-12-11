@@ -2,24 +2,26 @@
 
 const express = require("express");
 const { body } = require("express-validator");
-const { get_categories, post_post, post_get } = require("../controllers/postController");
+const multer = require("multer");
+const fileFilter = (req, file, cb) => {
+    if(file.mimetype.includes("image")) {
+        cb(null, true)
+    } else {
+        cb(null, false);
+    }
+};
+const upload = multer({dest: "./uploads/", fileFilter});
+const { get_all_posts, get_post, upload_post } = require("../controllers/postController");
 const router = express.Router();
-const multer = require('multer');
-
-const upload = multer({dest: './uploads/'});
 
 router.route('/')
-    .get(get_categories)
+    .get(get_all_posts)
     .post(upload.single('post'),
         body('description').notEmpty(),
         body('category').isNumeric(),
-        post_post);
+        upload_post);
 
 router.route('/:postId')
-    .get(post_get);
-  
-// router.route("/:postId")
-// .get(get_post)
-// .delete(delete_post)
+    .get(get_post);
 
 module.exports = router;

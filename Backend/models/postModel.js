@@ -13,14 +13,11 @@ const getAllCategories = async () => {
 }
 
 const getAllPosts = async () => {
-    //all async will return a promise
     try {
-      // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
       const [rows] = await promisePool.query('SELECT post_id, ootd_user.username, image, description, categories.cid, categories.category FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid ;');
       return rows;
     } catch (e) {
-      console.error('error', e.message);
-      const err = httpError('Sql error', 500);
+      console.error('error getting all posts', e.message);
     };
 };
 
@@ -29,24 +26,22 @@ const getPost = async(postId, next) => {
     try{
         //const[rows] = await promisePool.query(`SELECT * FROM wop_cat WHERE cat_id=${catId}`);
         const[rows] = await promisePool.execute('SELECT post_id, ootd_user.username, image, description, categories.cid, categories.category FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid WHERE post_id = ?;', [postId]);
-        console.log('get by id result', rows);
         return rows[0];
     } catch (e){
+      console.log("error getting post", e.message);
       const err = httpError('Sql error', 500);
       next(err);
     }
 };
   
-const insertPost = async (post, userId) =>{
+const insertPost = async (post) =>{
     try{
       const[rows] = await promisePool.execute('INSERT INTO user_post (user_id, image, description, category) VALUES (?,?,?,?)', 
-      [userId, post.image, post.description, post.category]);
+      [post.userId, post.filename, post.description, post.category]);
       console.log('model insert post', rows);
       return rows.insertId;
     }catch(e){
       console.error('model insert post', e.message);
-      const err = httpError('SQL error', 500);
-      next(err);
     };
 };
 
@@ -79,9 +74,6 @@ const insertPost = async (post, userId) =>{
 //       console.error('model update cat', e.message);
 //     };
 // };
-  
-
-  
 
 module.exports = {
   getAllCategories,

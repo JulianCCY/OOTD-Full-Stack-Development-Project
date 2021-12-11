@@ -5,9 +5,10 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
+const authRoute = require('./routes/authRoute.js');
 const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
-const authRoute = require('./routes/authRoute.js');
+const categoryRoute = require('./routes/categoryRoute');
 
 const { httpError } = require('./utils/errors');
 const passport = require('./utils/pass');
@@ -22,16 +23,12 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 app.use(passport.initialize());
 
 app.use(express.static('uploads'));
+app.use("/thumbnails",express.static("thumbnails"));
 
 app.use('/auth', authRoute);
 app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
-// app.use('/post', passport.authenticate('jwt', {session: false}), postRoute);
-app.use('/post', postRoute)
-
-//hash password check
-// app.get('/', async (req, res) =>{
-//     res.send(await bcrypt.hash('admin', 12));
-// });
+app.use('/post', passport.authenticate('jwt', {session: false}), postRoute);
+app.use('/category', passport.authenticate('jwt', {session: false}), categoryRoute);
 
 //Handling error
 app.use((req, res, next)=>{

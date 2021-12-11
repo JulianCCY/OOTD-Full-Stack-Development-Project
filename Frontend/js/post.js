@@ -22,7 +22,12 @@ const categoryOptions = (categories) => {
 // get categories options
 const getCategories = async () => {
   try {
-    const response = await fetch(url + '/post');
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + '/category', options);
     const categories = await response.json();
     categoryOptions(categories);
   } catch (e) {

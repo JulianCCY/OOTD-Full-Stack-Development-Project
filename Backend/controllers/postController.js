@@ -1,19 +1,24 @@
 'use strict';
 
-const { getAllCategories, insertPost } = require('../models/postModel');
+const { getAllPosts, getPost, insertPost } = require('../models/postModel');
 const { httpError } = require('../utils/errors');
 const { validationResult } = require("express-validator");
 // const { makeThumbnail } = require('../utils/resize');
 // const { getCoordinates } = require('../utils/imageMeta');
 
-const get_categories = async (req, res) => {
-    const categories = await getAllCategories();
-    console.log("all categories", categories);
-    res.json(categories);
-};
+const get_all_posts = async (req, res) => {
+    const posts = await getAllPosts();
+    console.log("all posts", posts);
+    if (posts.length > 0) {
+        res.json(posts);
+    } else {
+        const err = httpError("Posts not found", 404);
+        next(err);
+    }
+  };
 
-const post_get = async (req, res, next) => {
-    const post = await get(req.params.postId, next)
+const get_post = async (req, res, next) => {
+    const post = await getPost(req.params.postId, next)
     if (post) {
         res.json({post});
         return;
@@ -22,7 +27,7 @@ const post_get = async (req, res, next) => {
     next(err);
 };
 
-const post_post = async (req, res, next) => {
+const upload_post = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log('Post image validation: ', errors.array());
@@ -30,25 +35,22 @@ const post_post = async (req, res, next) => {
         next(err);
         return;
     }
-
-    console.log("add post data", req.body);
-    console.log("Posting images", req.file);
-
+    console.log("upload post data", req.body);
+    console.log("filename", req.file);
     if (!req.file) {
         const err = httpError('Invalid file', 400);
         next(err);
         return;
     }
-
     try {
         const post = req.body;
-        const user_id = req.user.user_id;
-        const id = await insertPost(post, user_id);
-        res.json({message: `post created with id: ${id}`, post_id: id});
-
+        post.filename = req.file.filename;
+        post.userId = req.user.user_id;
+        const id = await insertPost(post);
+        res.json({message: `Post created with id: ${id}`, post_id: id});
     } catch (e) {
-        console.log("post_post error", e.message);
-        const err = httpError("Error uploading post", 400);
+        console.log("upload post error", e.message);
+        const err = httpError("Error uploading cat", 400);
         next(err);
         return;
     }
@@ -69,7 +71,7 @@ const post_post = async (req, res, next) => {
 // }
 
 module.exports = {
-    get_categories,
-    post_post,
-    post_get,
+    get_all_posts,
+    get_post,
+    upload_post,
 };
