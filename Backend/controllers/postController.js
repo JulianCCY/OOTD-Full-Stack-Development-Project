@@ -1,6 +1,6 @@
 'use strict';
 
-const { getAllPosts, getPost, insertPost, deletePost, insertLike } = require('../models/postModel');
+const { getAllPosts, getPost, insertPost, deletePost, manageLikes } = require('../models/postModel');
 const { httpError } = require('../utils/errors');
 const { validationResult } = require("express-validator");
 const { makePostPhoto } = require('../utils/resize');
@@ -66,15 +66,15 @@ const upload_post = async (req, res, next) => {
     }
 }
 
+const delete_post = async (req, res) => {
+    const deleted = await deletePost(req.params.postId, req.user.user_id, req.user.role);
+    res.json({message: `Post with id: ${deleted} has been deleted.`});
+}
+
 const like_post = async (req, res, next) =>{
     const like = await insertLike(req.user.user_id, req.params.postId);
     console.log('give a like', like);
     //not yet finish....
-}
-
-const delete_post = async (req, res) => {
-    const deleted = await deletePost(req.params.postId, req.user.user_id, req.user.role);
-    res.json({message: `Post with id: ${deleted} has been deleted.`});
 }
 
 // const cat_update = async (req, res) => {

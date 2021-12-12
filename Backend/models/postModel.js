@@ -36,17 +36,21 @@ const getPost = async(postId, next) => {
 };
 
 const deletePost = async (postId, user_id, role) => {
-  let sql = 'DELETE FROM user_post WHERE post_id = ? AND user_id = ?';
-  let params = [postId, user_id];
+  //after finishing profile, let user delete own post
+  let sql1 = 'Delete from post_likes where post_likes.post_id = ?;';
+  let sql2 = 'Delete from user_post where user_post.post_id = ? AND user_post.user_id;';
+  let params1 = [postId]
+  let params2 = [postId, user_id];
   if (role === 0){
-    sql = 'DELETE FROM user_post WHERE post_id = ?';
-    params = [postId];
+    sql2 = 'Delete from user_post where user_post.post_id = ?;';
+    params2 = [postId];
   }
   try {
-    const[rows] = await promisePool.execute(sql, params);
-    return rows.affectedRows === 1;
+    const[rows1] = await promisePool.execute(sql1, params1);
+    const[rows2] = await promisePool.execute(sql2, params2);
+    return rows1.affectedRows === 1, rows2.affectedRows === 1;
   } catch (e) {
-    console.error('error deleteing post in model', e.message);
+    console.error('error deleteing post in model:', e.message);
   }
 };
 
@@ -75,27 +79,35 @@ const insertPost = async (post) =>{
 };
 
 
-const insertLike = async (userId, postId, next) => {
+const manageLikes = async (userId, postId, next) => {
   try {
-    const [rows] = await promisePool.execute('INSERT INTO post_likes (user_id, post_id) VALUES (?,?)', [userId, postId]);
-    console.log('Give a like to post', rows);
+    const [check] = await promisePool.execute('SELECT COUNT(*) FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
+    if (check[0] === 0){
+      const [rows] = await promisePool.execute('INSERT INTO post_likes (user_id, post_id) VALUES (?,?)', [userId, postId]);
+      console.log('Give a like to post', rows);
+    }
+    else {
+      const [rows] = await promisePool.execute('DELETE FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
+      console.log('Remove a like to post', rows);
+    }
+    
   } catch (e){
-    console.error('model add likes', e.message);
+    console.error('error managing likes', e.message);
     const err = httpError('Sql error', 500);
     next(err);
   }
 }
 
-const deleteLike = async (userId, postId) => {
-  let sql = 'DELETE FROM post_likes WHERE user_id = ? AND post_id = ?';
-  let params = [userId, postId];
-  try {
-    const [rows] = await promisePool.execute(sql, params);
-    return rows.affectedRows === 1;
-  } catch (e){
-    console.error('model delete like', e.message);
-  }
-}
+// const deleteLike = async (userId, postId) => {
+//   let sql = 'DELETE FROM post_likes WHERE user_id = ? AND post_id = ?';
+//   let params = [userId, postId];
+//   try {
+//     const [rows] = await promisePool.execute(sql, params);
+//     return rows.affectedRows === 1;
+//   } catch (e){
+//     console.error('model delete like', e.message);
+//   }
+// }
   
 // const updatePost = async (cat) => {
 //     let sql = 'UPDATE wop_cat SET name = ?, weight = ? ,birthdate = ? WHERE cat_id = ? AND owner = ?';
@@ -119,7 +131,6 @@ module.exports = {
   deletePost,
   getLikeOfPost,
   insertPost,
-  insertLike,
-  deleteLike,
+  manageLikes,
 };
   
