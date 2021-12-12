@@ -74,7 +74,7 @@ const delete_post = async (req, res) => {
 
 const like_post = async (req, res, next) =>{
     const like = await insertLike(req.user.user_id, req.params.postId);
-    console.log('give a like', like);
+    
     //not yet finish....
 }
 
