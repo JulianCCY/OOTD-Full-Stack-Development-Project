@@ -6,7 +6,7 @@ const { validationResult } = require("express-validator");
 const { makePostPhoto } = require('../utils/resize');
 // const { getCoordinates } = require('../utils/imageMeta');
 
-const get_all_posts = async (req, res) => {
+const get_all_posts = async (req, res, next) => {
     const posts = await getAllPosts();
     console.log("all posts", posts);
     if (posts.length > 0) {
@@ -14,6 +14,7 @@ const get_all_posts = async (req, res) => {
     } else {
         const err = httpError("Posts not found", 404);
         next(err);
+        return;
     }
   };
 

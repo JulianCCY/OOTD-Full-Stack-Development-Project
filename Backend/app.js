@@ -30,6 +30,12 @@ app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
 app.use('/post', passport.authenticate('jwt', {session: false}), postRoute);
 app.use('/category', passport.authenticate('jwt', {session: false}), categoryRoute);
 
+
+app.get('/', async(req, res) => {
+      res.send(await bcrypt.hash('admin', 12));
+});
+
+
 //Handling error
 app.use((req, res, next)=>{
     const err = httpError('Not Found', 404);
