@@ -1,6 +1,6 @@
 'use strict';
 
-const { getAllPosts, getPost, insertPost } = require('../models/postModel');
+const { getAllPosts, getPost, insertPost, insertLike } = require('../models/postModel');
 const { httpError } = require('../utils/errors');
 const { validationResult } = require("express-validator");
 const { makePostPhoto } = require('../utils/resize');
@@ -68,6 +68,12 @@ const upload_post = async (req, res, next) => {
         next(err);
         return;
     }
+}
+
+const like_post = async (req, res, next) =>{
+    const like = await insertLike(req.user.user_id, req.params.postId);
+    console.log('give a like', like);
+    //not yet finish....
 }
 
 // const cat_delete = async (req, res) => {
