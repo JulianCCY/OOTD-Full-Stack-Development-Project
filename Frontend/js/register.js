@@ -17,5 +17,5 @@ registerForm.addEventListener('submit', async (evt) => {
     const json = await response.json();
     console.log(json);
     alert(json.message);
-    // location.href = 'front.html';
+    location.href = 'front.html';
   });

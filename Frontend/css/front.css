@@ -8,6 +8,7 @@ body {
     padding: 0;
     margin: 0;
     scroll-behavior: smooth;
+    font-size: 16px;
   }
 
 .light-border {
@@ -438,6 +439,19 @@ body {
   right: 100px;
   font-size:calc(50px + 6vw);
 }
+.its {
+  font-size:calc(3em + 4vw);
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+#it2 {
+  text-align: center;
+}
+#it3 {
+  text-align: end;
+}
 .a5 .c1 {
   display: flex;
 }
@@ -448,17 +462,15 @@ body {
 .a5 .c1 p {
   position: relative;
   width: 500px;
-  height: 500px;
-  margin-top: 150px;
-  margin-left: 150px;
-  font-size:calc(20px + 1vw);
+  margin-left: 2em;
+  font-size:calc(1em + 4vw);
 }
 .a5 .c2 {
   display: flex;
   flex-direction: row-reverse;
 }
 .a5 .c2 img {
-  width: 30%;
+  width: 35%;
   margin-right: 7%;
   transform: translateY(-50%);
 }
@@ -466,23 +478,72 @@ body {
   display: flex;
 }
 .a5 .c3 img {
-  width: 50%;
-  margin-left: 5%;
-  transform: translateY(-40%);
+  width: 40%;
+  margin-left: 10%;
+  transform: translateY(-50%);
 }
-.a5 .c3 p {
+.a5 .c3 div {
+  width: 35%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  width: 500px;
-  height: 500px;
-  margin-left: 100px;
-  font-size:calc(20px + 1vw);
+}
+.a5 .c3 div p {
+  text-align: center;
+  font-size:calc(1em + 4vw);
+  transform: translateY(-200%);
+}
+.a5 .c3 div img {
+  width: 100%;
+  position: absolute;
+  bottom: 10%;
+  right: -10%;
+  transform: translateY(0%);
 }
 .a5 .c4 {
   display: flex;
-  flex-direction: row-reverse;
+  margin-left: 5%;
+}
+.a5 .c4 div {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-40%);
+}
+.a5 .c4 div p {
+  font-size:calc(1em + 4vw);
+}
+.a5 .c4 div img {
+  padding-top: 0%;
+  width: 90%;
+  height: auto;
 }
 .a5 .c4 img {
-  width: 30%;
-  margin-right: 5%;
-  transform: translateY(-100%);
+  padding-top: 10%;
+  width: 45%;
+  height: 1%;
+}
+.a5 .c5 {
+  display: flex;
+}
+.a5 .c5 img {
+  width: 35%;
+  margin-left: 5%;
+  transform: translateY(-20%);
+}
+.a5 .c5 p {
+  font-size:calc(1em + 4vw);
+  margin-top: 10%;
+  margin-left: 5%;
+}
+.a5 .c6 img {
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.a5 .c6 p {
+  font-size:calc(1em + 4vw);
+  text-align: center;
 }

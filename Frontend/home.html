@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css/home.css" rel="stylesheet">
     <!-- icons -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/18835e3c93.js" crossorigin="anonymous"></script>
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,16 +56,16 @@
                 </span>
                 </a>
             </li>
-            <li><a class="link profile" href="profile.html">
+            <li><a class="link profile">
                 <span class="wrap">
-                    <div class="link-container">
+                    <div class="link-container" id="profile">
                         <span class="link-title1 title">Profile</span>
                         <span class="link-title2 title">Profile</span>
                     </div>
                 </span>
                 </a>
             </li>
-            <li><a class="link logout" href="logout.html">
+            <!-- <li><a class="link logout" href="logout.html">
                 <span class="wrap">
                     <div class="link-container">
                         <span class="link-title1 title">Logout</span>
@@ -73,9 +73,15 @@
                     </div>
                 </span>
                 </a>
-            </li>
+            </li> -->
+            <ul class="profile-list">
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href=""><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
         </ul>
     </nav>
+    
 
     <div class="posts-container">
         <ul id="list">

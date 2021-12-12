@@ -35,6 +35,21 @@ const getPost = async(postId, next) => {
     }
 };
 
+const deletePost = async (postId, user_id, role) => {
+  let sql = 'DELETE FROM user_post WHERE post_id = ? AND user_id = ?';
+  let params = [postId, user_id];
+  if (role === 0){
+    sql = 'DELETE FROM user_post WHERE post_id = ?';
+    params = [postId];
+  }
+  try {
+    const[rows] = await promisePool.execute(sql, params);
+    return rows.affectedRows === 1;
+  } catch (e) {
+    console.error('error deleteing post in model', e.message);
+  }
+};
+
 const getLikeOfPost = async (postId) => {
   try {
     const [rows] = await promisePool.execute('SELECT COUNT (*) as likes FROM post_likes WHERE post_id = ?', [postId]);
@@ -81,21 +96,6 @@ const deleteLike = async (userId, postId) => {
     console.error('model delete like', e.message);
   }
 }
-
-// const deletePost = async (catId, user_id, role) => {
-//     let sql = 'DELETE FROM wop_cat WHERE cat_id = ? AND owner = ?';
-//     let params = [catId, user_id];
-//     if (role === 0){
-//       sql = 'DELETE FROM wop_cat WHERE cat_id = ?';
-//       params = [catId];
-//     }
-//     try {
-//       const[rows] = await promisePool.execute(sql, params);
-//       return rows.affectedRows === 1;
-//     } catch (e) {
-//       console.error('model delete cat', e.message);
-//     }
-// };
   
 // const updatePost = async (cat) => {
 //     let sql = 'UPDATE wop_cat SET name = ?, weight = ? ,birthdate = ? WHERE cat_id = ? AND owner = ?';
@@ -116,6 +116,7 @@ module.exports = {
   getAllCategories,
   getAllPosts,
   getPost,
+  deletePost,
   getLikeOfPost,
   insertPost,
   insertLike,

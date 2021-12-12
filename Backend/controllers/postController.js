@@ -1,6 +1,6 @@
 'use strict';
 
-const { getAllPosts, getPost, insertPost, insertLike } = require('../models/postModel');
+const { getAllPosts, getPost, insertPost, deletePost, insertLike } = require('../models/postModel');
 const { httpError } = require('../utils/errors');
 const { validationResult } = require("express-validator");
 const { makePostPhoto } = require('../utils/resize');
@@ -48,23 +48,19 @@ const upload_post = async (req, res, next) => {
     try {
         const thumb = await makePostPhoto(req.file.path, req.file.filename);
         console.log('Try thumb', req.file);
-
         const post = req.body;
         post.filename = req.file.filename;
         post.userId = req.user.user_id;
         const id = await insertPost(post);
         console.log('Try insert', req.file);
-
         if (thumb){
             console.log('After insert', req.file);
-            res.json({message: `Post created with id: ${id}`, post_id: id});
+            res.json({message: `Your post has been uploaded with id: ${id}`, post_id: id});
             return;
         }
-        
-        
     } catch (e) {
         console.log("upload post error", e.message);
-        const err = httpError("Error uploading cat", 400);
+        const err = httpError("Error uploading post", 400);
         next(err);
         return;
     }
@@ -76,10 +72,10 @@ const like_post = async (req, res, next) =>{
     //not yet finish....
 }
 
-// const cat_delete = async (req, res) => {
-//     const deleted = await deleteCat(req.params.catId, req.user.user_id, req.user.role);
-//     res.json({message: `Cat deleted: ${deleted}`});
-// }
+const delete_post = async (req, res) => {
+    const deleted = await deletePost(req.params.postId, req.user.user_id, req.user.role);
+    res.json({message: `Post with id: ${deleted} has been deleted.`});
+}
 
 // const cat_update = async (req, res) => {
 //     req.body.id = req.params.catId;
@@ -94,4 +90,5 @@ module.exports = {
     get_all_posts,
     get_post,
     upload_post,
+    delete_post,
 };

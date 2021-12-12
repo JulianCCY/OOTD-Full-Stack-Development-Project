@@ -9,8 +9,16 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
+    font-size: 16px;
+}
+nav {
+    background-color: #2e2e3a;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+    position: sticky;
+    top: 0;
 }
 nav ul {
+    margin-top: 0;
     list-style-type: none;
     display: flex;
     justify-content: space-around;
@@ -59,32 +67,56 @@ nav ul li a {
 .fadeOut {
     opacity: 0;
     transition: 2s;
+    pointer-events: none;
 }
 .post {
     position: absolute;
-    right: 25%;
+    right: 15%;
 }
 .profile {
     position: absolute;
-    right: 15%;
+    right: 5%;
 }
-.logout {
+.profile-list {
+    all: unset;
+    list-style: none;
     position: absolute;
     right: 5%;
+    top: 50%;
+    opacity: 0;
+    pointer-events: none;
+    text-align: end;
+}
+.profile-list li a {
+    text-decoration: none;
+}
+.down {
+    transform: translateY(30%);
+    opacity: 1;
+    transition: 2s;
+    pointer-events: all;
+}
+.up {
+    transform: translateY(-20%);
+    opacity: 0;
+    transition: 2s;
+    pointer-events: none;
 }
 
 /* Nav effects */
 .link {
+    padding-top: 5px;
     height: 30px;
     align-items: center;
-    color: #000;
+    color: #f8f8f8;
     text-decoration: none;
     display: flex;
+    
 }
 .wrap {
     position: relative;
     padding: 0;
-    height: 22px;
+    height: 20px;
     overflow: hidden;
 }
 .link-container {
@@ -92,9 +124,10 @@ nav ul li a {
 }
 .title {
     display: block;
-    font-size: 20px;
+    font-size: 1.5em;
     line-height: 20px;
     transition: transform 0.5s ease;
+    cursor: pointer;
 }
 .link-title1 {
     transform-origin: right center;
@@ -121,27 +154,29 @@ nav ul li a {
     margin-right: auto;
 }
 .light-border {
-    border:1px solid #000;
-    /* padding: 1em; */
+    border: 2px solid #2e2e3a;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
   }
 .posts-container {
-    width: 30%;
+    width: 725px;
     display: block;
     margin: auto;
-    /* border-style: groove; */
 }
 #list {
     margin: 0;
     padding: 0;
     list-style-type: none;
     display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
+    flex-wrap: wrap;
   }
   
 #list li {
-    width: 100%;
+    position: relative;
+    margin: 5px;
+    padding: 0.5em;
+    min-width: 350px;
+    min-height: 500px;
     margin-bottom: 1em;
   }
 #list li p {
@@ -151,8 +186,20 @@ nav ul li a {
     font-weight: bold;
     font-size: calc(10px + 0.8vw);
 }
-button {
-  display: inline-block;
-  width: 100%;
-  margin: 0.5em 0;
+.likes {
+    cursor: pointer;
+}
+.delete-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(25%, -25%);
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 10, 80, 0.8);
+    color: #f8f8f8;
+    cursor: pointer;
 }

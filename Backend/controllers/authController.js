@@ -42,7 +42,7 @@ const user_post = async (req, res, next) => {
     req.body.passwd = bcrypt.hashSync(req.body.passwd, 12);
     const user = req.body;
     const id = await insertUser(user);
-    res.json({message: `User created with id: ${id}`});
+    res.json({message: `You have registered an account with id: ${id}`});
 
   } catch (e) {
     console.log("user_post error", e.message);

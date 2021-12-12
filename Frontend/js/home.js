@@ -6,7 +6,6 @@ var toggle = 0;
 const search = document.querySelector("#search");
 const searchBar = document.querySelector(".searchBar");
 search.addEventListener('click', () => {
-    console.log("clicked");
     if (toggle === 0) {
         searchBar.classList.add("fadeInLeft");
         searchBar.classList.remove("fadeOut");
@@ -17,6 +16,23 @@ search.addEventListener('click', () => {
         searchBar.classList.remove("fadeInLeft");
         toggle = 0;
     }
+});
+
+// Profile 
+var profileToggle = 0;
+const profile = document.querySelector("#profile");
+const profileList = document.querySelector(".profile-list");
+profile.addEventListener("click", () => {
+  if (profileToggle === 0) {
+    profileList.classList.add("down");
+    profileList.classList.remove("up");
+    profileToggle = 1;
+  }
+  else {
+    profileList.classList.add("down");
+    profileList.classList.add("up");
+    profileToggle = 0;
+  }
 });
 
 // Create posts
@@ -49,7 +65,7 @@ const createPosts = (posts) => {
       p1.innerHTML = `${post.username}`;
   
       const p2 = document.createElement('p');
-      p2.innerHTML = `${post.likes} likes`;
+      p2.innerHTML = `<i class="far fa-heart"></i> ${post.likes} likes`;
   
       const p3 = document.createElement('p');
       p3.innerHTML = `${post.description}`;
@@ -57,6 +73,7 @@ const createPosts = (posts) => {
       const li = document.createElement('li');
       li.classList.add('light-border');
       p1.classList.add("username");
+      p2.classList.add("likes");
   
     //   li.appendChild(h2);
       li.appendChild(p1);
@@ -64,6 +81,16 @@ const createPosts = (posts) => {
       li.appendChild(p2);
       li.appendChild(p3);
       ul.appendChild(li);
+
+      // NOT WORKING YET
+      p2.addEventListener("click", () => {
+        if (p2.innerHTML.classList.includes("far")) {
+          p2.innerHTML.classList.replace("far fa-heart", "fas fa-heart");
+        }
+        else {
+          p2.innerHTML.classList.replace("fas fa-heart", "far fa-heart");
+        }
+      });
 
         // if (user.role === 0 || user.user_id === post.owner) {
         // link to modify form
@@ -73,11 +100,11 @@ const createPosts = (posts) => {
         // modButton.classList.add('button');
   
         // admin delete post
-        if (user.role === 1) {
+        if (user.role === 0) {
         // delete selected cat
         const delButton = document.createElement('button');
-        delButton.innerHTML = 'Delete';
-        delButton.classList.add('button');
+        delButton.innerHTML = '<i class="fas fa-trash"></i>';
+        delButton.classList.add('delete-button');
         delButton.addEventListener('click', async () => {
           const fetchOptions = {
             method: 'DELETE',
@@ -97,8 +124,6 @@ const createPosts = (posts) => {
             console.log(e.message);
           }
         });
-  
-        li.appendChild(modButton);
         li.appendChild(delButton);
       }
     });
