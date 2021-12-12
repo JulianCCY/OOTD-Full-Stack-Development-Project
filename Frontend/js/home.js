@@ -103,7 +103,7 @@ const createPosts = (posts) => {
         if (user.role === 0) {
         // delete selected cat
         const delButton = document.createElement('button');
-        delButton.innerHTML = '<i class="fas fa-trash"></i>';
+        delButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
         delButton.classList.add('delete-button');
         delButton.addEventListener('click', async () => {
           const fetchOptions = {

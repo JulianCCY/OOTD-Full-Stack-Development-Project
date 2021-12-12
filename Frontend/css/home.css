@@ -93,13 +93,13 @@ nav ul li a {
 .down {
     transform: translateY(30%);
     opacity: 1;
-    transition: 2s;
+    transition: 0.5s;
     pointer-events: all;
 }
 .up {
     transform: translateY(-20%);
     opacity: 0;
-    transition: 2s;
+    transition: 0.5s;
     pointer-events: none;
 }
 
@@ -190,16 +190,14 @@ nav ul li a {
     cursor: pointer;
 }
 .delete-button {
+    padding-top: 5px;
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(25%, -25%);
     display: inline-block;
-    width: 25px;
-    height: 25px;
     border: none;
-    border-radius: 50%;
-    background-color: rgba(255, 10, 80, 0.8);
-    color: #f8f8f8;
+    background-color: transparent;
+    color: black;
     cursor: pointer;
+    font-size: calc(10px + 0.8vw);
 }
