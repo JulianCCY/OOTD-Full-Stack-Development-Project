@@ -167,7 +167,7 @@ nav ul li a {
     box-sizing: border-box;
   }
 .posts-container {
-    width: 725px;
+    width: 750px;
     display: block;
     margin: auto;
 }
@@ -176,6 +176,7 @@ nav ul li a {
     padding: 0;
     list-style-type: none;
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 #list hr {
@@ -186,7 +187,7 @@ nav ul li a {
 }
 #list li {
     position: relative;
-    margin: 5px;
+    margin: 0.3em;
     padding: 0.3em;
     width: 350px;
     height: 500px;
