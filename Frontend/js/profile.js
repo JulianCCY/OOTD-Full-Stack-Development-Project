@@ -18,7 +18,7 @@ search.addEventListener('click', () => {
     }
 });
 
-// Profile 
+// Nav Profile 
 var profileToggle = 0;
 const profile = document.querySelector("#profile");
 const profileList = document.querySelector(".profile-list");
@@ -33,4 +33,19 @@ profile.addEventListener("click", () => {
     profileList.classList.add("up");
     profileToggle = 0;
   }
+});
+
+// Edit Profile
+const editButton = document.querySelector("#editButton");
+const editForm = document.querySelector(".edit-profile");
+const closeButton = document.querySelector("#closeButton");
+const submitButton = document.querySelector("#confirmButton");
+
+editButton.addEventListener("click", () => {
+    editForm.classList.add("open-form");
+    editForm.classList.remove("close-form");
+});
+closeButton.addEventListener("click", () => {
+    editForm.classList.add("close-form");
+    editForm.classList.remove("open-form");
 });

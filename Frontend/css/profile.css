@@ -146,10 +146,10 @@ nav ul li a {
     transform: rotate(0);
 }
 
-/* Profile */
+/* Profile section */
 .profile-section {
     display: flex;
-    border-style: groove;
+    /* border-style: groove; */
 }
 .profile-pic-container {
     width: 20%;
@@ -170,9 +170,9 @@ nav ul li a {
     height: 3em;
     width: 8em;
     color: #f8f8f8;
-    background: rgba(29,46,45,1);
+    background: #2e2e3a;
     border: transparent;
-    border-radius: 1em;
+    border-radius: 0.5em;
     cursor: pointer;
 }
 .profile-pic-container button:hover {
@@ -181,13 +181,92 @@ nav ul li a {
 }
 .profile-info {
     width: 80%;
-    border-style: groove;
+    /* border-style: groove; */
+    position: relative;
 }
 .username {
+    margin-top: 1em;
     font-size: calc(1em + 1.5vw);
 }
 .profile-info div {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
     display: flex;
-    justify-content: space-evenly;
-    border-style: groove;
+    /* border-style: groove; */
+}
+.likes {
+    margin-right: 5em;
+}
+
+/* Modify User Form */
+.edit-container {
+    width: 20%;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.edit-profile {
+    width: 100%;
+    position: relative;
+    border: 2px solid #2e2e3a;
+    border-radius: 0.2em;
+    opacity: 0;
+    background-color: #2e2e3a;
+    color: #f8f8f8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.edit-profile h2 {
+    text-align: center;
+}
+.edit-profile form {
+    display: block;
+    margin: auto;
+    width: 75%;
+}
+.edit-profile form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+.edit-profile form div input {
+    /* border-style: solid; */
+    padding: 0.2em;
+    border: 1px solid transparent;
+}
+#confirmButton {
+    width: 50%;
+    height: 2em;
+    display: block;
+    margin: auto;
+    margin-bottom: 1em;
+    color: #f8f8f8;
+    background: #2e2e3a;
+    border: transparent;
+    border: 1px solid #f8f8f8;
+    border-radius: 0.3em;
+    cursor: pointer;
+}
+#confirmButton:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: 0.2s;
+}
+#closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+.open-form {
+    transform: translateY(30%);
+    opacity: 1;
+    transition: 0.5s;
+    pointer-events: all;
+}
+.close-form {
+    opacity: 0;
+    transition: 0.5s;
+    pointer-events: none;
 }

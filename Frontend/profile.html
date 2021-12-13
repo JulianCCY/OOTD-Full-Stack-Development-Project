@@ -43,7 +43,7 @@
                             <span class="link-title1 title">Search</span>
                             <span class="link-title2 title">Search</span>
                         </div>
-                        <input class="searchBar" type="text" name="searchBar" placeholder="Username or category">
+                        <input class="searchBar" type="text" name="searchBar" placeholder="Users">
                     </span>
                 </a>
             </li>
@@ -72,10 +72,12 @@
             </ul>
         </ul>
     </nav>
+
+    <!-- Profile -->
     <section class="profile-section">
         <div class="profile-pic-container">
             <img class="profile-pic" src="img/DefaultProfilePic.png">
-            <button>Edit profile</button>
+            <button id="editButton">Edit profile</button>
             <button>Settings</button>
         </div>
         <div class="profile-info">
@@ -86,6 +88,41 @@
             </div>
         </div>
     </section>
+
+    <hr>
+
+    <!-- Modify user -->
+    <section class="edit-container">
+        <div class="edit-profile">
+            <h2>Edit profile</h2>
+            <form id="editProfileForm" action="http://localhost:3000/user/user:id" method="put">
+                <div class="file">
+                    <label>Profile picture:</label>
+                    <input type="file" required name="profile_pic" accept="image/*" placeholder="Choose file">
+                </div>
+                <div>
+                    <label>Username:</label>
+                    <input autocomplete="off" type="text" required name="username" placeholder="Username">
+                </div>
+                <div>
+                    <label>Email:</label>
+                    <input autocomplete="off" type="text" required name="email" placeholder="Email">
+                </div>
+                <div>
+                    <label>New password:</label>
+                    <input type="password" required name="passwd" placeholder="Password" />
+                </div>
+                <div>
+                    <label>Profile description:</label>
+                    <input autocomplete="off" type="text" required name="profile" placeholder="Description" />
+                </div>
+                <button id="confirmButton" type="submit">Confirm</button>
+                <i class="fas fa-times" id="closeButton"></i>
+            </form>
+        </div>
+    </section>
+
+    <!-- Posts -->
     <section class="posts-section">
         <ul id="list">
             <!-- js creates post here -->
