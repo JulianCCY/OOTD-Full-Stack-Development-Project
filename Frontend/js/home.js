@@ -57,9 +57,10 @@ const createPosts = (posts) => {
       });
   
       const figure = document.createElement('figure').appendChild(img);
-  
-    //   const h2 = document.createElement('h2');
-    //   h2.innerHTML = cat.name;
+
+      const imgContainer = document.createElement("div");
+      imgContainer.classList.add("img-container");
+      imgContainer.appendChild(figure);
   
       const p1 = document.createElement('p');
       p1.innerHTML = `${post.username}`;
@@ -75,30 +76,33 @@ const createPosts = (posts) => {
       p1.classList.add("username");
       p2.classList.add("likes");
   
-    //   li.appendChild(h2);
       li.appendChild(p1);
-      li.appendChild(figure);
+      li.appendChild(imgContainer);
       li.appendChild(p2);
       li.appendChild(p3);
       ul.appendChild(li);
 
-      // NOT WORKING YET
-      p2.addEventListener("click", () => {
-        if (p2.innerHTML.classList.includes("far")) {
-          p2.innerHTML.classList.replace("far fa-heart", "fas fa-heart");
-        }
-        else {
-          p2.innerHTML.classList.replace("fas fa-heart", "far fa-heart");
+      // functional likes
+      p2.addEventListener("click", async () => {
+        const fetchOptions = {
+          method: 'POST',
+          headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+          },
+        };
+        try {
+          const response = await fetch(
+            url + '/post/' + post.post_id,
+            fetchOptions
+          );
+          const json = await response.json();
+          console.log('modify likes response', json);
+          getPost();
+        } catch (e) {
+          console.log(e.message);
         }
       });
 
-        // if (user.role === 0 || user.user_id === post.owner) {
-        // link to modify form
-        // const modButton = document.createElement('a');
-        // modButton.innerHTML = 'Modify';
-        // modButton.href = `modify-cat.html?id=${cat.cat_id}`;
-        // modButton.classList.add('button');
-  
         // admin delete post
         if (user.role === 0) {
         // delete selected cat

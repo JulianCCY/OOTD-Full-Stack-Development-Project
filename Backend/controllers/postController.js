@@ -72,10 +72,9 @@ const delete_post = async (req, res) => {
     res.json({message: `Post with id: ${deleted} has been deleted.`});
 }
 
-const like_post = async (req, res, next) =>{
-    const like = await insertLike(req.user.user_id, req.params.postId);
-    
-    //not yet finish....
+const likes_of_post = async (req, res) =>{
+    const likes = await manageLikes(req.user.user_id, req.params.postId);
+    res.json({message: `Modified likes. ${likes}`});
 }
 
 // const cat_update = async (req, res) => {
@@ -92,4 +91,5 @@ module.exports = {
     get_post,
     upload_post,
     delete_post,
+    likes_of_post,
 };

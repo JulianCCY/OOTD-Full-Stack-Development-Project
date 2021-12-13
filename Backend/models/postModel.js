@@ -3,6 +3,7 @@ const pool = require('../database/db');
 const { httpError } = require('../utils/errors');
 const promisePool = pool.promise();
 
+// get all categories
 const getAllCategories = async () => {
   try {
     const [rows] = await promisePool.query('SELECT * FROM categories');
@@ -12,9 +13,9 @@ const getAllCategories = async () => {
   }
 }
 
+// get all posts
 const getAllPosts = async () => {
     try {
-      // const [countlike] = await promisePool.query('');
       const [rows] = await promisePool.query('SELECT user_post.post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes ON user_post.post_id = post_likes.post_id GROUP BY user_post.post_id;');
       return rows;
     } catch (e) {
@@ -22,10 +23,9 @@ const getAllPosts = async () => {
     };
 };
 
+// get one single post
 const getPost = async(postId, next) => {
-    //git push origin database
     try{
-        //const[rows] = await promisePool.query(`SELECT * FROM wop_cat WHERE cat_id=${catId}`);
         const[rows] = await promisePool.execute('SELECT post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes USING(post_id) WHERE post_id = ? GROUP BY post_likes.post_id;', [postId]);
         return rows[0];
     } catch (e){
@@ -35,6 +35,21 @@ const getPost = async(postId, next) => {
     }
 };
 
+// insert post
+const insertPost = async (post) =>{
+  try{
+    const[rows] = await promisePool.execute('INSERT INTO user_post (user_id, image, description, category) VALUES (?,?,?,?)', 
+    [post.userId, post.filename, post.description, post.category]);
+    console.log('model insert post', rows);
+    return rows.insertId;
+  }catch(e){
+    console.error('model insert post', e.message);
+    const err = httpError('Sql error', 500);
+    next(err);
+  };
+};
+
+// delete post
 const deletePost = async (postId, user_id, role) => {
   //after finishing profile, let user delete own post
   let sql1 = 'Delete from post_likes where post_likes.post_id = ?;';
@@ -64,37 +79,23 @@ const getLikeOfPost = async (postId) => {
     next(err);
   }
 }
-  
-const insertPost = async (post) =>{
-    try{
-      const[rows] = await promisePool.execute('INSERT INTO user_post (user_id, image, description, category) VALUES (?,?,?,?)', 
-      [post.userId, post.filename, post.description, post.category]);
-      console.log('model insert post', rows);
-      return rows.insertId;
-    }catch(e){
-      console.error('model insert post', e.message);
-      const err = httpError('Sql error', 500);
-      next(err);
-    };
-};
 
-
-const manageLikes = async (userId, postId, next) => {
+// manage likes of a post
+const manageLikes = async (userId, postId) => {
   try {
-    const [check] = await promisePool.execute('SELECT COUNT(*) FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
-    if (check[0] === 0){
+    const [check] = await promisePool.execute('SELECT COUNT(*) AS likes FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
+    if (check[0].likes === 0){
       const [rows] = await promisePool.execute('INSERT INTO post_likes (user_id, post_id) VALUES (?,?)', [userId, postId]);
       console.log('Give a like to post', rows);
+      // return check[0].likes;
     }
     else {
       const [rows] = await promisePool.execute('DELETE FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
       console.log('Remove a like to post', rows);
+      // return check[0].likes;
     }
-    
   } catch (e){
     console.error('error managing likes', e.message);
-    const err = httpError('Sql error', 500);
-    next(err);
   }
 }
 
@@ -128,9 +129,9 @@ module.exports = {
   getAllCategories,
   getAllPosts,
   getPost,
+  insertPost,
   deletePost,
   getLikeOfPost,
-  insertPost,
   manageLikes,
 };
   
