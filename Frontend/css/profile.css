@@ -16,6 +16,7 @@ nav {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 nav ul {
     margin-top: 0;
@@ -149,7 +150,6 @@ nav ul li a {
 /* Profile section */
 .profile-section {
     display: flex;
-    /* border-style: groove; */
 }
 .profile-pic-container {
     width: 20%;
@@ -181,19 +181,26 @@ nav ul li a {
 }
 .profile-info {
     width: 80%;
-    /* border-style: groove; */
     position: relative;
+    /* border-style: groove; */
 }
 .username {
-    margin-top: 1em;
-    font-size: calc(1em + 1.5vw);
+    font-size: calc(1em + 1.8vw);
+    margin: 0;
+    position: absoulte;
+    top: 0;
+    /* border-style: groove; */
+}
+.email {
+    margin: 0;
+    opacity: 0.8;
+    /* border-style: groove; */
 }
 .profile-info div {
     width: 100%;
     position: absolute;
     bottom: 0;
     display: flex;
-    /* border-style: groove; */
 }
 .likes {
     margin-right: 5em;
@@ -231,7 +238,6 @@ nav ul li a {
     margin-bottom: 1em;
 }
 .edit-profile form div input {
-    /* border-style: solid; */
     padding: 0.2em;
     border: 1px solid transparent;
 }

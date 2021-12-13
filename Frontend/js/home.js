@@ -52,9 +52,9 @@ const createPosts = (posts) => {
       img.classList.add('resp');
   
       // open image in single.html
-      img.addEventListener('click', () => {
-        location.href = 'single.html?id=' + post.post_id;
-      });
+      // img.addEventListener('click', () => {
+      //   location.href = 'single.html?id=' + post.post_id;
+      // });
   
       const figure = document.createElement('figure').appendChild(img);
 
@@ -62,6 +62,15 @@ const createPosts = (posts) => {
       imgContainer.classList.add("img-container");
       imgContainer.appendChild(figure);
   
+      const proImg = document.createElement("img");
+      if (post.profile_pic === null) {
+        proImg.src = "./img/DefaultProfilePic.png";
+      }
+      else {
+        proImg.src = url + "/" + post.profile_pic;
+      }
+      const proPic = document.createElement("figure").appendChild(proImg);
+      
       const p1 = document.createElement('p');
       p1.innerHTML = `${post.username}`;
   
@@ -70,16 +79,36 @@ const createPosts = (posts) => {
   
       const p3 = document.createElement('p');
       p3.innerHTML = `${post.description}`;
+
+      const p4 = document.createElement("p");
+      var date = new Date(post.time_stamp);
+      var d = date.toDateString().split(' ').slice(1).join(' ');
+      p4.innerHTML = `${d}`
+
+      const usernameContainer = document.createElement("div");
+      usernameContainer.classList.add("username-container");
+      usernameContainer.appendChild(proPic);
+      usernameContainer.appendChild(p1);
+
+      const info = document.createElement("div");
+      info.classList.add("info");
+      info.appendChild(p2);
+      info.appendChild(p3);
+      info.appendChild(p4);
+
+      const hr = document.createElement("hr");
   
       const li = document.createElement('li');
       li.classList.add('light-border');
       p1.classList.add("username");
       p2.classList.add("likes");
+      p3.classList.add("des");
+      p4.classList.add("date");
   
-      li.appendChild(p1);
+      li.appendChild(usernameContainer);
+      li.appendChild(hr);
       li.appendChild(imgContainer);
-      li.appendChild(p2);
-      li.appendChild(p3);
+      li.appendChild(info);
       ul.appendChild(li);
 
       // functional likes

@@ -63,10 +63,10 @@ const promisePool = pool.promise();
     }
   };
 
-  const updateUser = async (user) => {
+  const updateUser = async (user, userId) => {
     try {
-      const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?',
-      [user.username, user.email, user.passwd, user.profile, user.userId]);
+      const [rows] = await promisePool.execute('UPDATE ootd_user SET profile_pic = ?, username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?',
+      [user.profile_pic, user.username, user.email, user.passwd, user.profile, userId]);
       return rows.affectedRows === 1;
     } catch (e) {
       console.error('model update user info', e.message);

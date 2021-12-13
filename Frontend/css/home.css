@@ -162,8 +162,8 @@ nav ul li a {
     transform: translate(-50%, -50%);
 }
 .light-border {
-    border: 2px solid #2e2e3a;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid gray;
+    border-radius: 0.3em;
     box-sizing: border-box;
   }
 .posts-container {
@@ -178,23 +178,49 @@ nav ul li a {
     display: flex;
     flex-wrap: wrap;
 }
+#list hr {
+    margin: 0;
+    margin-bottom: 0.2em;
+    background-color: gray;
+    height: 3px;
+}
 #list li {
     position: relative;
     margin: 5px;
-    padding: 0.5em;
+    padding: 0.3em;
     width: 350px;
     height: 500px;
     margin-bottom: 1em;
+    overflow: hidden;
 }
 #list li p {
     margin: 0;
+}
+.username-container {
+    display: flex;
+}
+.username-container img {
+    max-width: 28px;
+    max-height: 28px;
+    border-radius: 50%;
+    margin-right: 0.2em;
 }
 .username {
     font-weight: bold;
     font-size: calc(10px + 0.8vw);
 }
+#list li .info {
+    position: relative;
+}
 .likes {
+    max-width: 20%;
     cursor: pointer;
+}
+.date {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: gray;
 }
 .delete-button {
     padding-top: 5px;

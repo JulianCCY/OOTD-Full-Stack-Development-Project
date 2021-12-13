@@ -18,10 +18,10 @@ router.get('/token', checkToken);
 
 router.route('/')
     .get(user_list_get)
-    .put(user_update);
 
 router.route('/:userId')
     .get(user_get)
     .delete(user_delete)
+    .put(user_update);
 
 module.exports = router;

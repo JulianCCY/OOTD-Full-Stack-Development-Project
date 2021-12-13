@@ -82,8 +82,9 @@
         </div>
         <div class="profile-info">
             <p class="username">Username</p>
+            <p class="email">Email not set</p>
             <div>
-                <p class="likes">0 likes</p>
+                <p class="likes">0 posts</p>
                 <p class="description">No description yet.</p>
             </div>
         </div>
@@ -96,25 +97,25 @@
         <div class="edit-profile">
             <h2>Edit profile</h2>
             <form id="editProfileForm" action="http://localhost:3000/user/user:id" method="put">
-                <div class="file">
+                <!-- <div class="file">
                     <label>Profile picture:</label>
-                    <input type="file" required name="profile_pic" accept="image/*" placeholder="Choose file">
-                </div>
-                <div>
+                    <input type="file" name="profile_pic" accept="image/*" placeholder="Choose file">
+                </div> -->
+                <div id="username-input"> 
                     <label>Username:</label>
-                    <input autocomplete="off" type="text" required name="username" placeholder="Username">
+                    <input autocomplete="off" type="text" name="username" placeholder="Username" value="">
                 </div>
-                <div>
+                <div id="email-input">
                     <label>Email:</label>
-                    <input autocomplete="off" type="text" required name="email" placeholder="Email">
+                    <input autocomplete="off" type="text" name="email" placeholder="Email" value="">
                 </div>
-                <div>
+                <!-- <div id="password-input">
                     <label>New password:</label>
-                    <input type="password" required name="passwd" placeholder="Password" />
-                </div>
-                <div>
+                    <input type="password" name="passwd" placeholder="Password" value="">
+                </div> -->
+                <div id="description-input">
                     <label>Profile description:</label>
-                    <input autocomplete="off" type="text" required name="profile" placeholder="Description" />
+                    <input autocomplete="off" type="text" name="profile" placeholder="Description" value="">
                 </div>
                 <button id="confirmButton" type="submit">Confirm</button>
                 <i class="fas fa-times" id="closeButton"></i>

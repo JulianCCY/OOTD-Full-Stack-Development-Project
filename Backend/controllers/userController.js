@@ -1,5 +1,5 @@
 'use strict';
-const {getUserLogin, getAllUsers, insertUser, updateUser, updateUserProPic} = require("../models/userModel");
+const { getAllUsers, getUser, updateUser, updateUserProPic } = require("../models/userModel");
 const { httpError } = require("../utils/errors");
 const { body, validationResult } = require('express-validator');
 
@@ -24,25 +24,26 @@ const user_list_get = async (req, res) => {
     res.json(filterAdmin);
 };
 
-const user_get = async(req, res) => {
+const user_get = async (req, res) => {
     const user = await getUser(req.params.userId);
     await delete user.password;
     res.json(user);
 };
 
-const user_delete = async(req, res)=>{
+const user_delete = async (req, res)=>{
     const deleted = await deleteUser(req.params.userId);
     res.json({message: `User deleted: ${deleted}`});
 };
 
 
-const userProPic_update = async(req, res)=>{
+const userProPic_update = async (req, res)=>{
     const proPic_update = await updateUserProPic(req.body);
     res.json({message: `User profile picture updated: ${proPic_update}`});
 }
 
-const user_update = async(req, res)=>{
-    const update = await updateUser(req.body);
+const user_update = async (req, res)=>{
+    const userId = req.params.id;
+    const update = await updateUser(req.body, userId);
     res.send(`at updated: ${update}`);
     res.json({message: `User updated: ${update}`});
 }
@@ -52,8 +53,7 @@ module.exports = {
     user_get,
     user_delete,
     user_update,
-    checkToken,
     userProPic_update,
-    user_update,
+    checkToken,
 }
 
