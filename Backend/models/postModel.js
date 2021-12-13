@@ -16,7 +16,7 @@ const getAllCategories = async () => {
 // get all posts
 const getAllPosts = async () => {
     try {
-      const [rows] = await promisePool.query('SELECT user_post.post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes ON user_post.post_id = post_likes.post_id GROUP BY user_post.post_id;');
+      const [rows] = await promisePool.query('SELECT user_post.post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes, upload_time, time_stamp FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes ON user_post.post_id = post_likes.post_id GROUP BY user_post.post_id ORDER BY user_post.upload_time DESC;');
       return rows;
     } catch (e) {
       console.error('error getting all posts', e.message);
@@ -26,7 +26,7 @@ const getAllPosts = async () => {
 // get one single post
 const getPost = async(postId, next) => {
     try{
-        const[rows] = await promisePool.execute('SELECT post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes USING(post_id) WHERE post_id = ? GROUP BY post_likes.post_id;', [postId]);
+        const[rows] = await promisePool.execute('SELECT post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes, upload_time, time_stamp FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes USING(post_id) WHERE post_id = ? GROUP BY post_likes.post_id;', [postId]);
         return rows[0];
     } catch (e){
       console.log('error getting post', e.message);
@@ -38,8 +38,12 @@ const getPost = async(postId, next) => {
 // insert post
 const insertPost = async (post) =>{
   try{
-    const[rows] = await promisePool.execute('INSERT INTO user_post (user_id, image, description, category) VALUES (?,?,?,?)', 
-    [post.userId, post.filename, post.description, post.category]);
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    const[rows] = await promisePool.execute('INSERT INTO user_post (user_id, image, description, category, upload_time) VALUES (?,?,?,?,?)', 
+    [post.userId, post.filename, post.description, post.category, dateTime]);
     console.log('model insert post', rows);
     return rows.insertId;
   }catch(e){

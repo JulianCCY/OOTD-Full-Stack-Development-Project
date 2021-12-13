@@ -43,10 +43,42 @@ const promisePool = pool.promise();
       console.error("insert error", e.message);
     }
   };
+
+  const deleteUser = async (userId) => {
+    try {
+      const [rows] = await promisePool.execute('DELETE FROM ootd_user WHERE user_id = ?', [userId]);
+      console.log("Delete user account", rows)
+      return rows.affectedRows === 1;
+    } catch (e) {
+      console.error("model delete user", e.message);
+    }
+  };
+
+  const updateUserProPic = async (user) => {
+    try {
+      const [rows] = await promisePool.execute('UPDATE ootd_user SET profile_pic = ? WHERE user_id = ?',[user.profilePicture, user.userId]);
+      return rows.affectedRows === 1;
+    } catch (e) {
+      console.error('model update user profile picture', e.message);
+    }
+  };
+
+  const updateUser = async (user) => {
+    try {
+      const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?',
+      [user.username, user.email, user.passwd, user.profile, user.userId]);
+      return rows.affectedRows === 1;
+    } catch (e) {
+      console.error('model update user info', e.message);
+    }
+  }
   
   module.exports = {
     getUserLogin,
     getUser,
     getAllUsers,
     insertUser,
+    deleteUser,
+    updateUserProPic,
+    updateUser,
   };

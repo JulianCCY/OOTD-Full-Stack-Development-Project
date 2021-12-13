@@ -1,5 +1,5 @@
 'use strict';
-const {getUserLogin, getAllUsers, insertUser} = require("../models/userModel");
+const {getUserLogin, getAllUsers, insertUser, updateUser, updateUserProPic} = require("../models/userModel");
 const { httpError } = require("../utils/errors");
 const { body, validationResult } = require('express-validator');
 
@@ -35,9 +35,15 @@ const user_delete = async(req, res)=>{
     res.json({message: `User deleted: ${deleted}`});
 };
 
+
+const userProPic_update = async(req, res)=>{
+    const proPic_update = await updateUserProPic(req.body);
+    res.json({message: `User profile picture updated: ${proPic_update}`});
+}
+
 const user_update = async(req, res)=>{
-    const update = await updateUser(req.body)
-    // res.send(`at updated: ${update}`);
+    const update = await updateUser(req.body);
+    res.send(`at updated: ${update}`);
     res.json({message: `User updated: ${update}`});
 }
 
@@ -47,5 +53,7 @@ module.exports = {
     user_delete,
     user_update,
     checkToken,
+    userProPic_update,
+    user_update,
 }
 

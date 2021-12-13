@@ -92,6 +92,7 @@ typings/
 Backend/node_modules
 Backend/thumbnails
 Backend/uploads
+Backend/uploadProPic
 Backend/.env
 
 .vscode/
