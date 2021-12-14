@@ -1,7 +1,9 @@
 'use strict';
-const { getAllUsers, getUser, updateUser, updateUserProPic } = require("../models/userModel");
+const { getAllUsers, getUser, updateUserProPic, updateUser } = require("../models/userModel");
 const { httpError } = require("../utils/errors");
 const { body, validationResult } = require('express-validator');
+const pool = require('../database/db');
+const promisePool = pool.promise();
 
 // userController.js
 const checkToken = (req, res, next) => {
@@ -41,11 +43,31 @@ const userProPic_update = async (req, res)=>{
     res.json({message: `User profile picture updated: ${proPic_update}`});
 }
 
-const user_update = async (req, res)=>{
-    const userId = req.params.id;
-    const update = await updateUser(req.body, userId);
-    res.send(`at updated: ${update}`);
-    res.json({message: `User updated: ${update}`});
+const user_update = async (req, res, next)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log('Post image validation: ', errors.array());
+        const err = httpError("Posting data not valid", 400);
+        next(err);
+        return;
+    }
+
+    const userId = req.params.userId;
+
+    const[checkUsername] = await promisePool.execute('SELECT COUNT(*) FROM ootd_user WHERE user_id = ?', [userId]);
+    if (checkUsername != 0){
+        res.json({message: 'Username already in used'});
+        return;
+    }
+
+    const updated = await updateUser(req.body, userId);
+    if (updated) {
+        res.json({ message: `Update successfully: ${updated}` });
+        return;
+    }else{
+        res.json({ message: 'Error updating user' });
+        return;
+    }
 }
 
 module.exports = {

@@ -12,7 +12,7 @@ const fileFilter = (req, file, cb) => {
         cb(null, false);
     }
 };
-const uploadProPic = multer({dest: "./uploadProPic", fileFilter});
+const uploadProPic = multer({dest: "./uploadProPic/", fileFilter});
 
 router.get('/token', checkToken);
 
@@ -22,6 +22,11 @@ router.route('/')
 router.route('/:userId')
     .get(user_get)
     .delete(user_delete)
-    .put(user_update);
+    .put(
+        body('username').isLength({ min:3}),
+        body('email').isEmail(),
+        body('passwd').matches('(?=.*[A-Z]).{8,}'),
+        body('profile').notEmpty(),
+        user_update);
 
 module.exports = router;

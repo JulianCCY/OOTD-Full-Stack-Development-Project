@@ -2,6 +2,7 @@
 
 const pool = require('../database/db');
 const promisePool = pool.promise();
+var bcrypt = require('bcryptjs');
 
   const getUserLogin = async (params) => {
     try {
@@ -63,10 +64,12 @@ const promisePool = pool.promise();
     }
   };
 
-  const updateUser = async (user, userId) => {
+  const updateUser = async (user, userId)=> {
+
+    const hashPassword = await bcrypt.hash(user.passwd, 12);
+    
     try {
-      const [rows] = await promisePool.execute('UPDATE ootd_user SET profile_pic = ?, username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?',
-      [user.profile_pic, user.username, user.email, user.passwd, user.profile, userId]);
+      const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?', [user.username, user.email, hashPassword, user.profile, userId]);
       return rows.affectedRows === 1;
     } catch (e) {
       console.error('model update user info', e.message);

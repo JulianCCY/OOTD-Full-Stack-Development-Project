@@ -206,13 +206,14 @@ body {
   }
   #login-container p {
     text-align: center;
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.4);
   }
   #registerButton {
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.7);
   }
   #registerButton:hover {
+    text-decoration: underline;
     color: rgba(0, 0, 0, 1);
     transition: 0.5s;
   }

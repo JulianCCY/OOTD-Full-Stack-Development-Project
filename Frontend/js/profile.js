@@ -86,11 +86,11 @@ const editForm = document.querySelector("#editProfileForm");
 editForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const data = serializeJson(editForm);
-    for (const [prop, value] of Object.entries(data)) {
-        if (value === '') {
-          delete data[prop];
-        }
-    }
+    // for (const [prop, value] of Object.entries(data)) {
+    //     if (value === '') {
+    //       delete data[prop];
+    //     }
+    // }
     const fetchOptions = {
       method: 'PUT',
       headers: {
