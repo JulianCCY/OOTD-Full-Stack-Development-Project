@@ -25,7 +25,7 @@ router.route('/:userId')
     .put(
         body('username').isLength({ min:3 }),
         body('email').isEmail(),
-        body('passwd').matches('(?=.*[A-Z]).{8,}'),
+        body('passwd').matches('(?=.*?[A-Z])(?=.*?[0-9]).{8,}$'),
         body('profile').notEmpty(),
         user_update);
 

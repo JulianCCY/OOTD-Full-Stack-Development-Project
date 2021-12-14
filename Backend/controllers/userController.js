@@ -52,19 +52,28 @@ const user_update = async (req, res, next)=>{
         res.json({message: 'Username already in used'});
         return;
     }
+
+    const check_Email = await checkEmail(req.body);
+    if (check_Email !== 0) {
+        res.json({message: 'Email already in used.'});
+        return;
+    }
+
     const check_oldPassword = await checkPassword(req.body, req.params.userId);
     // if (check_oldPassword) {
-        const updated = await updateUser(req.body, req.params.userId);
+        
+    // } else {
+    //     res.json({message: "Old password not match, can't identify user."});\
+    //     return;
+    // }
+
+    const updated = await updateUser(req.body, req.params.userId);
         if (updated) {
             res.json({ message: `Update successfully: ${updated}` });
         } else{
             res.json({ message: 'Error updating user' });
             return;
         }
-    // } else {
-    //     res.json({message: "Old password not match, can't identify user."});\
-    //     return;
-    // }
 
 }
 

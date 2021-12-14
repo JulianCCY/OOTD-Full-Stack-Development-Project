@@ -2,7 +2,7 @@
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const { insertUser } = require('../models/userModel');
+const { insertUser, checkUsername, checkEmail } = require('../models/userModel');
 const { httpError } = require('../utils/errors');
 const bcrypt = require("bcryptjs");
 
@@ -32,9 +32,21 @@ const login = (req, res, next) => {
 const user_post = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-      const err = httpError("Register Invalid", 400);
+      const err = httpError('Register Invalid \nInput value does not match requirement', 400);
       next(err);
       console.log(errors);
+      return;
+  }
+
+  const check_Username = await checkUsername(req.body);
+  if (check_Username === 1) {
+      res.json({message: 'Username already in used.'});
+      return;
+  }
+
+  const check_Email = await checkEmail(req.body);
+  if (check_Email !== 0) {
+      res.json({message: 'Email already in used.'});
       return;
   }
 

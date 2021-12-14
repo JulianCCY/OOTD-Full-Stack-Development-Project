@@ -78,14 +78,25 @@ var bcrypt = require('bcryptjs');
       const [rows] = await promisePool.execute('SELECT COUNT(*) AS duplicate FROM ootd_user WHERE username = ?', [user.username]);
       return rows[0].duplicate;
     } catch (e) {
-      console.error("error checking username", e.message);
+      console.error('error checking username', e.message);
     }
   }
 
-  //idk this sql
-  const checkPassword = async (user, userId) => {
+  const checkEmail = async (user) => {
     try {
-      const [rows] = promisePool.execute('SELECT COUNT(*) AS password FROM ootd_user WHERE username = ?, password = ?', [userId, user.oldpasswd]);
+      const [rows] = await promisePool.execute('SELECT COUNT(*) AS duplicate FROM ootd_user WHERE email = ?', [user.email]);
+      return rows[0].duplicate;
+    } catch (e) {
+      console.error('error checking email', e.message);
+    }
+  }
+
+  //idk this sql, bcrypt not allow, Banned (sad)
+  const checkPassword = async (user, userId) => {
+    const hashOldPassword = await bcrypt.hash(user.oldpasswd, 12);
+
+    try {
+      const [rows] = promisePool.execute('SELECT COUNT(*) AS currentPassword FROM ootd_user WHERE user_id = ?, password = ?', [userId, hashOldPassword]);
       return rows.affectedRows === 1;
     } catch (e) {
       console.error('error checking password', e.message);
@@ -94,7 +105,7 @@ var bcrypt = require('bcryptjs');
 
   const getUserPosts = async (userId) => {
     try {
-      const [rows] = await promisePool.query('SELECT user_post.post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes, (SELECT COUNT(*) FROM post_likes WHERE user_id = ? AND post_id = user_post.post_id) as liked, upload_time, time_stamp FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes ON user_post.post_id = post_likes.post_id GROUP BY user_post.post_id ORDER BY user_post.upload_time DESC;', [userId]);
+      const [rows] = await promisePool.query('SELECT user_post.post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes, (SELECT COUNT(*) FROM post_likes WHERE user_id = ? AND post_id = user_post.post_id) as liked, upload_time, time_stamp FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes ON user_post.post_id = post_likes.post_id WHERE ootd_user.user_id = ? GROUP BY user_post.post_id ORDER BY user_post.upload_time DESC;', [userId, userId]);
       return rows;
     } catch (e) {
       console.error('error getting all posts', e.message);
@@ -110,5 +121,6 @@ var bcrypt = require('bcryptjs');
     updateUserProPic,
     updateUser,
     checkUsername,
+    checkEmail,
     getUserPosts,
   };
