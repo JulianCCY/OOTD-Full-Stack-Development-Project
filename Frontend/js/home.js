@@ -75,8 +75,12 @@ const createPosts = (posts) => {
       p1.innerHTML = `${post.username}`;
   
       const p2 = document.createElement('p');
-      p2.innerHTML = `<i class="far fa-heart"></i> ${post.likes} likes`;
-  
+      if (post.liked === 0) {
+        p2.innerHTML = `<i class="far fa-heart dislike"></i> ${post.likes} likes`;
+      } else {
+        p2.innerHTML = `<i class="fas fa-heart" style="color: #e60000"></i> ${post.likes} likes`;
+      }
+
       const p3 = document.createElement('p');
       p3.innerHTML = `${post.description}`;
 
@@ -125,7 +129,6 @@ const createPosts = (posts) => {
             fetchOptions
           );
           const json = await response.json();
-          console.log('modify likes response', json);
           getPost();
         } catch (e) {
           console.log(e.message);

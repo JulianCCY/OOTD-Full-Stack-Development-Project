@@ -152,20 +152,31 @@ body {
     background: #f8f8f8;
     position: relative;
   }
-  .login img {
+  /* .login img {
     margin-top: 20px;
     margin-left: 10%;
     width: 600px;
     transform: rotate(25deg);
+  } */
+  #video1 {
+    height: 130%;
+    transform: translate(-3%, -20%) rotate(4deg);
+    /* z-index: 2; */
+  }
+  #video2 {
+    height: 120%;
+    transform: translate(-14%, -15%) rotate(-2deg);
+    /* z-index: 1; */
   }
   #login-container {
     position: absolute;
-    margin-right: 8%;
+    margin-right: 0;
     margin-bottom: 2%;
-    width: 30em;
+    width: 35em;
     height: 30em;
     right: 0;
     bottom: 0;
+
   }
   #login-container h3 {
     margin-top: 2em;
@@ -550,4 +561,46 @@ body {
 .a5 .c6 p {
   font-size:calc(1em + 4vw);
   text-align: center;
+}
+.footer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 3% 5% 1% 5%;
+  background-color: f8f8f8;
+}
+.customer h3 {
+  font-size:calc(1em + 0.5vw);
+}
+.customer a {
+  text-decoration: none;
+  color: black;
+}
+.explore h3 {
+  font-size:calc(1em + 0.5vw);
+}
+.explore a {
+  text-decoration: none;
+  color: black;
+}
+.contact h3 {
+  font-size:calc(1em + 0.5vw);
+}
+.media {
+  height: 100%;
+  margin-top: 4em;
+  font-size:calc(1em + 1vw);
+  /* border-style: groove; */
+}
+.media i {
+  margin: 0.5em;
+}
+.copyright {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

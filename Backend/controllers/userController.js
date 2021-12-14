@@ -1,7 +1,9 @@
 'use strict';
-const { getAllUsers, getUser, updateUserProPic, updateUser } = require("../models/userModel");
+const { getAllUsers, getUser, updateUserProPic, updateUser, checkUsername, checkPassword, getUserPosts } = require("../models/userModel");
 const { httpError } = require("../utils/errors");
 const { body, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
@@ -28,7 +30,7 @@ const user_list_get = async (req, res) => {
 
 const user_get = async (req, res) => {
     const user = await getUser(req.params.userId);
-    await delete user.password;
+    await delete user.passwd;
     res.json(user);
 };
 
@@ -36,12 +38,6 @@ const user_delete = async (req, res)=>{
     const deleted = await deleteUser(req.params.userId);
     res.json({message: `User deleted: ${deleted}`});
 };
-
-
-const userProPic_update = async (req, res)=>{
-    const proPic_update = await updateUserProPic(req.body);
-    res.json({message: `User profile picture updated: ${proPic_update}`});
-}
 
 const user_update = async (req, res, next)=>{
     const errors = validationResult(req);
@@ -51,24 +47,43 @@ const user_update = async (req, res, next)=>{
         next(err);
         return;
     }
-
-    const userId = req.params.userId;
-
-    const[checkUsername] = await promisePool.execute('SELECT COUNT(*) FROM ootd_user WHERE user_id = ?', [userId]);
-    if (checkUsername != 0){
+    const check_Username = await checkUsername(req.body);
+    if (check_Username === 1) {
         res.json({message: 'Username already in used'});
         return;
     }
+    const check_oldPassword = await checkPassword(req.body, req.params.userId);
+    // if (check_oldPassword) {
+        const updated = await updateUser(req.body, req.params.userId);
+        if (updated) {
+            res.json({ message: `Update successfully: ${updated}` });
+        } else{
+            res.json({ message: 'Error updating user' });
+            return;
+        }
+    // } else {
+    //     res.json({message: "Old password not match, can't identify user."});\
+    //     return;
+    // }
 
-    const updated = await updateUser(req.body, userId);
-    if (updated) {
-        res.json({ message: `Update successfully: ${updated}` });
-        return;
-    }else{
-        res.json({ message: 'Error updating user' });
+}
+
+const userProPic_update = async (req, res) => {
+    const proPic_update = await updateUserProPic(req.body);
+    res.json({message: `User profile picture updated: ${proPic_update}`});
+}
+
+const user_post_get = async (req, res, next) => {
+    const posts = await getUserPosts(req.params.userId);
+    console.log("all posts", posts);
+    if (posts.length > 0) {
+        res.json(posts);
+    } else {
+        const err = httpError("Posts not found", 404);
+        next(err);
         return;
     }
-}
+};
 
 module.exports = {
     user_list_get,
@@ -76,6 +91,7 @@ module.exports = {
     user_delete,
     user_update,
     userProPic_update,
+    user_post_get,
     checkToken,
 }
 

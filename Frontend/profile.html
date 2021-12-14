@@ -10,7 +10,7 @@
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@200;400;600&display=swap" rel="stylesheet">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Profile</title>
@@ -109,7 +109,11 @@
                     <label>Email:</label>
                     <input autocomplete="off" type="text" required name="email" placeholder="Email" value="">
                 </div>
-                <div id="password-input">
+                <div id="oldPassword-input">
+                    <label>Old password:</label>
+                    <input type="password" name="oldpasswd" required placeholder="Password" value="">
+                </div>
+                <div id="newPassword-input">
                     <label>New password:</label>
                     <input type="password" name="passwd" required placeholder="Password" value="">
                 </div>
@@ -125,9 +129,11 @@
 
     <!-- Posts -->
     <section class="posts-section">
-        <ul id="list">
-            <!-- js creates post here -->
-        </ul>
+        <div class="posts-container">
+            <ul id="list">
+                <!-- js creates post here -->
+            </ul>
+        </div>
     </section>
 
     <!-- js -->

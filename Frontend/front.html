@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css/front.css" rel="stylesheet">
     <!-- icons -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/18835e3c93.js" crossorigin="anonymous"></script>
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,13 @@
     <!-- login -->
     <section class="login" id="secLogin">
         <!-- <div class="trapezoid"></div> -->
-        <img src="img/DrawKit-Fashion-Illustration-10.png" alt="login page image">
+        <!-- <img src="img/DrawKit-Fashion-Illustration-10.png" alt="login page image"> -->
+        <video id="video1" controls preload="true" autoplay loop muted>
+            <source src="./video/video1.mp4" type="video/mp4" > 
+        </video>
+        <video id="video2" controls preload="true" autoplay loop muted>
+            <source src="./video/video2.mp4" type="video/mp4" > 
+         </video>
         <div id="login-container">
             <h3>Welcome to ootd</h3>
             <form id="loginForm" action="http://localhost:3000/auth/login" method="post">
@@ -142,6 +148,38 @@
                     <p>Stunning all around.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="footer">
+        <div class="customer">
+            <h3>Customer Services</h3>
+            <p>Contact us</p>
+            <p>FAQs</p>
+            <p>Feedbacks</p>
+            <p><a href="terms.html">Term of services</a></p>
+            <p>Privacy</p>
+        </div>
+        <div class="explore">
+            <h3>Explore</h3>
+            <p><a href="#secFront">Home</a></p>
+            <p><a href="#secAboutUs">About Us</a></p>
+            <p><a href="#secLogin">Signin/register</a></p>
+        </div>
+        <div class="contact">
+            <h3>Contact Info</h3>
+            <p>Tel: 123 4567890</p>
+            <p>Mail: kendrickbbg@outfitsoftheweek.com</p>
+        </div>
+        <div class="media">
+            <i class="fab fa-whatsapp"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-youtube"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-facebook-square"></i>
+        </div>
+        <div class="copyright">
+            <p>@2021 Outfitsoftheweek, J&B. All Rights Reserved.</p>
         </div>
     </section>
 

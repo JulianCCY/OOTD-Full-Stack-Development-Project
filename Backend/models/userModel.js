@@ -34,7 +34,6 @@ var bcrypt = require('bcryptjs');
     };
   };
   
-  
   const insertUser = async (user) => {
     try {
       const [rows] = await promisePool.execute(`INSERT INTO ootd_user (username, email, password) VALUES (?,?,?)`, 
@@ -64,16 +63,42 @@ var bcrypt = require('bcryptjs');
     }
   };
 
-  const updateUser = async (user, userId)=> {
-
+  const updateUser = async (user, userId) => {
     const hashPassword = await bcrypt.hash(user.passwd, 12);
-    
     try {
       const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?', [user.username, user.email, hashPassword, user.profile, userId]);
       return rows.affectedRows === 1;
     } catch (e) {
       console.error('model update user info', e.message);
     }
+  }
+
+  const checkUsername = async (user) => {
+    try {
+      const [rows] = await promisePool.execute('SELECT COUNT(*) AS duplicate FROM ootd_user WHERE username = ?', [user.username]);
+      return rows[0].duplicate;
+    } catch (e) {
+      console.error("error checking username", e.message);
+    }
+  }
+
+  //idk this sql
+  const checkPassword = async (user, userId) => {
+    try {
+      const [rows] = promisePool.execute('SELECT COUNT(*) AS password FROM ootd_user WHERE username = ?, password = ?', [userId, user.oldpasswd]);
+      return rows.affectedRows === 1;
+    } catch (e) {
+      console.error('error checking password', e.message);
+    }
+  }
+
+  const getUserPosts = async (userId) => {
+    try {
+      const [rows] = await promisePool.query('SELECT user_post.post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes, (SELECT COUNT(*) FROM post_likes WHERE user_id = ? AND post_id = user_post.post_id) as liked, upload_time, time_stamp FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes ON user_post.post_id = post_likes.post_id GROUP BY user_post.post_id ORDER BY user_post.upload_time DESC;', [userId]);
+      return rows;
+    } catch (e) {
+      console.error('error getting all posts', e.message);
+    };
   }
   
   module.exports = {
@@ -84,4 +109,6 @@ var bcrypt = require('bcryptjs');
     deleteUser,
     updateUserProPic,
     updateUser,
+    checkUsername,
+    getUserPosts,
   };
