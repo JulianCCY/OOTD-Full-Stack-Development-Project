@@ -40,6 +40,10 @@ const ul = document.querySelector('#list');
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
 
+// Profile href
+const profileHref = document.getElementById("profileHref");
+profileHref.href = `profile.html?id=${user.user_id}`;
+
 const createPosts = (posts) => {
     // clear ul
     ul.innerHTML = '';
@@ -71,7 +75,8 @@ const createPosts = (posts) => {
       }
       const proPic = document.createElement("figure").appendChild(proImg);
       
-      const p1 = document.createElement('p');
+      const p1 = document.createElement('a');
+      p1.href = `profile.html?id=${post.user_id}`;
       p1.innerHTML = `${post.username}`;
   
       const p2 = document.createElement('p');

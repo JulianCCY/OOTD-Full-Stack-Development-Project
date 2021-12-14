@@ -42,34 +42,38 @@ const user_delete = async (req, res)=>{
 const user_update = async (req, res, next)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log('Post image validation: ', errors.array());
-        const err = httpError("Posting data not valid", 400);
-        next(err);
+        // console.log('Post image validation: ', errors.array());
+        // const err = httpError("Posting data not valid", 400);
+        // next(err);
+        res.json({
+            message: `Register Invalid \nInput value does not match requirement`,
+            status: "invalid",
+        });
         return;
     }
     const check_Username = await checkUsername(req.body);
     if (check_Username === 1) {
-        res.json({message: 'Username already in used'});
+        res.json({
+            message: 'Username already in used.',
+            status: "username",
+          });
         return;
     }
 
     const check_Email = await checkEmail(req.body);
     if (check_Email !== 0) {
-        res.json({message: 'Email already in used.'});
+        res.json({
+            message: 'Email already in used.',
+            status: "email",
+        });
         return;
     }
 
-    const check_oldPassword = await checkPassword(req.body, req.params.userId);
-    // if (check_oldPassword) {
-        
-    // } else {
-    //     res.json({message: "Old password not match, can't identify user."});\
-    //     return;
-    // }
-
     const updated = await updateUser(req.body, req.params.userId);
         if (updated) {
-            res.json({ message: `Update successfully: ${updated}` });
+            res.json({ message: `Update successfully: ${updated}`,
+            status: "good",
+            });
         } else{
             res.json({ message: 'Error updating user' });
             return;

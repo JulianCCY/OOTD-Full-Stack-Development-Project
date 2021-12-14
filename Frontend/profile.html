@@ -16,106 +16,117 @@
     <title>Profile</title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a class="link home" href="home.html">
-                <span class="wrap">
-                    <div class="link-container">
-                        <span class="link-title1 title">Home</span>
-                        <span class="link-title2 title">Home</span>
-                    </div>
-                </span>
-                </a>
-            </li>
-            <li><a class="link highlights" href="highlights.html">
-                <span class="wrap">
-                    <div class="link-container">
-                        <span class="link-title1 title">Hightlights</span>
-                        <span class="link-title2 title">Hightlights</span>
-                    </div>
-                </span>
-                </a>
-            </li>
-            <li>
-                <a class="link search">
+    <section class="sectionOverlay">
+        <nav>
+            <ul>
+                <li><a class="link home" href="home.html">
                     <span class="wrap">
-                        <div class="link-container" id="search">
-                            <span class="link-title1 title">Search</span>
-                            <span class="link-title2 title">Search</span>
+                        <div class="link-container">
+                            <span class="link-title1 title">Home</span>
+                            <span class="link-title2 title">Home</span>
                         </div>
-                        <input class="searchBar" type="text" name="searchBar" placeholder="Users">
                     </span>
-                </a>
-            </li>
-            <li><a class="link post" href="post.html">
-                <span class="wrap">
-                    <div class="link-container">
-                        <span class="link-title1 title">Post</span>
-                        <span class="link-title2 title">Post</span>
-                    </div>
-                </span>
-                </a>
-            </li>
-            <li><a class="link profile">
-                <span class="wrap">
-                    <div class="link-container" id="profile">
-                        <span class="link-title1 title">Profile</span>
-                        <span class="link-title2 title">Profile</span>
-                    </div>
-                </span>
-                </a>
-            </li>
-            <ul class="profile-list">
-                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href=""><i class="fas fa-cog"></i> Settings</a></li>
-                <li><a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </a>
+                </li>
+                <li><a class="link highlights" href="highlights.html">
+                    <span class="wrap">
+                        <div class="link-container">
+                            <span class="link-title1 title">Hightlights</span>
+                            <span class="link-title2 title">Hightlights</span>
+                        </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link search">
+                        <span class="wrap">
+                            <div class="link-container" id="search">
+                                <span class="link-title1 title">Search</span>
+                                <span class="link-title2 title">Search</span>
+                            </div>
+                            <input class="searchBar" type="text" name="searchBar" placeholder="Users">
+                        </span>
+                    </a>
+                </li>
+                <li><a class="link post" href="post.html">
+                    <span class="wrap">
+                        <div class="link-container">
+                            <span class="link-title1 title">Post</span>
+                            <span class="link-title2 title">Post</span>
+                        </div>
+                    </span>
+                    </a>
+                </li>
+                <li><a class="link profile">
+                    <span class="wrap">
+                        <div class="link-container" id="profile">
+                            <span class="link-title1 title">Profile</span>
+                            <span class="link-title2 title">Profile</span>
+                        </div>
+                    </span>
+                    </a>
+                </li>
+                <ul class="profile-list">
+                    <li><a id="profileHref" href=""><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href=""><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
             </ul>
-        </ul>
-    </nav>
-
-    <!-- Profile -->
-    <section class="profile-section">
-        <div class="profile-pic-container">
-            <img class="profile-pic" src="img/DefaultProfilePic.png">
-            <button id="editButton">Edit profile</button>
-            <button>Settings</button>
-        </div>
-        <div class="profile-info">
-            <p class="username">Username</p>
-            <p class="email">Email not set</p>
-            <div>
-                <p class="likes">0 posts</p>
-                <p class="description">No description yet.</p>
+        </nav>
+    
+        <!-- Profile -->
+        <section class="profile-section">
+            <div class="profile-pic-container">
+                <img class="profile-pic" src="img/DefaultProfilePic.png">
+                <button id="editButton">Edit profile</button>
+                <button>Settings</button>
             </div>
-        </div>
+            <div class="profile-info">
+                <p class="main-username">Username</p>
+                <p class="email">Email not set</p>
+                <div>
+                    <p class="posts">0 posts</p>
+                    <p class="likes">0 likes</p>
+                    <p class="description">No description yet.</p>
+                </div>
+            </div>
+        </section>
+        <hr>
+        <!-- Posts -->
+        <section class="posts-section">
+            <div class="posts-container">
+                <ul id="list">
+                    <!-- js creates post here -->
+                </ul>
+            </div>
+        </section>
     </section>
-
-    <hr>
 
     <!-- Modify user -->
     <section class="edit-container">
         <div class="edit-profile">
             <h2>Edit profile</h2>
-            <form id="editProfileForm" action="http://localhost:3000/user/user:id" method="put">
+            <form id="editProfileForm" onsubmit="event.preventDefault(); validation();" action="http://localhost:3000/user/user:id" method="put">
                 <!-- <div class="file">
                     <label>Profile picture:</label>
                     <input type="file" name="profile_pic" accept="image/*" placeholder="Choose file">
                 </div> -->
                 <div id="username-input"> 
                     <label>Username:</label>
-                    <input autocomplete="off" type="text" required name="username" placeholder="Username" value="">
+                    <input id="username" autocomplete="off" type="text" required name="username" placeholder="Username" value="">
                 </div>
                 <div id="email-input">
                     <label>Email:</label>
-                    <input autocomplete="off" type="text" required name="email" placeholder="Email" value="">
-                </div>
-                <div id="oldPassword-input">
-                    <label>Old password:</label>
-                    <input type="password" name="oldpasswd" required placeholder="Password" value="">
+                    <input id="email" autocomplete="off" type="text" required name="email" placeholder="Email" value="">
                 </div>
                 <div id="newPassword-input">
                     <label>New password:</label>
-                    <input type="password" name="passwd" required placeholder="Password" value="">
+                    <input id="passwd" type="password" name="passwd" required placeholder="Password" value="">
+                </div>
+                <div id="confirmPassword-input">
+                    <label>Confirm password:</label>
+                    <input id="passwdC" type="password" name="passwdC" required placeholder="Password" value="">
+                    <span id="message"></span>
                 </div>
                 <div id="description-input">
                     <label>Profile description:</label>
@@ -124,15 +135,6 @@
                 <button id="confirmButton" type="submit">Confirm</button>
                 <i class="fas fa-times" id="closeButton"></i>
             </form>
-        </div>
-    </section>
-
-    <!-- Posts -->
-    <section class="posts-section">
-        <div class="posts-container">
-            <ul id="list">
-                <!-- js creates post here -->
-            </ul>
         </div>
     </section>
 

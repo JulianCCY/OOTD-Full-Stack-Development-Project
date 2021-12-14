@@ -3,6 +3,8 @@ const url = 'http://localhost:3000'; // change url when uploading to server
 
 const registerForm = document.querySelector('#registerForm');
 
+const message = document.getElementById("message");
+
 registerForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const data = serializeJson(registerForm);
@@ -17,5 +19,31 @@ registerForm.addEventListener('submit', async (evt) => {
     const json = await response.json();
     console.log(json);
     alert(json.message);
-    location.href = 'front.html';
-  });
+    if (json.status === "invalid") {
+      document.getElementById("username").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("passwd").value = "";
+      document.getElementById("passwdC").value = "";
+    }
+    if (json.status === "username") {
+      document.getElementById("username").value = "";
+    }
+    if (json.status === "email") {
+      document.getElementById("email").value = "";
+    }
+    if (json.status === "good") {
+      location.href = 'front.html';
+    }
+});
+
+function validation() {
+  console.log(document.getElementById("passwd").value);
+  console.log(document.getElementById("passwdC").value);
+  if (document.getElementById("passwd").value != document.getElementById("passwdC").value) {
+    message.innerHTML = "Passwords not match";
+    return false;
+  } else {
+    message.innerHTML = " ";
+    return true;
+  }
+}

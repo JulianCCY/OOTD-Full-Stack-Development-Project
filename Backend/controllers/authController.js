@@ -32,30 +32,40 @@ const login = (req, res, next) => {
 const user_post = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-      const err = httpError('Register Invalid \nInput value does not match requirement', 400);
-      next(err);
-      console.log(errors);
+      // const err = httpError('Register Invalid \nInput value does not match requirement', 400);
+      // next(err);
+      // console.log(errors);
+      res.json({
+        message: `Register Invalid \nInput value does not match requirement`,
+        status: "invalid",
+      });
+
       return;
   }
-
   const check_Username = await checkUsername(req.body);
   if (check_Username === 1) {
-      res.json({message: 'Username already in used.'});
+      res.json({
+        message: 'Username already in used.',
+        status: "username",
+      });
       return;
   }
-
   const check_Email = await checkEmail(req.body);
-  if (check_Email !== 0) {
-      res.json({message: 'Email already in used.'});
+  if (check_Email != 0) {
+      res.json({
+        message: 'Email already in used.',
+        status: "email",
+      });
       return;
   }
-
   try {
     req.body.passwd = bcrypt.hashSync(req.body.passwd, 12);
     const user = req.body;
     const id = await insertUser(user);
-    res.json({message: `Welcome to OOTD, ${user.username}!\nRegistered an account with User ID: ${id}`});
-
+    res.json({
+      message: `Welcome to OOTD, ${user.username}!\nRegistered an account with User ID: ${id}`,
+      status: "good",
+    });
   } catch (e) {
     console.log("user_post error", e.message);
     const err = httpError("Error registering user", 400);

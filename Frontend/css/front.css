@@ -151,6 +151,7 @@ body {
     height: 100vh;
     background: #f8f8f8;
     position: relative;
+    overflow: hidden;
   }
   /* .login img {
     margin-top: 20px;
@@ -160,13 +161,13 @@ body {
   } */
   #video1 {
     height: 130%;
-    transform: translate(-3%, -20%) rotate(4deg);
-    /* z-index: 2; */
+    transform: translate(-4%, -20%) rotate(4deg);
+    pointer-events: none;
   }
   #video2 {
     height: 120%;
-    transform: translate(-14%, -15%) rotate(-2deg);
-    /* z-index: 1; */
+    transform: translate(-15%, -15%) rotate(-2deg);
+    pointer-events: none;
   }
   #login-container {
     position: absolute;

@@ -44,20 +44,23 @@ const submitButton = document.querySelector("#confirmButton");
 editButton.addEventListener("click", () => {
     editContainer.classList.add("open-form");
     editContainer.classList.remove("close-form");
+    document.querySelector(".sectionOverlay").classList.add("overlay");
 });
 closeButton.addEventListener("click", () => {
     editContainer.classList.add("close-form");
     editContainer.classList.remove("open-form");
+    document.querySelector(".sectionOverlay").classList.remove("overlay");
 });
 
 // update user info to web
 const user = JSON.parse(sessionStorage.getItem("user"));
-console.log(user);
+const profileHref = document.getElementById("profileHref");
+profileHref.href = `profile.html?id=${user.user_id}`;
 
 const profilePicture = document.querySelector(".profile-pic-container img");
-const username = document.querySelector(".username");
+const username = document.querySelector(".main-username");
 const email = document.querySelector(".email");
-const likes = document.querySelector(".likes");
+const posts = document.querySelector(".posts");
 const description = document.querySelector(".description");
 // const usernameInput = document.getElementById("username-input");
 // const emailInput = document.getElementById("email-input");
@@ -73,7 +76,7 @@ const webInfo = (info) => {
     // usernameInput.setAttribute("value", info.username);
     email.innerHTML = info.email;
     // emailInput.value = info.email;
-    likes.innerHTML = info.likes + "likes";
+    posts.innerHTML = info.numOfOwnedPosts + " posts";
     if (info.profile != null) {
         description.innerHTML = info.profile;
     }
@@ -102,10 +105,24 @@ editForm.addEventListener('submit', async (evt) => {
     const json = await response.json();
     // getUser();
     alert(json.message);
-    location.href = 'profile.html';
+    // location.href = 'profile.html';
 });
 
+function validation() {
+    console.log(document.getElementById("passwd").value);
+    console.log(document.getElementById("passwdC").value);
+    if (document.getElementById("passwd").value != document.getElementById("passwdC").value) {
+      message.innerHTML = "Passwords not match";
+      return false;
+    } else {
+      message.innerHTML = " ";
+      return true;
+    }
+}
+
 // get user info
+var params = new URL(window.location.href);
+var id = params.searchParams.get("id");
 const getUser = async () => {
     try {
       const options = {
@@ -113,7 +130,7 @@ const getUser = async () => {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       };
-      const response = await fetch(url + '/user/' + user.user_id, options);
+      const response = await fetch(url + '/user/' + id, options);
       const users = await response.json();
       console.log(users);
       webInfo(users[0]);
@@ -221,8 +238,8 @@ const createPosts = (posts) => {
         }
       });
 
-        // admin delete post
-        if (user.role === 0) {
+        // admin or owner delete post
+        if (user.role === 0 || user.username === post.username) {
         const delButton = document.createElement('button');
         delButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
         delButton.classList.add('delete-button');
@@ -258,7 +275,7 @@ const createPosts = (posts) => {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       };
-      const response = await fetch(url + '/user/post/' + user.user_id, fetchOptions);
+      const response = await fetch(url + '/user/post/' + id, fetchOptions);
       const posts = await response.json();
       createPosts(posts);
     } catch (e) {

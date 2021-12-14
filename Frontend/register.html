@@ -21,18 +21,24 @@
     </div>
     <div id="register-container">
         <h3>Join ootd today!</h3>
-        <form id="registerForm" action="http://localhost:3000/auth/register" method="post">
+        <form id="registerForm" onsubmit="event.preventDefault(); validation();" action="http://localhost:3000/auth/register" method="post">
             <div>
                 <label>Enter username:</label>
-                <input class="light-border" autocomplete="off" type="text" required name="username" placeholder="Username">
+                <input class="light-border" id="username" autocomplete="off" type="text" required name="username" placeholder="Username">
             </div>
             <div>
                 <label>Enter email:</label>
-                <input class="light-border" autocomplete="off" type="text" required name="email" placeholder="Email">
+                <input class="light-border" id="email" autocomplete="off" type="text" required name="email" placeholder="Email">
             </div>
             <div>
                 <label>Enter password:</label>
-                <input class="light-border" type="password" required name="passwd" placeholder="Password" />
+                <input class="light-border" id="passwd" type="password" required name="passwd" placeholder="Password">
+                <span class="requirement">Password must contain at least one digit and a capital letter, minimum 8 characters.</span>
+            </div>
+            <div>
+                <label>Confirm password:</label>
+                <input class="light-border" id="passwdC" type="password" required name="passwdC" placeholder="Password">
+                <span id="message"></span>
             </div>
             <button id="registerButton" type="submit">Register</button>
             <a id="backButton" href="front.html">Back</a>

@@ -6,7 +6,7 @@ const { validationResult } = require("express-validator");
 const { makePostPhoto } = require('../utils/resize');
 // const { getCoordinates } = require('../utils/imageMeta');
 
-const get_all_posts = async (req, res,next) => {
+const get_all_posts = async (req, res, next) => {
     const posts = await getAllPosts(req.user.user_id);
     console.log("all posts", posts);
     if (posts.length > 0) {

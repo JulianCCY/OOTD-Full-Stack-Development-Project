@@ -11,6 +11,7 @@ body {
     padding: 0;
     display: flex;
     overflow: hidden;
+    font-size: 16px;
 }
 .light-border {
     border-radius: 8px;
@@ -33,7 +34,8 @@ body {
     width: 50%;
 }
 #register-container h3 {
-    margin-top: 3em;
+    margin-top: 2em;
+    margin-bottom: 0;
     font-size:calc(20px + 2vw);
     text-align: center;
 }
@@ -81,4 +83,13 @@ body {
 #backButton:hover {
     color: rgba(0, 0, 0, 1);
     transition: 0.5s;
+}
+.requirement {
+    margin-top: 0.1em;
+    font-size:calc(10px + 0.1vw);
+    color: rgba(29,46,45, 0.7);
+}
+#message {
+    font-size:calc(10px + 0.2vw);
+    color: red;
 }

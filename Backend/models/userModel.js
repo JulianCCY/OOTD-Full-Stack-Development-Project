@@ -16,7 +16,7 @@ var bcrypt = require('bcryptjs');
 
   const getUser = async (userId) => {
     try{
-      const [rows] = await promisePool.execute('SELECT * FROM ootd_user WHERE user_id = ?', [userId]);
+      const [rows] = await promisePool.execute('SELECT ootd_user.user_id, ootd_user.username, ootd_user.email, ootd_user.password, ootd_user.role, ootd_user.profile, profile_pic, COUNT(user_post.user_id) AS numOfOwnedPosts FROM ootd_user INNER JOIN user_post ON ootd_user.user_id = user_post.user_id WHERE ootd_user.user_id = ?;', [userId]);
       return rows;
     } catch (e) {
       console.error('model get user by ID', e.message);
