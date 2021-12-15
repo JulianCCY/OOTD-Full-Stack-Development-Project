@@ -44,13 +44,13 @@ const pCloseButton = document.querySelector("#pictureCloseButton");
 const pictureButton = document.querySelector("#pictureButton");
 
 avatar.addEventListener("click", () => {
-    editPicture.classList.add("open-form");
-    editPicture.classList.remove("close-form");
+    editPicture.classList.add("open-avatar-form");
+    editPicture.classList.remove("close-avatar-form");
     document.querySelector(".sectionOverlay").classList.add("overlay");
 });
 pCloseButton.addEventListener("click", () => {
-    editPicture.classList.add("close-form");
-    editPicture.classList.remove("open-form");
+    editPicture.classList.add("close-avatar-form");
+    editPicture.classList.remove("open-avatar-form");
     document.querySelector(".sectionOverlay").classList.remove("overlay");
 });
 
@@ -121,14 +121,14 @@ getUser();
 const editPictureForm = document.querySelector("#editPictureForm");
 editPictureForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    const data = serializeJson(editPictureForm);
+    const data = new FormData(editPictureForm);
     const fetchOptions = {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
-        body: JSON.stringify(data),
+        body: data,
     };
     console.log(fetchOptions);
     const response = await fetch(url + '/user', fetchOptions);
@@ -194,16 +194,10 @@ const createPosts = (posts) => {
     posts.forEach((post) => {
       // create li with DOM methods
       const img = document.createElement('img');
-      // img.src = url + '/thumbnails/' + post.image;
       img.src = url + '/' + post.image;
       img.alt = post.id;
       img.classList.add('resp');
-  
-      // open image in single.html
-      // img.addEventListener('click', () => {
-      //   location.href = 'single.html?id=' + post.post_id;
-      // });
-  
+
       const figure = document.createElement('figure').appendChild(img);
 
       const imgContainer = document.createElement("div");
@@ -281,6 +275,7 @@ const createPosts = (posts) => {
         } catch (e) {
           console.log(e.message);
         }
+        // getUser();
       });
 
         // admin or owner delete post

@@ -220,7 +220,7 @@ nav ul li a {
     width: 20%;
     position: fixed;
     top: 40%;
-    left: 2%;
+    left: -20%;
     z-index: 1;
 }
 .edit-picture {
@@ -228,7 +228,7 @@ nav ul li a {
     position: relative;
     border: 2px solid #2e2e3a;
     border-radius: 0.2em;
-    opacity: 0;
+    opacity: 1;
     background-color: #2e2e3a;
     color: #f8f8f8;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -270,12 +270,23 @@ nav ul li a {
     font-size: 1.5em;
     cursor: pointer;
 }
+.open-avatar-form {
+    transform: translateX(110%);
+    opacity: 1;
+    transition: 0.5s;
+    pointer-events: all;
+}
+.close-avatar-form {
+    opacity: 0;
+    transition: 0.5s;
+    pointer-events: none;
+}
 
 /* Modify User Form */
 .edit-container {
     width: 20%;
     position: fixed;
-    top: 20%;
+    top: -30%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
@@ -285,7 +296,7 @@ nav ul li a {
     position: relative;
     border: 2px solid #2e2e3a;
     border-radius: 0.2em;
-    opacity: 0;
+    opacity: 1;
     background-color: #2e2e3a;
     color: #f8f8f8;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -332,7 +343,7 @@ nav ul li a {
     cursor: pointer;
 }
 .open-form {
-    transform: translateY(30%);
+    transform: translateY(120%);
     opacity: 1;
     transition: 0.5s;
     pointer-events: all;
@@ -413,7 +424,7 @@ nav ul li a {
     max-width: 20%;
     cursor: pointer;
 }
-.like {
+/* .like {
     animation: bounce 0.5s;
 }
 @keyframes bounce
@@ -430,7 +441,7 @@ nav ul li a {
   {
     transform: scale( 1 );
   }
-}
+} */
 .date {
     position: absolute;
     top: 0;
