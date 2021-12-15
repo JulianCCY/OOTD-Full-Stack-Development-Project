@@ -47,9 +47,9 @@ var bcrypt = require('bcryptjs');
     }
   };
 
-  const updateUserProPic = async (user) => {
+  const updateUserProPic = async (user, userId) => {
     try {
-      const [rows] = await promisePool.execute('UPDATE ootd_user SET profile_pic = ? WHERE user_id = ?',[user.profilePicture, user.userId]);
+      const [rows] = await promisePool.execute('UPDATE ootd_user SET profile_pic = ? WHERE user_id = ?', [user.profile_pic, userId]);
       return rows.affectedRows === 1;
     } catch (e) {
       console.error('model update user profile picture', e.message);
@@ -60,8 +60,44 @@ var bcrypt = require('bcryptjs');
   const updateUser = async (user, userId) => {
     const hashPassword = await bcrypt.hash(user.passwd, 12);
     try {
-      const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?', [user.username, user.email, hashPassword, user.profile, userId]);
-      return rows.affectedRows === 1;
+      // const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?', [user.username, user.email, hashPassword, user.profile, userId]);
+      // return rows.affectedRows === 1;
+      if (user.username === "") {
+        if (user.email === "") {
+          const [rows] = await promisePool.execute('UPDATE ootd_user SET password = ?, profile = ? WHERE user_id = ?', [hashPassword, user.profile, userId]);
+          return rows.affectedRows === 1;
+        }
+        if (user.profile === "") {
+          const [rows] = await promisePool.execute('UPDATE ootd_user SET email = ?, password = ? WHERE user_id = ?', [user.email, hashPassword, userId]);
+          return rows.affectedRows === 1;
+        }
+        if (user.email === "" && user.profile === "") {
+          const [rows] = await promisePool.execute('UPDATE ootd_user SET password = ? WHERE user_id = ?', [hashPassword, userId]);
+          return rows.affectedRows === 1;
+        }
+        else {
+          const [rows] = await promisePool.execute('UPDATE ootd_user SET  email = ?, password = ?, profile = ? WHERE user_id = ?', [user.email, hashPassword, user.profile, userId]);
+          return rows.affectedRows === 1;
+        }
+      }
+      if (user.email === "") {
+        if (user.username === "") {
+          const [rows] = await promisePool.execute('UPDATE ootd_user SET password = ?, profile = ? WHERE user_id = ?', [hashPassword, user.profile, userId]);
+          return rows.affectedRows === 1;
+        }
+        if (user.profile === "") {
+          const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, password = ? WHERE user_id = ?', [user.username, hashPassword, userId]);
+          return rows.affectedRows === 1;
+        }
+        else {
+          const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, password = ?, profile = ? WHERE user_id = ?', [user.username, hashPassword, user.profile, userId]);
+          return rows.affectedRows === 1;
+        }
+      }
+      if (user.profile === "") {
+        const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, email = ?, password = ? WHERE user_id = ?', [user.username, user.email, hashPassword, userId]);
+        return rows.affectedRows === 1;
+      }
     } catch (e) {
       console.error('model update user info', e.message);
     }

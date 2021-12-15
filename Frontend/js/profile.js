@@ -1,6 +1,7 @@
 'use strict';
 const url = 'http://localhost:3000'; // change url when uploading to server
 
+// Nav ----------------------------------------------------------------------------------
 // Search Bar
 var toggle = 0;
 const search = document.querySelector("#search");
@@ -35,7 +36,25 @@ profile.addEventListener("click", () => {
   }
 });
 
-// Edit Profile
+// Profile info -----------------------------------------------------------------------------------------------------------
+// Edit Picture container show up
+const avatar = document.querySelector(".profile-pic"); 
+const editPicture = document.querySelector(".edit-picture");
+const pCloseButton = document.querySelector("#pictureCloseButton");
+const pictureButton = document.querySelector("#pictureButton");
+
+avatar.addEventListener("click", () => {
+    editPicture.classList.add("open-form");
+    editPicture.classList.remove("close-form");
+    document.querySelector(".sectionOverlay").classList.add("overlay");
+});
+pCloseButton.addEventListener("click", () => {
+    editPicture.classList.add("close-form");
+    editPicture.classList.remove("open-form");
+    document.querySelector(".sectionOverlay").classList.remove("overlay");
+});
+
+// Edit Profile container show up
 const editButton = document.querySelector("#editButton");
 const editContainer = document.querySelector(".edit-profile");
 const closeButton = document.querySelector("#closeButton");
@@ -63,62 +82,17 @@ const email = document.querySelector(".email");
 const likes = document.querySelector(".likes");
 const posts = document.querySelector(".posts");
 const description = document.querySelector(".description");
-// const usernameInput = document.getElementById("username-input");
-// const emailInput = document.getElementById("email-input");
-// const passwordInput = document.getElementById("password-input");
-// const descriptionInput = document.getElementById("description-input");
-
 
 const webInfo = (info) => {
     if (info.profile_pic != null) {
         profilePicture.src = info.profile_pic;
     }
     username.innerHTML = info.username;
-    // usernameInput.setAttribute("value", info.username);
     email.innerHTML = info.email;
-    // emailInput.value = info.email;
     likes.innerHTML = "Total " + info.totalNumOfLikes + " likes";
     posts.innerHTML = info.numOfOwnedPosts + " posts";
     if (info.profile != null) {
         description.innerHTML = info.profile;
-    }
-    // descriptionInput.value = info.profile;
-}
-
-// submit edit form
-const editForm = document.querySelector("#editProfileForm");
-editForm.addEventListener('submit', async (evt) => {
-    evt.preventDefault();
-    const data = serializeJson(editForm);
-    // for (const [prop, value] of Object.entries(data)) {
-    //     if (value === '') {
-    //       delete data[prop];
-    //     }
-    // }
-    const fetchOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-      },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(url + '/user/' + user.user_id, fetchOptions);
-    const json = await response.json();
-    // getUser();
-    alert(json.message);
-    // location.href = 'profile.html';
-});
-
-function validation() {
-    console.log(document.getElementById("passwd").value);
-    console.log(document.getElementById("passwdC").value);
-    if (document.getElementById("passwd").value != document.getElementById("passwdC").value) {
-      message.innerHTML = "Passwords not match";
-      return false;
-    } else {
-      message.innerHTML = " ";
-      return true;
     }
 }
 
@@ -142,7 +116,76 @@ const getUser = async () => {
 };
 getUser();
 
-// Create posts
+//  FORMS ------------------------------------------------------------------------------------------------------------
+// sumbit avatar
+const editPictureForm = document.querySelector("#editPictureForm");
+editPictureForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const data = serializeJson(editPictureForm);
+    const fetchOptions = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+        body: JSON.stringify(data),
+    };
+    console.log(fetchOptions);
+    const response = await fetch(url + '/user', fetchOptions);
+    const json = await response.json();
+    alert(json.message);
+});
+
+// submit edit form
+const editForm = document.querySelector("#editProfileForm");
+editForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    if (document.getElementById("passwd").value != document.getElementById("passwdC").value) {
+      message.innerHTML = "Passwords not match";
+      return;
+    } else {
+        message.innerHTML = " ";
+        const data = serializeJson(editForm);
+        // for (const [prop, value] of Object.entries(data)) {
+        //     if (value === '') {
+        //       delete data[prop];
+        //     }
+        // }
+        const fetchOptions = {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+            body: JSON.stringify(data),
+        };
+        const response = await fetch(url + '/user/' + user.user_id, fetchOptions);
+        const json = await response.json();
+        alert(json.message);
+        if (json.status === "invalid") {
+            document.getElementById("username").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("passwd").value = "";
+            document.getElementById("passwdC").value = "";
+        }
+        if (json.status === "username") {
+            document.getElementById("username").value = "";
+        }
+        if (json.status === "email") {
+            document.getElementById("email").value = "";
+        }
+        if (json.status === "good") {
+            document.getElementById("username").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("passwd").value = "";
+            document.getElementById("passwdC").value = "";
+            document.getElementById("description").value = "";
+            getUser();
+        }
+    }
+});
+
+// Create posts ----------------------------------------------------------------------------
 const ul = document.querySelector('#list');
 
 const createPosts = (posts) => {

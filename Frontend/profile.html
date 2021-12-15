@@ -102,35 +102,45 @@
         </section>
     </section>
 
+    <!-- Modify profile picture -->
+    <section class="edit-picture-container">
+        <div class="edit-picture">
+            <h2>Upload profile picture</h2>
+            <form id="editPictureForm" action="http://localhost:3000/user" method="put">
+                <div class="file">
+                    <label>Profile picture:</label>
+                    <input type="file" name="profile_pic" accept="image/*" placeholder="Choose file">
+                </div>
+                <button id="pictureButton" type="submit">Confirm</button>
+                <i class="fas fa-times" id="pictureCloseButton"></i>
+            </form>
+        </div>
+    </section>
     <!-- Modify user -->
     <section class="edit-container">
         <div class="edit-profile">
             <h2>Edit profile</h2>
-            <form id="editProfileForm" onsubmit="event.preventDefault(); validation();" action="http://localhost:3000/user/user:id" method="put">
-                <!-- <div class="file">
-                    <label>Profile picture:</label>
-                    <input type="file" name="profile_pic" accept="image/*" placeholder="Choose file">
-                </div> -->
+            <form id="editProfileForm" action="http://localhost:3000/user/user:id" method="put">
                 <div id="username-input"> 
                     <label>Username:</label>
-                    <input id="username" autocomplete="off" type="text" required name="username" placeholder="Username" value="">
+                    <input id="username" autocomplete="off" type="text"  name="username" placeholder="Username" value="">
                 </div>
                 <div id="email-input">
                     <label>Email:</label>
-                    <input id="email" autocomplete="off" type="text" required name="email" placeholder="Email" value="">
+                    <input id="email" autocomplete="off" type="text"  name="email" placeholder="Email" value="">
                 </div>
                 <div id="newPassword-input">
-                    <label>New password:</label>
-                    <input id="passwd" type="password" name="passwd" required placeholder="Password" value="">
+                    <label>Password:</label>
+                    <input id="passwd" type="password" name="passwd"  required placeholder="Old password or new one" value="">
                 </div>
                 <div id="confirmPassword-input">
                     <label>Confirm password:</label>
-                    <input id="passwdC" type="password" name="passwdC" required placeholder="Password" value="">
+                    <input id="passwdC" type="password" name="passwdC" required placeholder="Confirm password" value="">
                     <span id="message"></span>
                 </div>
                 <div id="description-input">
                     <label>Profile description:</label>
-                    <input autocomplete="off" type="text" required name="profile" placeholder="Description" value="">
+                    <input id="description" autocomplete="off" type="text" name="profile" placeholder="Description" value="">
                 </div>
                 <button id="confirmButton" type="submit">Confirm</button>
                 <i class="fas fa-times" id="closeButton"></i>

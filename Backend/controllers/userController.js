@@ -2,10 +2,6 @@
 const { getAllUsers, getUser, updateUserProPic, updateUser, checkUsername, checkPassword, getUserPosts, checkEmail} = require("../models/userModel");
 const { httpError } = require("../utils/errors");
 const { body, validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const pool = require('../database/db');
-const promisePool = pool.promise();
 
 // userController.js
 const checkToken = (req, res, next) => {
@@ -42,9 +38,6 @@ const user_delete = async (req, res)=>{
 const user_update = async (req, res, next)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // console.log('Post image validation: ', errors.array());
-        // const err = httpError("Posting data not valid", 400);
-        // next(err);
         res.json({
             message: `Register Invalid \nInput value does not match requirement`,
             status: "invalid",
@@ -78,11 +71,14 @@ const user_update = async (req, res, next)=>{
             res.json({ message: 'Error updating user' });
             return;
         }
-
 }
 
-const userProPic_update = async (req, res) => {
-    const proPic_update = await updateUserProPic(req.body);
+const updateProPic = async (req, res) => {
+    // const picture = req.body;
+    // picture.profile_pic = req.file.filename;
+    console.log(req.body);
+    // console.log(req.file.filename);
+    const proPic_update = await updateUserProPic(req.body, req.user.userId);
     res.json({message: `User profile picture updated: ${proPic_update}`});
 }
 
@@ -103,7 +99,7 @@ module.exports = {
     user_get,
     user_delete,
     user_update,
-    userProPic_update,
+    updateProPic,
     user_post_get,
     checkToken,
 }
