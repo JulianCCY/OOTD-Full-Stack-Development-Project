@@ -85,7 +85,7 @@ const description = document.querySelector(".description");
 
 const webInfo = (info) => {
     if (info.profile_pic != null) {
-        profilePicture.src = info.profile_pic;
+        profilePicture.src = url + "/" + info.profile_pic;
     }
     username.innerHTML = info.username;
     email.innerHTML = info.email;
@@ -123,13 +123,12 @@ editPictureForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const data = new FormData(editPictureForm);
     const fetchOptions = {
-        method: 'POST',
+        method: 'PUT',
         headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
         body: data,
     };
-    console.log(fetchOptions);
     const response = await fetch(url + '/user', fetchOptions);
     const json = await response.json();
     alert(json.message);
@@ -316,6 +315,7 @@ const createPosts = (posts) => {
       };
       const response = await fetch(url + '/user/post/' + id, fetchOptions);
       const posts = await response.json();
+      console.log(posts);
       createPosts(posts);
     } catch (e) {
       console.log(e.message);

@@ -146,3 +146,22 @@ nav ul li a {
 .link:hover .link-title2 {
     transform: rotate(0);
 }
+section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+.deleteButton {
+    border-style: none;
+    color: white;
+    width: 500px;
+    height: 500px;
+    border-radius: 20%;
+    background-color: red;
+    font-size: 50px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

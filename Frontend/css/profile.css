@@ -165,6 +165,7 @@ nav ul li a {
     display: block;
     margin: auto;
     width: 50%;
+    height: 50%;
     border-radius: 50%;
 }
 .profile-pic-container button {
@@ -343,7 +344,7 @@ nav ul li a {
     cursor: pointer;
 }
 .open-form {
-    transform: translateY(120%);
+    transform: translateY(130%);
     opacity: 1;
     transition: 0.5s;
     pointer-events: all;
@@ -397,7 +398,7 @@ nav ul li a {
     margin: 0.3em;
     padding: 0.3em;
     width: 350px;
-    height: 500px;
+    height: 600px;
     margin-bottom: 1em;
     overflow: hidden;
 }
@@ -406,16 +407,18 @@ nav ul li a {
 }
 .username-container {
     display: flex;
+    height: 6%;
+    margin-bottom: 0.2em;
 }
 .username-container img {
-    max-width: 28px;
-    max-height: 28px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     margin-right: 0.2em;
 }
 .username {
     font-weight: bold;
-    font-size: calc(10px + 0.8vw);
+    font-size: calc(15px + 1.2vw);
 }
 #list li .info {
     position: relative;

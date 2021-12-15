@@ -12,14 +12,15 @@ const fileFilter = (req, file, cb) => {
         cb(null, false);
     }
 };
-const uploadProPic = multer({dest: "./uploadProPic/", fileFilter});
+const uploads = multer({dest: "./uploads", fileFilter});
 
 router.get('/token', checkToken);
 
 router.route('/')
     .get(user_list_get)
-    .post(uploadProPic.single("profile_pic"),
-    updateProPic);
+    .put(uploads.single("profile_pic"),
+    updateProPic)
+    .delete(user_delete)
 
 router.route('/:userId')
     .get(user_get)

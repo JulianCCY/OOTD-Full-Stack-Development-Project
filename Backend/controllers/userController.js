@@ -74,17 +74,18 @@ const user_update = async (req, res, next)=>{
 }
 
 const updateProPic = async (req, res) => {
-    // const picture = req.body;
-    // picture.profile_pic = req.file.filename;
-    console.log(req.body);
-    // console.log(req.file.filename);
-    const proPic_update = await updateUserProPic(req.body, req.user.userId);
-    res.json({message: `User profile picture updated: ${proPic_update}`});
+    try {
+        const proPic_update = await updateUserProPic(req.file, req.user.user_id);
+        res.json({message: `User profile picture updated: ${proPic_update}`});
+    } catch (e) {
+        console.log("error uploading avatar", e.message);
+    }
+    
 }
 
 const user_post_get = async (req, res, next) => {
     const posts = await getUserPosts(req.params.userId);
-    console.log("all posts", posts);
+    // console.log("all posts", posts);
     if (posts.length > 0) {
         res.json(posts);
     } else {

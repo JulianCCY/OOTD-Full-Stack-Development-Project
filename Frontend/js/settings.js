@@ -42,3 +42,26 @@ const user = JSON.parse(sessionStorage.getItem('user'));
 // Profile href
 const profileHref = document.getElementById("profileHref");
 profileHref.href = `profile.html?id=${user.user_id}`;
+
+//  DELETEEEEEEEEEEEE --------------------------------------------------------------------------------------------
+const deleteButton = document.querySelector(".deleteButton");
+deleteButton.addEventListener('click', async (evt) => {
+    evt.preventDefault();
+    const fetchOptions = {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      };
+      try {
+        const response = await fetch(
+          url + '/user',
+          fetchOptions
+        );
+        const json = await response.json();
+        console.log('delete response', json);
+        location.href = 'logout.html';
+      } catch (e) {
+        console.log(e.message);
+      }
+});

@@ -47,9 +47,9 @@ var bcrypt = require('bcryptjs');
     }
   };
 
-  const updateUserProPic = async (user, userId) => {
+  const updateUserProPic = async (file, userId) => {
     try {
-      const [rows] = await promisePool.execute('UPDATE ootd_user SET profile_pic = ? WHERE user_id = ?', [user.profile_pic, userId]);
+      const [rows] = await promisePool.execute('UPDATE ootd_user SET profile_pic = ? WHERE user_id = ?', [file.filename, userId]);
       return rows.affectedRows === 1;
     } catch (e) {
       console.error('model update user profile picture', e.message);
