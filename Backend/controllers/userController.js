@@ -1,5 +1,5 @@
 'use strict';
-const { getAllUsers, getUser, updateUserProPic, updateUser, checkUsername, checkPassword, getUserPosts, checkEmail} = require("../models/userModel");
+const { getAllUsers, getUser, updateUserProPic, updateUser, checkUsername, checkPassword, getUserPosts, checkEmail, deleteUser} = require("../models/userModel");
 const { httpError } = require("../utils/errors");
 const { body, validationResult } = require('express-validator');
 

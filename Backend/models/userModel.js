@@ -147,9 +147,9 @@ var bcrypt = require('bcryptjs');
 
   //Delete user account
   const deleteUser = async (userId) => {
-    let sql1 = 'Delete from post_likes where user_id = ?;';
-    let sql2 = 'Delete from user_post where user_id = ?;';
-    let sql3 = 'Delete from ootd_user Where user_id = ?;';
+    let sql1 = 'Delete from post_likes where user_id = ?';
+    let sql2 = 'Delete from user_post where user_id = ?';
+    let sql3 = 'Delete from ootd_user Where user_id = ?';
     let params = [userId];
 
     try{

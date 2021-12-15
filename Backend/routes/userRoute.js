@@ -20,7 +20,6 @@ router.route('/')
     .get(user_list_get)
     .put(uploads.single("profile_pic"),
     updateProPic)
-    .delete(user_delete)
 
 router.route('/:userId')
     .get(user_get)

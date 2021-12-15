@@ -55,9 +55,9 @@ deleteButton.addEventListener('click', async (evt) => {
       };
       try {
         const response = await fetch(
-          url + '/user',
-          fetchOptions
+          url + '/user/' + user.user_id, fetchOptions
         );
+        console.log(response);
         const json = await response.json();
         console.log('delete response', json);
         location.href = 'logout.html';
