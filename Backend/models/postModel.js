@@ -90,13 +90,11 @@ const manageLikes = async (userId, postId) => {
     const [check] = await promisePool.execute('SELECT COUNT(*) AS likes FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
     if (check[0].likes === 0){
       const [rows] = await promisePool.execute('INSERT INTO post_likes (user_id, post_id) VALUES (?,?)', [userId, postId]);
-      console.log('Give a like to post', rows);
-      // return check[0].likes;
+      return rows;
     }
     else {
       const [rows] = await promisePool.execute('DELETE FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
-      console.log('Remove a like to post', rows);
-      // return check[0].likes;
+      return rows;
     }
   } catch (e){
     console.error('error managing likes', e.message);

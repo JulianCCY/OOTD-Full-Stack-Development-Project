@@ -8,7 +8,6 @@ const { makePostPhoto } = require('../utils/resize');
 
 const get_all_posts = async (req, res, next) => {
     const posts = await getAllPosts(req.user.user_id);
-    console.log("all posts", posts);
     if (posts.length > 0) {
         res.json(posts);
     } else {
@@ -76,15 +75,6 @@ const likes_of_post = async (req, res) =>{
     const likes = await manageLikes(req.user.user_id, req.params.postId);
     res.json({message: `Modified likes. ${likes}`});
 }
-
-// const cat_update = async (req, res) => {
-//     req.body.id = req.params.catId;
-//     req.body.owner = req.body.owner || req.user.user_id;
-//     req.body.role = req.user.role;
-//     const updated = await updateCat(req.body);
-//     // res.send(`Cat updated: ${updated}`);
-//     res.json({message: `Cat updated: ${updated}`});
-// }
 
 module.exports = {
     get_all_posts,

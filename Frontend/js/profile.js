@@ -37,12 +37,16 @@ profile.addEventListener("click", () => {
 });
 
 // Profile info -----------------------------------------------------------------------------------------------------------
-// Edit Picture container show up
 const avatar = document.querySelector(".profile-pic"); 
 const editPicture = document.querySelector(".edit-picture");
 const pCloseButton = document.querySelector("#pictureCloseButton");
 const pictureButton = document.querySelector("#pictureButton");
+const editButton = document.querySelector("#editButton");
+const editContainer = document.querySelector(".edit-profile");
+const closeButton = document.querySelector("#closeButton");
+const submitButton = document.querySelector("#confirmButton");
 
+// Edit Picture container show up
 avatar.addEventListener("click", () => {
     editPicture.classList.add("open-avatar-form");
     editPicture.classList.remove("close-avatar-form");
@@ -55,11 +59,6 @@ pCloseButton.addEventListener("click", () => {
 });
 
 // Edit Profile container show up
-const editButton = document.querySelector("#editButton");
-const editContainer = document.querySelector(".edit-profile");
-const closeButton = document.querySelector("#closeButton");
-const submitButton = document.querySelector("#confirmButton");
-
 editButton.addEventListener("click", () => {
     editContainer.classList.add("open-form");
     editContainer.classList.remove("close-form");
@@ -96,10 +95,14 @@ const webInfo = (info) => {
     }
 }
 
-// get user info
+// get user info by html params
 var params = new URL(window.location.href);
 var id = params.searchParams.get("id");
 const getUser = async () => {
+    if (user.user_id != id) {
+        document.getElementById("editButton").style.display = "none";
+        document.getElementById("settingsButton").style.display = "none";
+    }
     try {
       const options = {
         headers: {
@@ -273,7 +276,7 @@ const createPosts = (posts) => {
         } catch (e) {
           console.log(e.message);
         }
-        // getUser();
+        getUser();
       });
 
         // admin or owner delete post
