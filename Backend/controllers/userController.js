@@ -54,7 +54,7 @@ const user_update = async (req, res, next)=>{
     }
 
     const check_Email = await checkEmail(req.body);
-    if (check_Email !== 0) {
+    if (check_Email === 1) {
         res.json({
             message: 'Email already in used.',
             status: "email",

@@ -59,9 +59,8 @@ var bcrypt = require('bcryptjs');
   //Update user profile(name, email, password, description)
   const updateUser = async (user, userId) => {
     const hashPassword = await bcrypt.hash(user.passwd, 12);
+    
     try {
-      // const [rows] = await promisePool.execute('UPDATE ootd_user SET username = ?, email = ?, password = ?, profile = ? WHERE user_id = ?', [user.username, user.email, hashPassword, user.profile, userId]);
-      // return rows.affectedRows === 1;
       if (user.username === "") {
         if (user.email === "") {
           const [rows] = await promisePool.execute('UPDATE ootd_user SET password = ?, profile = ? WHERE user_id = ?', [hashPassword, user.profile, userId]);
@@ -115,12 +114,13 @@ var bcrypt = require('bcryptjs');
 
   //Check if email is unique for register
   const checkEmail = async (user) => {
-    try {
-      const [rows] = await promisePool.execute('SELECT COUNT(*) AS duplicate FROM ootd_user WHERE email = ?', [user.email]);
-      return rows[0].duplicate;
-    } catch (e) {
-      console.error('error checking email', e.message);
-    }
+      try {
+        const [rows] = await promisePool.execute('SELECT COUNT(*) AS duplicate FROM ootd_user WHERE email = ?', [user.email]);
+        console.log(rows[0])
+        return rows[0].duplicate;
+      } catch (e) {
+        console.error('error checking email', e.message);
+      }
   }
 
   //idk this sql, bcrypt not allow (Later)
@@ -153,9 +153,10 @@ var bcrypt = require('bcryptjs');
     let params = [userId];
 
     try{
-      const[row1] = await promisePool.execute(sql1, params);
-      const[row2] = await promisePool.execute(sql2, params);
-      const[row3] = await promisePool.execute(sql3, params);
+      const[rows1] = await promisePool.execute(sql1, params);
+      const[rows2] = await promisePool.execute(sql2, params);
+      const[rows3] = await promisePool.execute(sql3, params);
+      return rows1.affectedRows === 1, rows2.affectedRows === 1, rows3.affectedRows === 1;
     } catch (e) {
       console.error('error deleting post in model', e.message);
     }
