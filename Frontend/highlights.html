@@ -4,13 +4,96 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="./css/hightlights.css" rel="stylesheet">
+    <!-- icons -->
+    <script src="https://kit.fontawesome.com/18835e3c93.js" crossorigin="anonymous"></script>
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Homepage</title>
 </head>
 <body>
-    <p>Nothing to see here yet.</p>
+    <nav>
+        <ul>
+            <li><a class="link home" href="home.html">
+                <span class="wrap">
+                    <div class="link-container">
+                        <span class="link-title1 title">Home</span>
+                        <span class="link-title2 title">Home</span>
+                    </div>
+                </span>
+                </a>
+            </li>
+            <li><a class="link highlights" href="highlights.html">
+                <span class="wrap">
+                    <div class="link-container">
+                        <span class="link-title1 title">Hightlights</span>
+                        <span class="link-title2 title">Hightlights</span>
+                    </div>
+                </span>
+                </a>
+            </li>
+            <li>
+                <a class="link search">
+                    <span class="wrap">
+                        <div class="link-container" id="search">
+                            <span class="link-title1 title">Search</span>
+                            <span class="link-title2 title">Search</span>
+                        </div>
+                        <input class="searchBar" type="text" name="searchBar" placeholder="Users">
+                    </span>
+                </a>
+            </li>
+            <li><a class="link post" href="post.html">
+                <span class="wrap">
+                    <div class="link-container">
+                        <span class="link-title1 title">Post</span>
+                        <span class="link-title2 title">Post</span>
+                    </div>
+                </span>
+                </a>
+            </li>
+            <li><a class="link profile">
+                <span class="wrap">
+                    <div class="link-container" id="profile">
+                        <span class="link-title1 title">Profile</span>
+                        <span class="link-title2 title">Profile</span>
+                    </div>
+                </span>
+                </a>
+            </li>
+            <ul class="profile-list">
+                <li><a id="profileHref" href=""><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </ul>
+    </nav>
+
+    <h1>Hightlights of OOTD</h1>
+
+    <section>
+        <div class="categories-container">
+            <ul id="categories-list">
+                <!-- js creates post here -->
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="posts-container">
+            <ul id="list">
+                <!-- js creates post here -->
+            </ul>
+        </div>
+    </section>
+
     <!-- js -->
-    <script src="./js/highlights.js"></script>
+    <script src="js/highlights.js"></script>
     <script src="./js/serialize.js"></script>
-    <!-- <script src="./js/check-login.js"></script> -->
+    <script src="./js/check-login.js"></script>
 </body>
 </html>
