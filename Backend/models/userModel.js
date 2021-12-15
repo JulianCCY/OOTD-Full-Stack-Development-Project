@@ -3,7 +3,8 @@
 const pool = require('../database/db');
 const promisePool = pool.promise();
 var bcrypt = require('bcryptjs');
-
+  
+  //Get user info by getting the username during login
   const getUserLogin = async (params) => {
     try {
       console.log(params);
@@ -14,9 +15,10 @@ var bcrypt = require('bcryptjs');
     }
   }
 
+  //show the details of user info
   const getUser = async (userId) => {
     try{
-      const [rows] = await promisePool.execute('SELECT ootd_user.user_id, ootd_user.username, ootd_user.email, ootd_user.password, ootd_user.role, ootd_user.profile, profile_pic, COUNT(user_post.user_id) AS numOfOwnedPosts FROM ootd_user INNER JOIN user_post ON ootd_user.user_id = user_post.user_id WHERE ootd_user.user_id = ?;', [userId]);
+      const [rows] = await promisePool.execute('SELECT ootd_user.user_id, username, email, password, role, profile, profile_pic, COUNT(user_post.user_id) AS numOfOwnedPosts,(SELECT COUNT(*) FROM user_post INNER JOIN post_likes ON user_post.post_id = post_likes.post_id WHERE user_post.user_id = ?) AS totalNumOfLikes FROM ootd_user INNER JOIN user_post ON ootd_user.user_id = user_post.user_id WHERE ootd_user.user_id = ?;', [userId, userId]);
       return rows;
     } catch (e) {
       console.error('model get user by ID', e.message);
@@ -34,6 +36,7 @@ var bcrypt = require('bcryptjs');
     };
   };
   
+  //Create new user account after validation check
   const insertUser = async (user) => {
     try {
       const [rows] = await promisePool.execute(`INSERT INTO ootd_user (username, email, password) VALUES (?,?,?)`, 
@@ -41,16 +44,6 @@ var bcrypt = require('bcryptjs');
       return rows.insertId;
     } catch (e) {
       console.error("insert error", e.message);
-    }
-  };
-
-  const deleteUser = async (userId) => {
-    try {
-      const [rows] = await promisePool.execute('DELETE FROM ootd_user WHERE user_id = ?', [userId]);
-      console.log("Delete user account", rows)
-      return rows.affectedRows === 1;
-    } catch (e) {
-      console.error("model delete user", e.message);
     }
   };
 
@@ -62,7 +55,8 @@ var bcrypt = require('bcryptjs');
       console.error('model update user profile picture', e.message);
     }
   };
-
+  
+  //Update user profile(name, email, password, description)
   const updateUser = async (user, userId) => {
     const hashPassword = await bcrypt.hash(user.passwd, 12);
     try {
@@ -73,6 +67,7 @@ var bcrypt = require('bcryptjs');
     }
   }
 
+  //Check if username is unique for register
   const checkUsername = async (user) => {
     try {
       const [rows] = await promisePool.execute('SELECT COUNT(*) AS duplicate FROM ootd_user WHERE username = ?', [user.username]);
@@ -82,6 +77,7 @@ var bcrypt = require('bcryptjs');
     }
   }
 
+  //Check if email is unique for register
   const checkEmail = async (user) => {
     try {
       const [rows] = await promisePool.execute('SELECT COUNT(*) AS duplicate FROM ootd_user WHERE email = ?', [user.email]);
@@ -91,7 +87,7 @@ var bcrypt = require('bcryptjs');
     }
   }
 
-  //idk this sql, bcrypt not allow, Banned (sad)
+  //idk this sql, bcrypt not allow (Later)
   const checkPassword = async (user, userId) => {
     const hashOldPassword = await bcrypt.hash(user.oldpasswd, 12);
 
@@ -103,6 +99,7 @@ var bcrypt = require('bcryptjs');
     }
   }
 
+  //Get detail of every post and check if curent login user liked the post or not for frontend purpose
   const getUserPosts = async (userId) => {
     try {
       const [rows] = await promisePool.query('SELECT user_post.post_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes, (SELECT COUNT(*) FROM post_likes WHERE user_id = ? AND post_id = user_post.post_id) as liked, upload_time, time_stamp FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes ON user_post.post_id = post_likes.post_id WHERE ootd_user.user_id = ? GROUP BY user_post.post_id ORDER BY user_post.upload_time DESC;', [userId, userId]);
@@ -111,6 +108,22 @@ var bcrypt = require('bcryptjs');
       console.error('error getting all posts', e.message);
     };
   }
+
+  //Delete user account
+  const deleteUser = async (userId) => {
+    let sql1 = 'Delete from post_likes where user_id = ?;';
+    let sql2 = 'Delete from user_post where user_id = ?;';
+    let sql3 = 'Delete from ootd_user Where user_id = ?;';
+    let params = [userId];
+
+    try{
+      const[row1] = await promisePool.execute(sql1, params);
+      const[row2] = await promisePool.execute(sql2, params);
+      const[row3] = await promisePool.execute(sql3, params);
+    } catch (e) {
+      console.error('error deleting post in model', e.message);
+    }
+  };
   
   module.exports = {
     getUserLogin,

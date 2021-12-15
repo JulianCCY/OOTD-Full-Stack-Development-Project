@@ -60,6 +60,7 @@ profileHref.href = `profile.html?id=${user.user_id}`;
 const profilePicture = document.querySelector(".profile-pic-container img");
 const username = document.querySelector(".main-username");
 const email = document.querySelector(".email");
+const likes = document.querySelector(".likes");
 const posts = document.querySelector(".posts");
 const description = document.querySelector(".description");
 // const usernameInput = document.getElementById("username-input");
@@ -76,6 +77,7 @@ const webInfo = (info) => {
     // usernameInput.setAttribute("value", info.username);
     email.innerHTML = info.email;
     // emailInput.value = info.email;
+    likes.innerHTML = "Total " + info.totalNumOfLikes + " likes";
     posts.innerHTML = info.numOfOwnedPosts + " posts";
     if (info.profile != null) {
         description.innerHTML = info.profile;
