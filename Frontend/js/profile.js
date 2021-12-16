@@ -20,31 +20,28 @@ search.addEventListener('click', () => {
 });
 
 document.querySelector(".searchBar").addEventListener("submit", async (evt) => {
-  evt.preventDefault();
-  const fetchOptions = {
-    headers: {
-      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-    },
-  };
-  try {
-    const response = await fetch(url + '/user', fetchOptions);
-    const json = await response.json();
-    console.log(json);
-    console.log(document.querySelector(".searchBar input").value);
-    json.forEach((user) => {
-      if(document.querySelector(".searchBar input").value === user.username) {
-        window.location.href = `profile.html?id=${user.user_id}`
-      } else {
-        Swal.fire({
-          icon: "question",
-          title: "User not found.",
-        });
-      }
-    });
-  } catch (e) {
-    console.log(e.message);
-  }
-});
+    evt.preventDefault();
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    try {
+      const response = await fetch(url + '/user', fetchOptions);
+      const json = await response.json();
+      console.log(json);
+      console.log(document.querySelector(".searchBar input").value);
+      json.forEach((user) => {
+        if(document.querySelector(".searchBar input").value === user.username) {
+          window.location.href = `profile.html?id=${user.user_id}`
+        } 
+      });
+      alert("User with inserted username not found. \nCase sensitive.")
+      document.querySelector(".searchBar input").value = "";
+    } catch (e) {
+      console.log(e.message);
+    }
+  });
 
 // Profile 
 var profileToggle = 0;
@@ -160,7 +157,7 @@ editPictureForm.addEventListener('submit', async (evt) => {
     };
     const response = await fetch(url + '/user', fetchOptions);
     const json = await response.json();
-    alert("Profile picture successfully uploaded.");
+    alert("Your profile picture has been changed successfully.");
 });
 
 // submit edit form
@@ -307,30 +304,34 @@ const createPosts = (posts) => {
 
         // admin or owner delete post
         if (user.role === 0 || user.username === post.username) {
-        const delButton = document.createElement('button');
-        delButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-        delButton.classList.add('delete-button');
-        delButton.addEventListener('click', async () => {
-          const fetchOptions = {
-            method: 'DELETE',
-            headers: {
-              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-            },
-          };
-          try {
-            const response = await fetch(
-              url + '/post/' + post.post_id,
-              fetchOptions
-            );
-            const json = await response.json();
-            console.log('delete response', json);
-            getPost();
-          } catch (e) {
-            console.log(e.message);
-          }
-        });
-        li.appendChild(delButton);
-      }
+            const delButton = document.createElement('button');
+            delButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            delButton.classList.add('delete-button');
+            delButton.addEventListener('click', async () => {
+              if (confirm("Are you sure you want to remove this post by ultimate admin power?")) {
+                const fetchOptions = {
+                  method: 'DELETE',
+                  headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                  },
+                };
+                try {
+                  const response = await fetch(
+                    url + '/post/' + post.post_id,
+                    fetchOptions
+                  );
+                  const json = await response.json();
+                  alert("Post deleted.");
+                  getPost();
+                } catch (e) {
+                  console.log(e.message);
+                }
+              } else {
+                alert("Nothing happened.");
+              }
+            });
+            li.appendChild(delButton);
+        }
     });
   };
   
@@ -344,7 +345,6 @@ const createPosts = (posts) => {
       };
       const response = await fetch(url + '/user/post/' + id, fetchOptions);
       const posts = await response.json();
-      console.log(posts);
       createPosts(posts);
     } catch (e) {
       console.log(e.message);

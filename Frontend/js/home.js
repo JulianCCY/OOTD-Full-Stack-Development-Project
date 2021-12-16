@@ -33,13 +33,10 @@ document.querySelector(".searchBar").addEventListener("submit", async (evt) => {
     json.forEach((user) => {
       if(document.querySelector(".searchBar input").value === user.username) {
         window.location.href = `profile.html?id=${user.user_id}`
-      } else {
-        Swal.fire({
-          icon: "question",
-          title: "User not found.",
-        });
-      }
+      } 
     });
+    alert("User with inserted username not found. \nCase sensitive.")
+    document.querySelector(".searchBar input").value = "";
   } catch (e) {
     console.log(e.message);
   }
@@ -72,12 +69,20 @@ profileHref.href = `profile.html?id=${user.user_id}`;
 // Create posts
 const ul = document.querySelector('#list');
 const createPosts = (posts) => {
+  // if no posts found and last post deleted
+    if (posts.message === "Posts not found") {
+      const nopost = document.createElement("h1");
+      nopost.innerHTML = "No posts recently found on ootd."
+      ul.innerHTML = "";
+      ul.appendChild(nopost);
+      return;
+    }
+    // if posts found, generate posts
     // clear ul
     ul.innerHTML = '';
     posts.forEach((post) => {
       // create li with DOM methods
       const img = document.createElement('img');
-      // img.src = url + '/thumbnails/' + post.image;
       img.src = url + '/' + post.image;
       img.alt = post.id;
       img.classList.add('resp');
@@ -157,7 +162,6 @@ const createPosts = (posts) => {
             fetchOptions
           );
           const json = await response.json();
-          // p2.style.animation = "bounce";
           console.log(json);
           p2.classList.add("like");
           if (json[1] === 0) {
@@ -165,8 +169,6 @@ const createPosts = (posts) => {
           } else {
             p2.innerHTML = `<i class="fas fa-heart" style="color: #e60000"></i> ${json[0]} likes`;
           }
-          // setTimeout(() => {getPost(), 10000});
-          // getPost();
         } catch (e) {
           console.log(e.message);
         }
@@ -174,27 +176,30 @@ const createPosts = (posts) => {
 
         // admin delete post
         if (user.role === 0) {
-        // delete selected cat
         const delButton = document.createElement('button');
         delButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
         delButton.classList.add('delete-button');
         delButton.addEventListener('click', async () => {
-          const fetchOptions = {
-            method: 'DELETE',
-            headers: {
-              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-            },
-          };
-          try {
-            const response = await fetch(
-              url + '/post/' + post.post_id,
-              fetchOptions
-            );
-            const json = await response.json();
-            console.log('delete response', json);
-            getPost();
-          } catch (e) {
-            console.log(e.message);
+          if (confirm("Are you sure you want to remove this post by ultimate admin power?")) {
+            const fetchOptions = {
+              method: 'DELETE',
+              headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+              },
+            };
+            try {
+              const response = await fetch(
+                url + '/post/' + post.post_id,
+                fetchOptions
+              );
+              const json = await response.json();
+              alert("Post deleted.");
+              getPost();
+            } catch (e) {
+              console.log(e.message);
+            }
+          } else {
+            alert("Nothing happened.");
           }
         });
         li.appendChild(delButton);

@@ -33,13 +33,10 @@ document.querySelector(".searchBar").addEventListener("submit", async (evt) => {
     json.forEach((user) => {
       if(document.querySelector(".searchBar input").value === user.username) {
         window.location.href = `profile.html?id=${user.user_id}`
-      } else {
-        Swal.fire({
-          icon: "question",
-          title: "User not found.",
-        });
-      }
+      } 
     });
+    alert("User with inserted username not found. \nCase sensitive.")
+    document.querySelector(".searchBar input").value = "";
   } catch (e) {
     console.log(e.message);
   }
@@ -72,6 +69,20 @@ profileHref.href = `profile.html?id=${user.user_id}`;
 // select existing html elements
 const uploadForm = document.querySelector('#uploadForm');
 const categoryList = document.querySelector('.category');
+
+// select file js
+const file = document.querySelector('.file');
+file.addEventListener('change', (e) => {
+  // Get the selected file
+  const [file] = e.target.files;
+  // Get the file name and size
+  const { name: fileName, size } = file;
+  // Convert size in bytes to kilo bytes
+  const fileSize = (size / 1000).toFixed(2);
+  // Set the text content
+  const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+  document.querySelector('.file-name').textContent = fileNameAndSize;
+});
 
 // create user options to <select>
 const categoryOptions = (categories) => {

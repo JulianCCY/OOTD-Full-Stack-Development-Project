@@ -107,7 +107,7 @@ const observerOptions = {
   fadeElms.forEach(el => observer.observe(el));
 
 
-// backend and fetch
+// fetch ***************************************************************************************************************
 const url = 'http://localhost:3000'; // change url when uploading to server
 
 // select existing html elements
@@ -126,9 +126,8 @@ loginForm.addEventListener('submit', async (evt) => {
   
     const response = await fetch(url + '/auth/login', fetchOptions);
     const json = await response.json();
-    console.log('login response', json);
     if (!json.user) {
-      Swal.fire(json.message);
+      alert(json.message);
     } else {
       // save token
       sessionStorage.setItem('token', json.token);

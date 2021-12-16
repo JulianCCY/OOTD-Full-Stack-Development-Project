@@ -224,7 +224,22 @@ nav ul li a {
     margin: auto;
 }
 .file {
-    background: #FFFFFF;  
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+}
+.file-input label {
+    display: block;
+    position: relative;
+    height: 50px;
+    background: #2e2e3a;
+    color: #f8f8f8;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 #uploadButton {
     display: inline-block;
@@ -232,7 +247,8 @@ nav ul li a {
     width: 8em;
     color: #f8f8f8;
     background: rgba(29,46,45,1);
-    border: 1px solid #000000;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
+    border: none;
     border-radius: 10px;
     cursor: pointer;
     font-weight: bold;

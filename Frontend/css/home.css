@@ -132,7 +132,7 @@ nav ul li a {
     pointer-events: none;
 }
 
-/* Nav effects */
+/* Nav effects ******************************************************************************************/
 .link {
     padding-top: 5px;
     height: 30px;
@@ -175,7 +175,11 @@ nav ul li a {
     transform: rotate(0);
 }
 
-/* Posts */
+/* Posts ******************************************************************************************************/
+#list h1 {
+    width: 100%;
+    text-align: center;
+}
 .img-container {
     width: 100%;
     height: 85%;
@@ -282,7 +286,7 @@ nav ul li a {
     height: 30px;
     font-family: 'Oswald', sans-serif;
     overflow: hidden;
-    white-space: nowrap; /* Don't forget this one */
+    white-space: nowrap;
     text-overflow: ellipsis;
     transition: all 3s;
 }
