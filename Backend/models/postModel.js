@@ -23,6 +23,16 @@ const getAllPosts = async (userId) => {
     };
 };
 
+// get all posts by category in highlight
+const getAllPostByCategory = async (categoryId) => {
+    try {
+      const [rows] = await promisePool.query('SELECT user_post.post_id, ootd_user.user_id, ootd_user.username, ootd_user.profile_pic, image, description, categories.cid, categories.category, COUNT(post_likes.post_id) AS likes, upload_time, time_stamp FROM user_post INNER JOIN ootd_user ON user_post.user_id = ootd_user.user_id JOIN categories ON user_post.category = categories.cid LEFT JOIN post_likes ON user_post.post_id = post_likes.post_id WHERE user_post.category = ? GROUP BY user_post.post_id ORDER BY user_post.upload_time DESC;', [categoryId]);
+      return rows;
+    } catch (e) {
+      console.error('error getting post by category', e.message);
+    }
+};
+
 // get one single post
 const getPost = async(postId, next) => {
     try{
@@ -55,7 +65,7 @@ const insertPost = async (post) =>{
 
 // delete post
 const deletePost = async (postId, user_id, role) => {
-  //delete all likes of the post and then delete the post
+  //delete all likes of the post before delete the post because of the link of foreign key
   let sql1 = 'Delete from post_likes where post_likes.post_id = ?;';
   let sql2 = 'Delete from user_post where user_post.post_id = ? AND user_post.user_id;';
   let params1 = [postId]
@@ -73,6 +83,7 @@ const deletePost = async (postId, user_id, role) => {
   }
 };
 
+// get the no. of likes from a single post
 const getLikeOfPost = async (postId) => {
   try {
     const [rows] = await promisePool.execute('SELECT COUNT (*) as likes FROM post_likes WHERE post_id = ?', [postId]);
@@ -84,7 +95,7 @@ const getLikeOfPost = async (postId) => {
   }
 };
 
-// manage likes of a post
+// manage likes on posts, add or remove likes
 const manageLikes = async (userId, postId) => {
   try {
     const [check] = await promisePool.execute('SELECT COUNT(*) AS likes FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
@@ -100,24 +111,12 @@ const manageLikes = async (userId, postId) => {
     console.error('error managing likes', e.message);
   }
 };  
-// const updatePost = async (cat) => {
-//     let sql = 'UPDATE wop_cat SET name = ?, weight = ? ,birthdate = ? WHERE cat_id = ? AND owner = ?';
-//     let params = [cat.name, cat.weight, cat.birthdate, cat.id, cat.owner];
-//     if(cat.role === 0){
-//       sql = 'UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate = ? WHERE cat_id = ?';
-//       params = [cat.name, cat.weight, cat.owner, cat.birthdate, cat.id]
-//     }
-//     try {
-//       const[rows] = await promisePool.execute(sql,params);
-//       return rows.affectedRows === 1;
-//     } catch (e) {
-//       console.error('model update cat', e.message);
-//     };
-// };
+
 
 module.exports = {
   getAllCategories,
   getAllPosts,
+  getAllPostByCategory,
   getPost,
   insertPost,
   deletePost,

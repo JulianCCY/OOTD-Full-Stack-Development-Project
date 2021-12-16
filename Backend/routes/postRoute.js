@@ -3,7 +3,7 @@
 const express = require("express");
 const { body } = require("express-validator");
 const multer = require("multer");
-const { get_all_posts, get_post, upload_post, delete_post, likes_of_post } = require("../controllers/postController");
+const { get_all_posts, get_post, upload_post, delete_post, likes_of_post, get_all_posts_by_category } = require("../controllers/postController");
 const router = express.Router();
 
 const fileFilter = (req, file, cb) => {
@@ -26,5 +26,10 @@ router.route('/:postId')
     .get(get_post)
     .delete(delete_post)
     .post(likes_of_post);
+
+//double check plz
+//From database user_post 'category' is a num which is equal to cid in categories
+router.route('/:category')
+    .get(get_all_posts_by_category)
 
 module.exports = router;

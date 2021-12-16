@@ -1,11 +1,11 @@
 'use strict';
 
-const { getAllPosts, getPost, insertPost, deletePost, manageLikes } = require('../models/postModel');
+const { getAllPosts, getPost, insertPost, deletePost, manageLikes, getAllPostByCategory } = require('../models/postModel');
 const { httpError } = require('../utils/errors');
 const { validationResult } = require("express-validator");
 const { makePostPhoto } = require('../utils/resize');
-// const { getCoordinates } = require('../utils/imageMeta');
 
+// get all the posts from usermodel with checking likes by user id
 const get_all_posts = async (req, res, next) => {
     const posts = await getAllPosts(req.user.user_id);
     if (posts.length > 0) {
@@ -17,16 +17,30 @@ const get_all_posts = async (req, res, next) => {
     }
   };
 
+// filter all the post by category id
+const get_all_posts_by_category = async (req, res, next) => {
+    const posts = await getAllPostByCategory(req.params.category);
+    if (posts.length > 0){
+        res.json(posts);
+    } else {
+        const err = httpError('Posts  not found', 404);
+        next(err)
+        return;
+    }
+}
+
+// get info of a single post with post id
 const get_post = async (req, res, next) => {
     const post = await getPost(req.params.postId, next)
     if (post) {
         res.json({post});
         return;
     }
-    const err = httpError("Post not found", 404);
+    const err = httpError("Posts not found", 404);
     next(err);
 };
 
+// upload a single post with user id, filename and validation check
 const upload_post = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -66,11 +80,13 @@ const upload_post = async (req, res, next) => {
     }
 }
 
+// delete post with post id, user id, and admin role (0)
 const delete_post = async (req, res) => {
     const deleted = await deletePost(req.params.postId, req.user.user_id, req.user.role);
     res.json({message: `Post with id: ${deleted} has been deleted.`});
 }
 
+// Add or remove likes of posts with post id and user id
 const likes_of_post = async (req, res) =>{
     const likes = await manageLikes(req.user.user_id, req.params.postId);
     res.json({message: `Modified likes. ${likes}`});
@@ -78,6 +94,7 @@ const likes_of_post = async (req, res) =>{
 
 module.exports = {
     get_all_posts,
+    get_all_posts_by_category,
     get_post,
     upload_post,
     delete_post,

@@ -51,11 +51,42 @@ const createCategories = (categories) => {
       // create li with DOM methods
       const categoryImg = document.createElement('img');
       switch (category.category) {
-        case "Vintage":
-            categoryImg.src = "./img/Vintage.png";
+        case 'Vintage':
+            categoryImg.src = './img/Vintage.png';
             break; 
-        case "Vintage 80s":
-            categoryImg.src = "./img/Vintage80s.jpg"
+        case 'Vintage 80s':
+            categoryImg.src = './img/80s.jpeg';
+            break;
+        case 'Vintage 90s':
+            categoryImg.src = './img/90s.jpeg';
+            break;
+        case 'Casual':
+            categoryImg.src = './img/Casual.jpeg';
+            break;
+        case 'GO-TO':
+            categoryImg.src = './img/GO-TO.jpeg';
+            break;
+        case 'Affordable':
+            categoryImg.src = './img/Affordable.jpeg';
+            break;
+        case 'Formal':
+            categoryImg.src = './img/Formal.jpeg';
+            break;
+        case 'Spring Essentials':
+            categoryImg.src = './img/Spring.jpeg';
+            break;
+        case 'Summer Pickups':
+            categoryImg.src = './img/Summer.jpeg';
+            break;
+        case 'Get Fall Ready':
+            categoryImg.src = './img/Fall.jpeg';
+            break;
+        case 'Winter Essentials':
+            categoryImg.src = './img/winter.jpeg';
+            break;
+        case 'Christmas (Season Limited)':
+            categoryImg.src = './img/Christmas.jpeg';
+            break;
       }
       categoryImg.classList.add('categoryImgProps');
   
