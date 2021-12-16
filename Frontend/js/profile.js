@@ -158,6 +158,7 @@ editPictureForm.addEventListener('submit', async (evt) => {
     const response = await fetch(url + '/user', fetchOptions);
     const json = await response.json();
     alert("Your profile picture has been changed successfully.");
+    getUser();
 });
 
 // submit edit form
@@ -180,7 +181,6 @@ editForm.addEventListener('submit', async (evt) => {
         };
         const response = await fetch(url + '/user/' + user.user_id, fetchOptions);
         const json = await response.json();
-        alert("Profile has been updated.");
         if (json.status === "invalid") {
             document.getElementById("username").value = "";
             document.getElementById("email").value = "";
@@ -199,6 +199,7 @@ editForm.addEventListener('submit', async (evt) => {
             document.getElementById("passwd").value = "";
             document.getElementById("passwdC").value = "";
             document.getElementById("description").value = "";
+            alert("Profile has been updated.");
             getUser();
         }
     }
@@ -308,7 +309,7 @@ const createPosts = (posts) => {
             delButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
             delButton.classList.add('delete-button');
             delButton.addEventListener('click', async () => {
-              if (confirm("Are you sure you want to remove this post by ultimate admin power?")) {
+              if (confirm("Are you sure you want to remove this post forever?")) {
                 const fetchOptions = {
                   method: 'DELETE',
                   headers: {
