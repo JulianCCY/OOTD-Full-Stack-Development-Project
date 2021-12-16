@@ -9,7 +9,7 @@ const url = 'http://localhost:3000'; // change url when uploading to server
     // remove token
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
-    alert("Logout failed \nYou have to be logged in to logout, please login to logout.");
+    alert("You have logged out \nThank you for using OOT:D");
     location.href = 'front.html';
   } catch (e) {
     console.log(e.message);

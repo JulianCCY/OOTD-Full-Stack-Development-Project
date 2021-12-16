@@ -6,27 +6,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css/post.css" rel="stylesheet">
     <!-- icons -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/18835e3c93.js" crossorigin="anonymous"></script>
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- alert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.0/sweetalert2.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
     <title>Post</title>
 </head>
 <body>
-    <div id="upload-container">
-        <h3>Share your outfit!</h3>
-        <form action="http://localhost:3000/category" method="post" enctype="multipart/form-data" id="uploadForm">
-            <input class="light-border file" type="file" required name="post" accept="image/*" placeholder="Choose file">
-            <input class="light-border" autocomplete="off" type="text" required name="description" placeholder="Description">
-            <select class="light-border category" name="category">
-                <option value="">Select a category</option>
-            </select>
-            <button id="uploadButton" type="submit">Upload</button>
-            <a id="backButton" href="home.html">Back</a>
-        </form>
+    <nav>
+        <ul>
+            <li><a class="link home" href="home.html">
+                <span class="wrap">
+                    <div class="link-container">
+                        <span class="link-title1 title">Home</span>
+                        <span class="link-title2 title">Home</span>
+                    </div>
+                </span>
+                </a>
+            </li>
+            <li><a class="link highlights" href="highlights.html">
+                <span class="wrap">
+                    <div class="link-container">
+                        <span class="link-title1 title">Hightlights</span>
+                        <span class="link-title2 title">Hightlights</span>
+                    </div>
+                </span>
+                </a>
+            </li>
+            <li>
+                <a class="link search">
+                    <span class="wrap">
+                        <div class="link-container" id="search">
+                            <span class="link-title1 title">Search</span>
+                            <span class="link-title2 title">Search</span>
+                        </div>
+                        <input class="searchBar" type="text" name="searchBar" placeholder="Users">
+                    </span>
+                </a>
+            </li>
+            <li><a class="link post" href="post.html">
+                <span class="wrap">
+                    <div class="link-container">
+                        <span class="link-title1 title">Post</span>
+                        <span class="link-title2 title">Post</span>
+                    </div>
+                </span>
+                </a>
+            </li>
+            <li><a class="link profile">
+                <span class="wrap">
+                    <div class="link-container" id="profile">
+                        <span class="link-title1 title">Profile</span>
+                        <span class="link-title2 title">Profile</span>
+                    </div>
+                </span>
+                </a>
+            </li>
+            <ul class="profile-list">
+                <li><a id="profileHref" href=""><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </ul>
+    </nav>
+
+    <div class="big-container">
+        <div class="preview">
+            <h1><i class="fas fa-tshirt"></i><br>Preview unavailable yet.</h1>
+        </div>
+        <div id="upload-container">
+            <h3>Share your outfit!</h3>
+            <form action="http://localhost:3000/category" method="post" enctype="multipart/form-data" id="uploadForm">
+                <input class="light-border file" type="file" required name="post" accept="image/*" placeholder="Choose file">
+                <input class="light-border" autocomplete="off" type="text" required name="description" placeholder="Description">
+                <select class="light-border category" name="category">
+                    <option value="">Select a category</option>
+                </select>
+                <button id="uploadButton" type="submit">Upload</button>
+                <a id="backButton" href="home.html">Back</a>
+            </form>
+        </div>
     </div>
 
     <!-- js -->

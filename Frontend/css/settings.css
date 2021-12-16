@@ -35,7 +35,7 @@ nav ul li a {
 }
 .highlights {
     position: absolute;
-    left: 15%;
+    left: 14%;
 }
 .search .wrap {
     position: absolute;
@@ -146,22 +146,74 @@ nav ul li a {
 .link:hover .link-title2 {
     transform: rotate(0);
 }
+/* ********************************************************************************************* */
 section {
     position: relative;
-    width: 100%;
-    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+.selections {
+    width: 20%;
+    padding: 1em;
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+.selections ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.selections li {
+    font-size: calc(1em + 0.5vw);
+    margin: 0.1em;
+    padding: 0.3em;
+    transition: 0.5s;
+    border-radius: 0.3em;
+    cursor: pointer;
+    /* border-style: groove; */
+}
+.selections li:hover {
+    background-color: rgba(0, 0, 0, 0.25);
 }
 .deleteButton {
+    margin: 1em;
+    padding: 0.5em;
     border-style: none;
     color: white;
-    width: 500px;
-    height: 500px;
-    border-radius: 20%;
-    background-color: red;
-    font-size: 50px;
+    background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+    background-size: 1000% 1000%;
+    font-size: 20px;
     cursor: pointer;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    border-radius: 0.3em;
+    animation: rainbow 10s ease infinite, colorRotate 1s linear 0s infinite;
+}
+@keyframes rainbow { 
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@keyframes colorRotate {
+    from {
+      color: #6666ff;
+    }
+    10% {
+      color: #0099ff;
+    }
+    50% {
+      color: #00ff00;
+    }
+    75% {
+      color: #ff3399;
+    }
+    100% {
+      color: #6666ff;
+    }
+  }
+.container {
+    width: 60%;
+}
+.container h1 {
+    text-align: center;
+    font-size: calc(5em + 2vw);
+    transform: rotate(20deg);
 }

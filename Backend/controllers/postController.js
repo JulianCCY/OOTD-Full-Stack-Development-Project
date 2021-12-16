@@ -1,6 +1,6 @@
 'use strict';
 
-const { getAllPosts, getPost, insertPost, deletePost, manageLikes, getAllPostByCategory } = require('../models/postModel');
+const { getAllPosts, getPost, insertPost, deletePost, manageLikes } = require('../models/postModel');
 const { httpError } = require('../utils/errors');
 const { validationResult } = require("express-validator");
 const { makePostPhoto } = require('../utils/resize');
@@ -16,18 +16,6 @@ const get_all_posts = async (req, res, next) => {
         return;
     }
   };
-
-// filter all the post by category id
-const get_all_posts_by_category = async (req, res, next) => {
-    const posts = await getAllPostByCategory(req.params.category);
-    if (posts.length > 0){
-        res.json(posts);
-    } else {
-        const err = httpError('Posts  not found', 404);
-        next(err)
-        return;
-    }
-}
 
 // get info of a single post with post id
 const get_post = async (req, res, next) => {
@@ -66,9 +54,9 @@ const upload_post = async (req, res, next) => {
         post.filename = req.file.filename;
         post.userId = req.user.user_id;
         const id = await insertPost(post);
-        console.log('Try insert', req.file);
+        // console.log('Try insert', req.file);
         if (thumb){
-            console.log('After insert', req.file);
+            // console.log('After insert', req.file);
             res.json({message: `Your post has been uploaded with id: ${id}`, post_id: id});
             return;
         }
@@ -94,7 +82,6 @@ const likes_of_post = async (req, res) =>{
 
 module.exports = {
     get_all_posts,
-    get_all_posts_by_category,
     get_post,
     upload_post,
     delete_post,

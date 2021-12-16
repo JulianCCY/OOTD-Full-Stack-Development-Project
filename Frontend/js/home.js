@@ -55,11 +55,6 @@ const createPosts = (posts) => {
       img.alt = post.id;
       img.classList.add('resp');
   
-      // open image in single.html
-      // img.addEventListener('click', () => {
-      //   location.href = 'single.html?id=' + post.post_id;
-      // });
-  
       const figure = document.createElement('figure').appendChild(img);
 
       const imgContainer = document.createElement("div");
@@ -81,7 +76,7 @@ const createPosts = (posts) => {
   
       const p2 = document.createElement('p');
       if (post.liked === 0) {
-        p2.innerHTML = `<i class="far fa-heart dislike"></i> ${post.likes} likes`;
+        p2.innerHTML = `<i class="far fa-heart"></i> ${post.likes} likes`;
       } else {
         p2.innerHTML = `<i class="fas fa-heart" style="color: #e60000"></i> ${post.likes} likes`;
       }
@@ -134,6 +129,7 @@ const createPosts = (posts) => {
             fetchOptions
           );
           const json = await response.json();
+          p2.classList.add("like");
           getPost();
         } catch (e) {
           console.log(e.message);

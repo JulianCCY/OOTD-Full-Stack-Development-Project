@@ -22,8 +22,8 @@ registerForm.addEventListener('submit', async (evt) => {
       };
       const response = await fetch(url + '/auth/register', fetchOptions);
       const json = await response.json();
-      console.log(json);
-      alert(json.message);
+      // alert(json.message);
+      Swal.fire(json.message);
       if (json.status === "invalid") {
         document.getElementById("username").value = "";
         document.getElementById("email").value = "";

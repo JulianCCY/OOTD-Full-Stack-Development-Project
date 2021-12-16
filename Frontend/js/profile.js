@@ -78,7 +78,7 @@ profileHref.href = `profile.html?id=${user.user_id}`;
 const profilePicture = document.querySelector(".profile-pic-container img");
 const username = document.querySelector(".main-username");
 const email = document.querySelector(".email");
-const likes = document.querySelector(".likes");
+const likes = document.querySelector(".totalLikes");
 const posts = document.querySelector(".posts");
 const description = document.querySelector(".description");
 
@@ -111,7 +111,6 @@ const getUser = async () => {
       };
       const response = await fetch(url + '/user/' + id, options);
       const users = await response.json();
-      console.log(users);
       webInfo(users[0]);
     } catch (e) {
       console.log(e.message);
@@ -134,7 +133,7 @@ editPictureForm.addEventListener('submit', async (evt) => {
     };
     const response = await fetch(url + '/user', fetchOptions);
     const json = await response.json();
-    alert(json.message);
+    alert("Profile picture successfully uploaded.");
 });
 
 // submit edit form
@@ -147,11 +146,6 @@ editForm.addEventListener('submit', async (evt) => {
     } else {
         message.innerHTML = " ";
         const data = serializeJson(editForm);
-        // for (const [prop, value] of Object.entries(data)) {
-        //     if (value === '') {
-        //       delete data[prop];
-        //     }
-        // }
         const fetchOptions = {
             method: 'PUT',
             headers: {
@@ -162,7 +156,7 @@ editForm.addEventListener('submit', async (evt) => {
         };
         const response = await fetch(url + '/user/' + user.user_id, fetchOptions);
         const json = await response.json();
-        alert(json.message);
+        alert("Profile has been updated.");
         if (json.status === "invalid") {
             document.getElementById("username").value = "";
             document.getElementById("email").value = "";
@@ -219,7 +213,7 @@ const createPosts = (posts) => {
   
       const p2 = document.createElement('p');
       if (post.liked === 0) {
-        p2.innerHTML = `<i class="far fa-heart dislike"></i> ${post.likes} likes`;
+        p2.innerHTML = `<i class="far fa-heart"></i> ${post.likes} likes`;
       } else {
         p2.innerHTML = `<i class="fas fa-heart" style="color: #e60000"></i> ${post.likes} likes`;
       }
@@ -272,6 +266,7 @@ const createPosts = (posts) => {
             fetchOptions
           );
           const json = await response.json();
+          p2.classList.add("like");
           getPost();
         } catch (e) {
           console.log(e.message);

@@ -1,5 +1,5 @@
 'use strict';
-const { getAllUsers, getUser, updateUserProPic, updateUser, checkUsername, checkPassword, getUserPosts, checkEmail, deleteUser} = require("../models/userModel");
+const { getAllUsers, getUser, updateUserProPic, updateUser, checkUsername, getUserPosts, checkEmail, deleteUser} = require("../models/userModel");
 const { httpError } = require("../utils/errors");
 const { body, validationResult } = require('express-validator');
 
@@ -13,10 +13,6 @@ const checkToken = (req, res, next) => {
 };
 
 const user_list_get = async (req, res) => {
-    // const newUsers = users.map((user)=>{
-    //     delete user.password
-    //     return user;
-    // });
     const newUsers = await getAllUsers();
     await newUsers.forEach((user) => delete user.password);
     
@@ -84,7 +80,7 @@ const updateProPic = async (req, res) => {
 }
 
 const user_post_get = async (req, res, next) => {
-    const posts = await getUserPosts(req.params.userId);
+    const posts = await getUserPosts(req.params.userId, req.user.user_id);
     // console.log("all posts", posts);
     if (posts.length > 0) {
         res.json(posts);

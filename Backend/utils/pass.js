@@ -12,7 +12,7 @@ passport.use(new Strategy(
         const params = [username];
         try {
             const [user] = await getUserLogin(params);
-            console.log('Local strategy', user); // result is binary row
+            // console.log('Local strategy', user); // result is binary row
             if (!user) {
             return done(null, false, {message: 'Incorrect username.'});
             }

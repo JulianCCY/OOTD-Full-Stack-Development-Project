@@ -27,9 +27,4 @@ router.route('/:postId')
     .delete(delete_post)
     .post(likes_of_post);
 
-//double check plz
-//From database user_post 'category' is a num which is equal to cid in categories
-router.route('/:category')
-    .get(get_all_posts_by_category)
-
 module.exports = router;

@@ -46,7 +46,7 @@ profileHref.href = `profile.html?id=${user.user_id}`;
 const categoriesUL = document.querySelector('#categories-list');
 const createCategories = (categories) => {
     // clear ul
-    categories.innerHTML = '';
+    categoriesUL.innerHTML = '';
     categories.forEach((category) => {
       // create li with DOM methods
       const categoryImg = document.createElement('img');
@@ -106,10 +106,18 @@ const createCategories = (categories) => {
       categoriesLI.appendChild(categoryName);
       categoriesLI.appendChild(categoryFigure);
       categoriesUL.appendChild(categoriesLI);
+
+      // Get posts of that category
+      categoryFigure.addEventListener('click', async () => {
+        console.log(`clicked ${category.category}`);
+        document.querySelector('#list').innerHTML = "";
+        getPost(category.cid);
+        setTimeout(() => {document.getElementById("secPosts").scrollIntoView()}, 200);
+      });
     });
   };
   
-  // AJAX call
+  // AJAX call for categories
   const getcategories = async () => {
     try {
       const fetchOptions = {
@@ -120,7 +128,6 @@ const createCategories = (categories) => {
       const response = await fetch(url + '/category', fetchOptions);
       const categories = await response.json();
       categories.shift();
-      console.log(categories);
       createCategories(categories);
     } catch (e) {
       console.log(e.message);
@@ -128,8 +135,95 @@ const createCategories = (categories) => {
   };
   getcategories();
 
-
-
-
 // Create posts
 const ul = document.querySelector('#list');
+const createPosts = (posts) => {
+    // clear ul
+    ul.innerHTML = '';
+    posts.forEach((post) => {
+      // create li with DOM methods
+      const img = document.createElement('img');
+      img.src = url + '/' + post.image;
+      img.alt = post.id;
+      img.classList.add('resp');
+  
+      const figure = document.createElement('figure').appendChild(img);
+
+      const imgContainer = document.createElement("div");
+      imgContainer.classList.add("img-container");
+      imgContainer.appendChild(figure);
+  
+      const proImg = document.createElement("img");
+      if (post.profile_pic === null) {
+        proImg.src = "./img/DefaultProfilePic.png";
+      }
+      else {
+        proImg.src = url + "/" + post.profile_pic;
+      }
+      const proPic = document.createElement("figure").appendChild(proImg);
+      
+      const p1 = document.createElement('a');
+      p1.href = `profile.html?id=${post.user_id}`;
+      p1.innerHTML = `${post.username}`;
+
+      const usernameContainer = document.createElement("div");
+      usernameContainer.classList.add("username-container");
+      usernameContainer.appendChild(proPic);
+      usernameContainer.appendChild(p1);
+  
+      const li = document.createElement('li');
+      li.classList.add('light-border');
+      p1.classList.add("username");
+  
+      li.appendChild(usernameContainer);
+      li.appendChild(imgContainer);
+      ul.appendChild(li);
+
+        // admin delete post
+        if (user.role === 0) {
+        // delete selected cat
+        const delButton = document.createElement('button');
+        delButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        delButton.classList.add('delete-button');
+        delButton.addEventListener('click', async () => {
+          const fetchOptions = {
+            method: 'DELETE',
+            headers: {
+              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+          };
+          try {
+            const response = await fetch(
+              url + '/post/' + post.post_id,
+              fetchOptions
+            );
+            const json = await response.json();
+            getPost(post.cid);
+          } catch (e) {
+            console.log(e.message);
+          }
+        });
+        li.appendChild(delButton);
+      }
+    });
+  };
+  
+  // AJAX call
+  const getPost = async (cid) => {
+    try {
+      const fetchOptions = {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      };
+      const response = await fetch(url + '/category/' + cid, fetchOptions);
+      const posts = await response.json();
+      if (posts.message === "None") {
+          Swal.fire("No posts found");
+      } else {
+        createPosts(posts);
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+};
