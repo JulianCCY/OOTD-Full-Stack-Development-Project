@@ -81,7 +81,6 @@ const updateProPic = async (req, res) => {
 
 const user_post_get = async (req, res, next) => {
     const posts = await getUserPosts(req.params.userId, req.user.user_id);
-    // console.log("all posts", posts);
     if (posts.length > 0) {
         res.json(posts);
     } else {

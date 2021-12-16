@@ -15,6 +15,13 @@ const passport = require('./utils/pass');
 
 var bcrypt = require('bcryptjs');
 
+// process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+// if (process.env.NODE_ENV === 'production') {
+//   require('./utils/production')(app, 3000);
+// } else {
+//   require('./utils/localhost')(app, 8000, 3000);
+// }
+
 
 app.use(cors());
 app.use(express.json());// for parsing application/json
