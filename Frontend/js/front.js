@@ -108,7 +108,7 @@ const observerOptions = {
 
 
 // fetch ***************************************************************************************************************
-const url = 'http://localhost:3000'; // change url when uploading to server
+const url = 'http://10.114.32.122/app'; // change url when uploading to server
 
 // select existing html elements
 const loginForm = document.querySelector('#loginForm');
