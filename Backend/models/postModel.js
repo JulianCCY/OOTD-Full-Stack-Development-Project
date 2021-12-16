@@ -54,7 +54,6 @@ const insertPost = async (post) =>{
     var dateTime = date+' '+time;
     const[rows] = await promisePool.execute('INSERT INTO user_post (user_id, image, description, category, upload_time) VALUES (?,?,?,?,?)', 
     [post.userId, post.filename, post.description, post.category, dateTime]);
-    console.log('model insert post', rows);
     return rows.insertId;
   }catch(e){
     console.error('model insert post', e.message);
@@ -101,11 +100,13 @@ const manageLikes = async (userId, postId) => {
     const [check] = await promisePool.execute('SELECT COUNT(*) AS likes FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
     if (check[0].likes === 0){
       const [rows] = await promisePool.execute('INSERT INTO post_likes (user_id, post_id) VALUES (?,?)', [userId, postId]);
-      return rows;
+      const [getLikes] = await promisePool.execute("SELECT COUNT(*) AS total FROM post_likes WHERE post_id = ?", [postId]);
+      return [getLikes[0].total, 1];
     }
     else {
       const [rows] = await promisePool.execute('DELETE FROM post_likes WHERE user_id = ? AND post_id = ?', [userId, postId]);
-      return rows;
+      const [getLikes] = await promisePool.execute("SELECT COUNT(*) AS total FROM post_likes WHERE post_id = ?", [postId]);
+      return [getLikes[0].total, 0];
     }
   } catch (e){
     console.error('error managing likes', e.message);

@@ -15,9 +15,9 @@ const checkToken = (req, res, next) => {
 const user_list_get = async (req, res) => {
     const newUsers = await getAllUsers();
     await newUsers.forEach((user) => delete user.password);
-    
-    const filterAdmin = newUsers.filter(user => user.role > 0);
-    res.json(filterAdmin);
+    res.json(newUsers);
+    // const filterAdmin = newUsers.filter(user => user.role > 0);
+    // res.json(filterAdmin);
 };
 
 const user_get = async (req, res) => {

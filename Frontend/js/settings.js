@@ -19,7 +19,34 @@ search.addEventListener('click', () => {
     }
 });
 
-// Nav Profile 
+document.querySelector(".searchBar").addEventListener("submit", async (evt) => {
+  evt.preventDefault();
+  const fetchOptions = {
+    headers: {
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    },
+  };
+  try {
+    const response = await fetch(url + '/user', fetchOptions);
+    const json = await response.json();
+    console.log(json);
+    console.log(document.querySelector(".searchBar input").value);
+    json.forEach((user) => {
+      if(document.querySelector(".searchBar input").value === user.username) {
+        window.location.href = `profile.html?id=${user.user_id}`
+      } else {
+        Swal.fire({
+          icon: "question",
+          title: "User not found.",
+        });
+      }
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+});
+
+// Profile 
 var profileToggle = 0;
 const profile = document.querySelector("#profile");
 const profileList = document.querySelector(".profile-list");

@@ -46,7 +46,10 @@
                             <span class="link-title1 title">Search</span>
                             <span class="link-title2 title">Search</span>
                         </div>
-                        <input class="searchBar" type="text" name="searchBar" placeholder="Users">
+                        <form class="searchBar" action="">
+                            <input type="search" autocomplete="off" name="search" placeholder="Users">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
                     </span>
                 </a>
             </li>
@@ -70,7 +73,7 @@
             </li>
             <ul class="profile-list">
                 <li><a id="profileHref" href=""><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href=""><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
                 <li><a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </ul>

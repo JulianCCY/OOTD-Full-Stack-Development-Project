@@ -38,9 +38,6 @@ const upload_post = async (req, res, next) => {
         return;
     }
 
-    console.log("upload post data", req.body);
-    console.log("filename", req.file);
-
     if (!req.file) {
         const err = httpError('Invalid file', 400);
         next(err);
@@ -49,14 +46,11 @@ const upload_post = async (req, res, next) => {
 
     try {
         const thumb = await makePostPhoto(req.file.path, req.file.filename);
-        console.log('Try thumb', req.file);
         const post = req.body;
         post.filename = req.file.filename;
         post.userId = req.user.user_id;
         const id = await insertPost(post);
-        // console.log('Try insert', req.file);
         if (thumb){
-            // console.log('After insert', req.file);
             res.json({message: `Your post has been uploaded with id: ${id}`, post_id: id});
             return;
         }
@@ -77,7 +71,7 @@ const delete_post = async (req, res) => {
 // Add or remove likes of posts with post id and user id
 const likes_of_post = async (req, res) =>{
     const likes = await manageLikes(req.user.user_id, req.params.postId);
-    res.json({message: `Modified likes. ${likes}`});
+    res.json(likes);
 }
 
 module.exports = {

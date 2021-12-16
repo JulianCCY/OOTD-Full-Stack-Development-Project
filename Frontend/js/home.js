@@ -18,6 +18,33 @@ search.addEventListener('click', () => {
     }
 });
 
+document.querySelector(".searchBar").addEventListener("submit", async (evt) => {
+  evt.preventDefault();
+  const fetchOptions = {
+    headers: {
+      Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+    },
+  };
+  try {
+    const response = await fetch(url + '/user', fetchOptions);
+    const json = await response.json();
+    console.log(json);
+    console.log(document.querySelector(".searchBar input").value);
+    json.forEach((user) => {
+      if(document.querySelector(".searchBar input").value === user.username) {
+        window.location.href = `profile.html?id=${user.user_id}`
+      } else {
+        Swal.fire({
+          icon: "question",
+          title: "User not found.",
+        });
+      }
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+});
+
 // Profile 
 var profileToggle = 0;
 const profile = document.querySelector("#profile");
@@ -35,8 +62,6 @@ profile.addEventListener("click", () => {
   }
 });
 
-// Create posts
-const ul = document.querySelector('#list');
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
 
@@ -44,6 +69,8 @@ const user = JSON.parse(sessionStorage.getItem('user'));
 const profileHref = document.getElementById("profileHref");
 profileHref.href = `profile.html?id=${user.user_id}`;
 
+// Create posts
+const ul = document.querySelector('#list');
 const createPosts = (posts) => {
     // clear ul
     ul.innerHTML = '';
@@ -117,6 +144,7 @@ const createPosts = (posts) => {
 
       // functional likes
       p2.addEventListener("click", async () => {
+        p2.classList.remove("like");
         const fetchOptions = {
           method: 'POST',
           headers: {
@@ -129,8 +157,16 @@ const createPosts = (posts) => {
             fetchOptions
           );
           const json = await response.json();
+          // p2.style.animation = "bounce";
+          console.log(json);
           p2.classList.add("like");
-          getPost();
+          if (json[1] === 0) {
+            p2.innerHTML = `<i class="far fa-heart"></i> ${json[0]} likes`;
+          } else {
+            p2.innerHTML = `<i class="fas fa-heart" style="color: #e60000"></i> ${json[0]} likes`;
+          }
+          // setTimeout(() => {getPost(), 10000});
+          // getPost();
         } catch (e) {
           console.log(e.message);
         }

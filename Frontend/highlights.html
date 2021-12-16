@@ -10,7 +10,7 @@
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@200;400;600&display=swap" rel="stylesheet">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- alert -->
@@ -46,7 +46,10 @@
                             <span class="link-title1 title">Search</span>
                             <span class="link-title2 title">Search</span>
                         </div>
-                        <input class="searchBar" type="text" name="searchBar" placeholder="Users">
+                        <form class="searchBar" action="">
+                            <input type="search" autocomplete="off" name="search" placeholder="Users">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
                     </span>
                 </a>
             </li>
