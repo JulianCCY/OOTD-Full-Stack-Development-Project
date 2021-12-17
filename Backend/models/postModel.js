@@ -66,7 +66,7 @@ const insertPost = async (post) =>{
 const deletePost = async (postId, user_id, role) => {
   //delete all likes of the post before delete the post because of the link of foreign key
   let sql1 = 'Delete from post_likes where post_likes.post_id = ?;';
-  let sql2 = 'Delete from user_post where user_post.post_id = ? AND user_post.user_id;';
+  let sql2 = 'Delete from user_post where user_post.post_id = ? AND user_post.user_id = ?;';
   let params1 = [postId]
   let params2 = [postId, user_id];
   if (role === 0){
