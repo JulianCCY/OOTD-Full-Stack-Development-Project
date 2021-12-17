@@ -460,6 +460,9 @@ nav ul li a {
     font-size: calc(15px + 1vw);
     text-decoration: none;
     color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #list li .info {
     position: relative;

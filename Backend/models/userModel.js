@@ -28,7 +28,6 @@ var bcrypt = require('bcryptjs');
   const getAllUsers = async () => {
     //all async will return a promise
     try {
-      // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
       const [rows] = await promisePool.query('SELECT * FROM ootd_user');
       return rows;
     } catch (e) {
