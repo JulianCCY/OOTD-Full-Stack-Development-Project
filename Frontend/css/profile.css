@@ -249,10 +249,16 @@ nav ul li a {
 .posts {
     width: 20%;
     margin-right: 5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
 }
 .totalLikes {
     width: 20%;
     margin-right: 5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
 }
 .description {
     width: 60%;
