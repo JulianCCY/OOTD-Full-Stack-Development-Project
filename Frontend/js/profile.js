@@ -33,7 +33,8 @@ document.querySelector(".searchBar").addEventListener("submit", async (evt) => {
       console.log(document.querySelector(".searchBar input").value);
       json.forEach((user) => {
         if(document.querySelector(".searchBar input").value === user.username) {
-          window.location.href = `profile.html?id=${user.user_id}`
+          window.location.href = `profile.html?id=${user.user_id}`;
+          return;
         } 
       });
       alert("User with inserted username not found. \nCase sensitive.")
