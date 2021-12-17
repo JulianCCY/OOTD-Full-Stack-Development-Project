@@ -122,10 +122,12 @@ const webInfo = (info) => {
 // get user info by html params
 var params = new URL(window.location.href);
 var id = params.searchParams.get("id");
+// hide edit and setting buttons
 const getUser = async () => {
     if (user.user_id != id) {
         document.getElementById("editButton").style.display = "none";
         document.getElementById("settingsButton").style.display = "none";
+        avatar.style.pointerEvents = "none";
     }
     try {
       const options = {

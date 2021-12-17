@@ -243,7 +243,7 @@ const createPosts = (posts) => {
       const response = await fetch(url + '/category/' + cid, fetchOptions);
       const posts = await response.json();
       if (posts.message === "None") {
-          Swal.fire("No posts found");
+          alert("No posts found");
       } else {
         createPosts(posts);
       }
