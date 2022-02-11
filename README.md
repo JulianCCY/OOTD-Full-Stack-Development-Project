@@ -1,4 +1,4 @@
-# OOTD. (Group 12) Year2 Period 2 Project
+# OOTD. (Group 12) Year2 Period 2 Project (Server stopped)
 > Each day is a page in your fashion story.
 
 ## Overview
@@ -32,7 +32,7 @@ and get inspiration
 - Login authentication: passport-jwt library, passport-local Strategy, JWT Strategy
 - Upload image: sharp, multer
 
-## Running Server for database, backend and frontend
+## Running Server for database, backend and frontend (Server stopped)
 - Please connect to Metropolia VPN
 - Database is running on user Metropolia server, (https://users.metropolia.fi/phpMyAdmin/)
 - Backend is running on remote EduCloud virtual server, (http://10.114.32.122/), running automatically with `pm2 start app.js`
