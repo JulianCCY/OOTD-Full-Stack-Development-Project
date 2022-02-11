@@ -1,4 +1,4 @@
-# OOTD. (Group 12) Year2 Period 2 Project (Server stopped)
+# OOTD. Year2 Full Stack Development Project with Nodejs and Expressjs (Server stopped)
 > Each day is a page in your fashion story.
 
 ## Overview
